@@ -4685,2347 +4685,2463 @@ Including file: EGRESOS.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\EGRESOS.
 77966>>>>>>>        Forward Send Construct_Object
 77968>>>>>>>        Set Main_File to TARJETA.File_Number
 77969>>>>>>>
-77969>>>>>>>        Set Add_Client_File to EGRESOS.File_Number
+77969>>>>>>>        Set Add_System_File to NPROX.File_Number DD_Lock_On_All
 77970>>>>>>>
-77970>>>>>>>        Set Add_System_File to NPROX.File_Number DD_Lock_On_All
-77971>>>>>>>
-77971>>>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-77972>>>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-77973>>>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-77974>>>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+77970>>>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+77971>>>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+77972>>>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+77973>>>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+77974>>>>>>>
+77974>>>>>>>        Set Field_Auto_Increment Field TARJETA.NUMERO to File_Field NPROX.TARJETA
 77975>>>>>>>
-77975>>>>>>>        Set Field_Auto_Increment Field TARJETA.NUMERO to File_Field NPROX.TARJETA
+77975>>>>>>>        Set Field_Option Field TARJETA.CLAVE DD_CAPSLOCK to True
 77976>>>>>>>
-77976>>>>>>>        Set Field_Option Field TARJETA.CLAVE DD_CAPSLOCK to True
+77976>>>>>>>    End_Procedure
 77977>>>>>>>
-77977>>>>>>>    End_Procedure
-77978>>>>>>>
-77978>>>>>>>End_Class
-77979>>>>>Use cdbCJGridColumn.pkg
-77979>>>>>
-77979>>>>>Object TARJETAS_SL is a dbModalPanel
-77981>>>>>    Object oTARJETA_DD is a TARJETA_DataDictionary
-77983>>>>>    End_Object
-77984>>>>>
-77984>>>>>    Set Main_DD to oTARJETA_DD
-77985>>>>>    Set Server to oTARJETA_DD
-77986>>>>>
-77986>>>>>
-77986>>>>>    Set Size to 88 171
-77987>>>>>    Set Location     to 4 5
-77988>>>>>    Set Border_Style to Border_Thick
-77989>>>>>    Set Label to "TIPO_GASTO"
-77990>>>>>    Set Column_Offset to 1
-77991>>>>>    
-77991>>>>>     Object oSelList is a dbList
-77993>>>>>        Set Main_File to TARJETA.File_Number
-77994>>>>>        Set Size to 62 159
-77995>>>>>        Set Location to 6 6
-77996>>>>>    
-77996>>>>>        Begin_Row
-77999>>>>>            Entry_Item TARJETA.Numero
-78000>>>>>            Entry_Item TARJETA.CLAVE
-78001>>>>>            Entry_Item TARJETA.DIA_CORTE
-78002>>>>>            Entry_Item TARJETA.DIA_PAGO
-78003>>>>>        End_Row
-78008>>>>>    
-78008>>>>>        Set Form_Width 0 to 19
-78009>>>>>        Set Header_Label  item 0 to "#"
-78010>>>>>        
-78010>>>>>        Set Form_Width 1 to 42
-78011>>>>>        Set Header_Label  item 1 to "Clave"
-78012>>>>>        
-78012>>>>>        Set Form_Width 2 to 49
-78013>>>>>        Set Header_Label  item 2 to "Dia Corte"
-78014>>>>>        
-78014>>>>>        Set Form_Width 3 to 43
-78015>>>>>        Set Header_Label  item 3 to "Dia Pago"
-78016>>>>>        
-78016>>>>>        Set Export_Column to 0
-78017>>>>>        Set Initial_Column to 0
-78018>>>>>        
-78018>>>>>    End_Object    // oSelList
-78019>>>>>
-78019>>>>>    Object oOK_bn is a Button
-78021>>>>>        Set Label     to "&OK"
-78022>>>>>        Set Location to 71 7
-78023>>>>>        Set peAnchors to anBottomRight
-78024>>>>>
-78024>>>>>        Procedure OnClick
-78027>>>>>            Send Ok of oSelList
-78028>>>>>        End_Procedure
+77977>>>>>>>End_Class
+77978>>>>>Use cdbCJGridColumn.pkg
+77978>>>>>
+77978>>>>>Object TARJETAS_SL is a dbModalPanel
+77980>>>>>    Object oTARJETA_DD is a TARJETA_DataDictionary
+77982>>>>>    End_Object
+77983>>>>>
+77983>>>>>    Set Main_DD to oTARJETA_DD
+77984>>>>>    Set Server to oTARJETA_DD
+77985>>>>>
+77985>>>>>
+77985>>>>>    Set Size to 88 171
+77986>>>>>    Set Location     to 4 5
+77987>>>>>    Set Border_Style to Border_Thick
+77988>>>>>    Set Label to "TIPO_GASTO"
+77989>>>>>    Set Column_Offset to 1
+77990>>>>>    
+77990>>>>>     Object oSelList is a dbList
+77992>>>>>        Set Main_File to TARJETA.File_Number
+77993>>>>>        Set Size to 62 159
+77994>>>>>        Set Location to 6 6
+77995>>>>>    
+77995>>>>>        Begin_Row
+77998>>>>>            Entry_Item TARJETA.Numero
+77999>>>>>            Entry_Item TARJETA.CLAVE
+78000>>>>>            Entry_Item TARJETA.DIA_CORTE
+78001>>>>>            Entry_Item TARJETA.DIA_PAGO
+78002>>>>>        End_Row
+78007>>>>>    
+78007>>>>>        Set Form_Width 0 to 19
+78008>>>>>        Set Header_Label  item 0 to "#"
+78009>>>>>        
+78009>>>>>        Set Form_Width 1 to 42
+78010>>>>>        Set Header_Label  item 1 to "Clave"
+78011>>>>>        
+78011>>>>>        Set Form_Width 2 to 49
+78012>>>>>        Set Header_Label  item 2 to "Dia Corte"
+78013>>>>>        
+78013>>>>>        Set Form_Width 3 to 43
+78014>>>>>        Set Header_Label  item 3 to "Dia Pago"
+78015>>>>>        
+78015>>>>>        Set Export_Column to 0
+78016>>>>>        Set Initial_Column to 0
+78017>>>>>        
+78017>>>>>    End_Object    // oSelList
+78018>>>>>
+78018>>>>>    Object oOK_bn is a Button
+78020>>>>>        Set Label     to "&OK"
+78021>>>>>        Set Location to 71 7
+78022>>>>>        Set peAnchors to anBottomRight
+78023>>>>>
+78023>>>>>        Procedure OnClick
+78026>>>>>            Send Ok of oSelList
+78027>>>>>        End_Procedure
+78028>>>>>
+78028>>>>>    End_Object
 78029>>>>>
-78029>>>>>    End_Object
-78030>>>>>
-78030>>>>>    Object oCancel_bn is a Button
-78032>>>>>        Set Label     to "&Cancel"
-78033>>>>>        Set Location to 71 61
-78034>>>>>        Set peAnchors to anBottomRight
-78035>>>>>
-78035>>>>>        Procedure OnClick
-78038>>>>>            Send Cancel of oSelList
-78039>>>>>        End_Procedure
+78029>>>>>    Object oCancel_bn is a Button
+78031>>>>>        Set Label     to "&Cancel"
+78032>>>>>        Set Location to 71 61
+78033>>>>>        Set peAnchors to anBottomRight
+78034>>>>>
+78034>>>>>        Procedure OnClick
+78037>>>>>            Send Cancel of oSelList
+78038>>>>>        End_Procedure
+78039>>>>>
+78039>>>>>    End_Object
 78040>>>>>
-78040>>>>>    End_Object
-78041>>>>>
-78041>>>>>    Object oSearch_bn is a Button
-78043>>>>>        Set Label     to "&Search..."
-78044>>>>>        Set Location to 71 115
-78045>>>>>        Set peAnchors to anBottomRight
-78046>>>>>
-78046>>>>>        Procedure OnClick
-78049>>>>>            Send Search of oSelList
-78050>>>>>        End_Procedure
+78040>>>>>    Object oSearch_bn is a Button
+78042>>>>>        Set Label     to "&Search..."
+78043>>>>>        Set Location to 71 115
+78044>>>>>        Set peAnchors to anBottomRight
+78045>>>>>
+78045>>>>>        Procedure OnClick
+78048>>>>>            Send Search of oSelList
+78049>>>>>        End_Procedure
+78050>>>>>
+78050>>>>>    End_Object
 78051>>>>>
-78051>>>>>    End_Object
-78052>>>>>
-78052>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
-78053>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
-78054>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
+78051>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
+78052>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
+78053>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
+78054>>>>>
+78054>>>>>End_Object
 78055>>>>>
-78055>>>>>End_Object
-78056>>>>>
-78056>>>Use cPRESUPUESTO_DataDictionary.dd
+78055>>>Use cPRESUPUESTO_DataDictionary.dd
 Including file: cPRESUPUESTO_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cPRESUPUESTO_DataDictionary.dd)
-78056>>>>>Use DataDict.pkg
-78056>>>>>
-78056>>>>>Open PRESUPUESTO
+78055>>>>>Use DataDict.pkg
+78055>>>>>
+78055>>>>>Open PRESUPUESTO
 Including file: PRESUPUESTO.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\PRESUPUESTO.fd)
-78058>>>>>Open EGRESOS
-78060>>>>>Open NPROX
-78062>>>>>
-78062>>>>>Class cPRESUPUESTODataDictionary is a DataDictionary
-78063>>>>>    
-78063>>>>>    Procedure Construct_Object
-78065>>>>>        Forward Send Construct_Object
-78067>>>>>        Set Main_File to PRESUPUESTO.File_Number
+78057>>>>>Open EGRESOS
+78059>>>>>Open NPROX
+78061>>>>>
+78061>>>>>Class cPRESUPUESTODataDictionary is a DataDictionary
+78062>>>>>    
+78062>>>>>    Procedure Construct_Object
+78064>>>>>        Forward Send Construct_Object
+78066>>>>>        Set Main_File to PRESUPUESTO.File_Number
+78067>>>>>
+78067>>>>>        Set Add_System_File to NPROX.File_Number DD_Lock_On_All
 78068>>>>>
-78068>>>>>        Set Add_System_File to NPROX.File_Number DD_Lock_On_All
+78068>>>>>        Set Add_Client_File to EGRESOS.File_Number
 78069>>>>>
-78069>>>>>        Set Add_Client_File to EGRESOS.File_Number
-78070>>>>>
-78070>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-78071>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-78072>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-78073>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+78069>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+78070>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+78071>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+78072>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+78073>>>>>
+78073>>>>>        Set Field_Auto_Increment Field PRESUPUESTO.NUMERO to File_Field NPROX.PRESUPUESTO
 78074>>>>>
-78074>>>>>        Set Field_Auto_Increment Field PRESUPUESTO.NUMERO to File_Field NPROX.PRESUPUESTO
+78074>>>>>    End_Procedure
 78075>>>>>
-78075>>>>>    End_Procedure
-78076>>>>>
-78076>>>>>End_Class
-78077>>>Use cTIPO_GASTO_DataDictionary.dd
-78077>>>Use TARJETA.dd
-78077>>>Use cEGRESOSDataDictionary.dd
+78075>>>>>End_Class
+78076>>>Use cTIPO_GASTO_DataDictionary.dd
+78076>>>Use cEGRESOSDataDictionary.dd
 Including file: cEGRESOSDataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cEGRESOSDataDictionary.dd)
-78077>>>>>Use DataDict.pkg
-78077>>>>>
-78077>>>>>Open EGRESOS
-78079>>>>>Open PRESUPUESTO
-78081>>>>>Open SUB_EGRESOS
+78076>>>>>Use DataDict.pkg
+78076>>>>>
+78076>>>>>Open EGRESOS
+78078>>>>>Open PRESUPUESTO
+78080>>>>>Open SUB_EGRESOS
 Including file: SUB_EGRESOS.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\SUB_EGRESOS.fd)
-78083>>>>>Open TIPO_GASTO
-78085>>>>>Open TARJETA
-78087>>>>>
-78087>>>>>Register_Object TIPO_GASTO_SL
-78087>>>>>Register_Object TARJETAS_SL
-78087>>>>>
-78087>>>>>Class cEGRESOSDataDictionary is a DataDictionary
-78088>>>>>    
-78088>>>>>        Procedure OnConstrain
-78090>>>>>            Forward Send OnConstrain
-78092>>>>>            Set pbUseDDSQLFilters to True
-78093>>>>>            Local String @Filtro @Filtro2 @Tipo_Gasto
-78093>>>>>            Local Integer @Vista 
+78082>>>>>Open TIPO_GASTO
+78084>>>>>Open TARJETA
+78086>>>>>
+78086>>>>>Register_Object TIPO_GASTO_SL
+78086>>>>>Register_Object TARJETAS_SL
+78086>>>>>
+78086>>>>>Class cEGRESOSDataDictionary is a DataDictionary
+78087>>>>>    
+78087>>>>>        Procedure OnConstrain
+78089>>>>>            Forward Send OnConstrain
+78091>>>>>            Set pbUseDDSQLFilters to True
+78092>>>>>            Local String @Filtro @Filtro2 @Tipo_Gasto
+78092>>>>>            Local Integer @Vista 
+78092>>>>>            
+78092>>>>>            Move '' to @Filtro2
 78093>>>>>            
-78093>>>>>            Move '' to @Filtro2
-78094>>>>>            
-78094>>>>>            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
-78095>>>>>            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
-78096>>>>>            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
-78097>>>>>            
-78097>>>>>            If (@Filtro ne '') Begin
-78099>>>>>                Append @Filtro2 @Filtro 
-78100>>>>>            End
-78100>>>>>>
-78100>>>>>            
-78100>>>>>            If (@Tipo_Gasto ne 'TODOS') Begin
-78102>>>>>                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-78106>>>>>                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-78109>>>>>            End
-78109>>>>>>
-78109>>>>>            
-78109>>>>>            Set psSQLFilter to @Filtro2
-78110>>>>>        End_Procedure
-78111>>>>>    
-78111>>>>>    Procedure Construct_Object
-78113>>>>>        Forward Send Construct_Object
-78115>>>>>        Set Main_File to EGRESOS.File_Number
-78116>>>>>
-78116>>>>>        Set Add_Server_File to TIPO_GASTO.File_Number
-78117>>>>>        Set Add_Server_File to PRESUPUESTO.File_Number
-78118>>>>>        Set Add_Server_File to TARJETA.File_Number
-78119>>>>>
-78119>>>>>        Set Add_Client_File to SUB_EGRESOS.File_Number
-78120>>>>>
-78120>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-78121>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-78122>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-78123>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-78124>>>>>
-78124>>>>>        Set Field_Prompt_Object Field EGRESOS.TIPO to TIPO_GASTO_SL
+78093>>>>>            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
+78094>>>>>            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
+78095>>>>>            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
+78096>>>>>            
+78096>>>>>            If (@Filtro ne '') Begin
+78098>>>>>                Append @Filtro2 @Filtro 
+78099>>>>>            End
+78099>>>>>>
+78099>>>>>            
+78099>>>>>            If (@Tipo_Gasto ne 'TODOS') Begin
+78101>>>>>                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+78105>>>>>                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+78108>>>>>            End
+78108>>>>>>
+78108>>>>>            
+78108>>>>>            Set psSQLFilter to @Filtro2
+78109>>>>>        End_Procedure
+78110>>>>>    
+78110>>>>>    Procedure Construct_Object
+78112>>>>>        Forward Send Construct_Object
+78114>>>>>        Set Main_File to EGRESOS.File_Number
+78115>>>>>
+78115>>>>>        Set Add_Server_File to TIPO_GASTO.File_Number
+78116>>>>>        Set Add_Server_File to PRESUPUESTO.File_Number
+78117>>>>>
+78117>>>>>        Set Add_Client_File to SUB_EGRESOS.File_Number
+78118>>>>>
+78118>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+78119>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+78120>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+78121>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+78122>>>>>
+78122>>>>>        Set Field_Prompt_Object Field EGRESOS.TIPO to TIPO_GASTO_SL
+78123>>>>>
+78123>>>>>        Set Field_Class_Name Field EGRESOS.ES_FIJO_SN to "Checkbox"
+78124>>>>>        Set Field_Checkbox_Values Field EGRESOS.ES_FIJO_SN to "S" "N"
 78125>>>>>
-78125>>>>>        Set Field_Class_Name Field EGRESOS.ES_FIJO_SN to "Checkbox"
-78126>>>>>        Set Field_Checkbox_Values Field EGRESOS.ES_FIJO_SN to "S" "N"
+78125>>>>>        Set Field_Class_Name Field EGRESOS.PAGADO_SN to "Checkbox"
+78126>>>>>        Set Field_Checkbox_Values Field EGRESOS.PAGADO_SN to "S" "N"
 78127>>>>>
-78127>>>>>        Set Field_Class_Name Field EGRESOS.PAGADO_SN to "Checkbox"
-78128>>>>>        Set Field_Checkbox_Values Field EGRESOS.PAGADO_SN to "S" "N"
+78127>>>>>        Set Field_Value_Check Field EGRESOS.FORMA_PAGO to "EF|TC|TD"
+78128>>>>>
+78128>>>>>        Set Field_Checkbox_Values Field EGRESOS.MARCAR to "S" "N"
 78129>>>>>
-78129>>>>>        Set Field_Value_Check Field EGRESOS.FORMA_PAGO to "EF|TC|TD"
-78130>>>>>
-78130>>>>>        Set Field_Checkbox_Values Field EGRESOS.MARCAR to "S" "N"
+78129>>>>>        Set Field_Class_Name Field EGRESOS.LIQUIDAR to "Checkbox"
+78130>>>>>        Set Field_Checkbox_Values Field EGRESOS.LIQUIDAR to "S" "N"
 78131>>>>>
-78131>>>>>        Set Field_Class_Name Field EGRESOS.LIQUIDAR to "Checkbox"
-78132>>>>>        Set Field_Checkbox_Values Field EGRESOS.LIQUIDAR to "S" "N"
+78131>>>>>        Set Field_Checkbox_Values Field EGRESOS.LIQUIDADO to "S" "N"
+78132>>>>>        Set Field_Class_Name Field EGRESOS.LIQUIDADO to "Checkbox"
 78133>>>>>
-78133>>>>>        Set Field_Checkbox_Values Field EGRESOS.LIQUIDADO to "S" "N"
-78134>>>>>        Set Field_Class_Name Field EGRESOS.LIQUIDADO to "Checkbox"
+78133>>>>>        Set Field_Prompt_Object Field EGRESOS.TC to TARJETAS_SL
+78134>>>>>
+78134>>>>>    End_Procedure
 78135>>>>>
-78135>>>>>        Set Field_Prompt_Object Field EGRESOS.TC to TARJETAS_SL
-78136>>>>>
-78136>>>>>    End_Procedure
-78137>>>>>
-78137>>>>>    Procedure Field_Defaults
-78139>>>>>        Forward Send Field_Defaults
-78141>>>>>        Set Field_Changed_Value Field EGRESOS.ES_FIJO_SN to "N"
-78142>>>>>        Set Field_Changed_Value Field EGRESOS.PAGADO_SN to "N"
-78143>>>>>        Set Field_Changed_Value Field EGRESOS.MARCAR to "N"
-78144>>>>>        Set Field_Changed_Value Field EGRESOS.LIQUIDAR to "N"
-78145>>>>>        Set Field_Changed_Value Field EGRESOS.LIQUIDADO to "N"
-78146>>>>>    End_Procedure
-78147>>>>>
-78147>>>>>End_Class
-78148>>>>>
-78148>>>>>Use TARJETAS.sl
-78148>>>>>Use TIPO_GASTO.sl
+78135>>>>>    Procedure Field_Defaults
+78137>>>>>        Forward Send Field_Defaults
+78139>>>>>        Set Field_Changed_Value Field EGRESOS.ES_FIJO_SN to "N"
+78140>>>>>        Set Field_Changed_Value Field EGRESOS.PAGADO_SN to "N"
+78141>>>>>        Set Field_Changed_Value Field EGRESOS.MARCAR to "N"
+78142>>>>>        Set Field_Changed_Value Field EGRESOS.LIQUIDAR to "N"
+78143>>>>>        Set Field_Changed_Value Field EGRESOS.LIQUIDADO to "N"
+78144>>>>>    End_Procedure
+78145>>>>>
+78145>>>>>End_Class
+78146>>>>>
+78146>>>>>Use TARJETAS.sl
+78146>>>>>Use TIPO_GASTO.sl
 Including file: TIPO_GASTO.sl    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\TIPO_GASTO.sl)
-78148>>>>>>>Use Windows.pkg
-78148>>>>>>>Use DFClient.pkg
-78148>>>>>>>Use cDbCJGridPromptList.pkg
-78148>>>>>>>Use cTIPO_GASTO_DataDictionary.dd
-78148>>>>>>>Use cdbCJGridColumn.pkg
-78148>>>>>>>
-78148>>>>>>>Object TIPO_GASTO_SL is a dbModalPanel
-78150>>>>>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
-78152>>>>>>>    End_Object
+78146>>>>>>>Use Windows.pkg
+78146>>>>>>>Use DFClient.pkg
+78146>>>>>>>Use cDbCJGridPromptList.pkg
+78146>>>>>>>Use cTIPO_GASTO_DataDictionary.dd
+78146>>>>>>>Use cdbCJGridColumn.pkg
+78146>>>>>>>
+78146>>>>>>>Object TIPO_GASTO_SL is a dbModalPanel
+78148>>>>>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
+78150>>>>>>>    End_Object
+78151>>>>>>>
+78151>>>>>>>    Set Main_DD to oTIPO_GASTO_DD
+78152>>>>>>>    Set Server to oTIPO_GASTO_DD
 78153>>>>>>>
-78153>>>>>>>    Set Main_DD to oTIPO_GASTO_DD
-78154>>>>>>>    Set Server to oTIPO_GASTO_DD
-78155>>>>>>>
-78155>>>>>>>    Set Size to 133 171
-78156>>>>>>>    Set Location     to 4 5
-78157>>>>>>>    Set Border_Style to Border_Thick
-78158>>>>>>>    Set Label to "TIPO_GASTO"
-78159>>>>>>>    Set Column_Offset to 1
-78160>>>>>>>    
-78160>>>>>>>     Object oSelList is a dbList
-78162>>>>>>>        Set Main_File to TIPO_GASTO.File_Number
-78163>>>>>>>        Set Size to 105 168
-78164>>>>>>>        Set Location to 6 2
-78165>>>>>>>    
-78165>>>>>>>        Begin_Row
-78168>>>>>>>            Entry_Item TIPO_GASTO.Numero
-78169>>>>>>>            Entry_Item TIPO_GASTO.CLAVE
-78170>>>>>>>            Entry_Item TIPO_GASTO.DESCRIPCION
-78171>>>>>>>        End_Row
-78176>>>>>>>    
-78176>>>>>>>        Set Form_Width 0 to 19
-78177>>>>>>>        Set Header_Label  item 0 to "#"
+78153>>>>>>>    Set Size to 133 171
+78154>>>>>>>    Set Location     to 4 5
+78155>>>>>>>    Set Border_Style to Border_Thick
+78156>>>>>>>    Set Label to "TIPO_GASTO"
+78157>>>>>>>    Set Column_Offset to 1
+78158>>>>>>>    
+78158>>>>>>>     Object oSelList is a dbList
+78160>>>>>>>        Set Main_File to TIPO_GASTO.File_Number
+78161>>>>>>>        Set Size to 105 168
+78162>>>>>>>        Set Location to 6 2
+78163>>>>>>>    
+78163>>>>>>>        Begin_Row
+78166>>>>>>>            Entry_Item TIPO_GASTO.Numero
+78167>>>>>>>            Entry_Item TIPO_GASTO.CLAVE
+78168>>>>>>>            Entry_Item TIPO_GASTO.DESCRIPCION
+78169>>>>>>>        End_Row
+78174>>>>>>>    
+78174>>>>>>>        Set Form_Width 0 to 19
+78175>>>>>>>        Set Header_Label  item 0 to "#"
+78176>>>>>>>        
+78176>>>>>>>        Set Form_Width 1 to 34
+78177>>>>>>>        Set Header_Label  item 1 to "Clave"
 78178>>>>>>>        
-78178>>>>>>>        Set Form_Width 1 to 34
-78179>>>>>>>        Set Header_Label  item 1 to "Clave"
-78180>>>>>>>        
-78180>>>>>>>        Set Form_Width 2 to 111
-78181>>>>>>>        Set Header_Label  item 2 to "Descripcion"
-78182>>>>>>>         Set Export_Column to 1
-78183>>>>>>>         Set Initial_Column to 1
-78184>>>>>>>        
-78184>>>>>>>    End_Object    // oSelList
-78185>>>>>>>
-78185>>>>>>>    Object oOK_bn is a Button
-78187>>>>>>>        Set Label     to "&OK"
-78188>>>>>>>        Set Location to 115 7
-78189>>>>>>>        Set peAnchors to anBottomRight
-78190>>>>>>>
-78190>>>>>>>        Procedure OnClick
-78193>>>>>>>            Send Ok of oSelList
-78194>>>>>>>        End_Procedure
-78195>>>>>>>
-78195>>>>>>>    End_Object
-78196>>>>>>>
-78196>>>>>>>    Object oCancel_bn is a Button
-78198>>>>>>>        Set Label     to "&Cancel"
-78199>>>>>>>        Set Location to 115 61
-78200>>>>>>>        Set peAnchors to anBottomRight
-78201>>>>>>>
-78201>>>>>>>        Procedure OnClick
-78204>>>>>>>            Send Cancel of oSelList
-78205>>>>>>>        End_Procedure
-78206>>>>>>>
-78206>>>>>>>    End_Object
-78207>>>>>>>
-78207>>>>>>>    Object oSearch_bn is a Button
-78209>>>>>>>        Set Label     to "&Search..."
-78210>>>>>>>        Set Location to 115 115
-78211>>>>>>>        Set peAnchors to anBottomRight
-78212>>>>>>>
-78212>>>>>>>        Procedure OnClick
-78215>>>>>>>            Send Search of oSelList
-78216>>>>>>>        End_Procedure
-78217>>>>>>>
-78217>>>>>>>    End_Object
-78218>>>>>>>
-78218>>>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
-78219>>>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
-78220>>>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
-78221>>>>>>>
-78221>>>>>>>End_Object
-78222>>>>>>>
-78222>>>Use SUB_EGRESOS.dd
+78178>>>>>>>        Set Form_Width 2 to 111
+78179>>>>>>>        Set Header_Label  item 2 to "Descripcion"
+78180>>>>>>>         Set Export_Column to 1
+78181>>>>>>>         Set Initial_Column to 1
+78182>>>>>>>        
+78182>>>>>>>    End_Object    // oSelList
+78183>>>>>>>
+78183>>>>>>>    Object oOK_bn is a Button
+78185>>>>>>>        Set Label     to "&OK"
+78186>>>>>>>        Set Location to 115 7
+78187>>>>>>>        Set peAnchors to anBottomRight
+78188>>>>>>>
+78188>>>>>>>        Procedure OnClick
+78191>>>>>>>            Send Ok of oSelList
+78192>>>>>>>        End_Procedure
+78193>>>>>>>
+78193>>>>>>>    End_Object
+78194>>>>>>>
+78194>>>>>>>    Object oCancel_bn is a Button
+78196>>>>>>>        Set Label     to "&Cancel"
+78197>>>>>>>        Set Location to 115 61
+78198>>>>>>>        Set peAnchors to anBottomRight
+78199>>>>>>>
+78199>>>>>>>        Procedure OnClick
+78202>>>>>>>            Send Cancel of oSelList
+78203>>>>>>>        End_Procedure
+78204>>>>>>>
+78204>>>>>>>    End_Object
+78205>>>>>>>
+78205>>>>>>>    Object oSearch_bn is a Button
+78207>>>>>>>        Set Label     to "&Search..."
+78208>>>>>>>        Set Location to 115 115
+78209>>>>>>>        Set peAnchors to anBottomRight
+78210>>>>>>>
+78210>>>>>>>        Procedure OnClick
+78213>>>>>>>            Send Search of oSelList
+78214>>>>>>>        End_Procedure
+78215>>>>>>>
+78215>>>>>>>    End_Object
+78216>>>>>>>
+78216>>>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
+78217>>>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
+78218>>>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
+78219>>>>>>>
+78219>>>>>>>End_Object
+78220>>>>>>>
+78220>>>Use SUB_EGRESOS.dd
 Including file: SUB_EGRESOS.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\SUB_EGRESOS.dd)
-78222>>>>>Use DataDict.pkg
-78222>>>>>
-78222>>>>>Open SUB_EGRESOS
-78224>>>>>Open EGRESOS
-78226>>>>>
-78226>>>>>Class SUB_EGRESOS_DataDictionary is a DataDictionary
-78227>>>>>    
-78227>>>>>    Procedure Construct_Object
-78229>>>>>        Forward Send Construct_Object
-78231>>>>>        Set Main_File to SUB_EGRESOS.File_Number
-78232>>>>>
-78232>>>>>        Set Add_Server_File to EGRESOS.File_Number
-78233>>>>>
-78233>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-78234>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-78235>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-78236>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-78237>>>>>
-78237>>>>>    End_Procedure
-78238>>>>>    
-78238>>>>>    Procedure Update 
-78240>>>>>        Forward Send Update
-78242>>>>>        Add SUB_EGRESOS.MONTO to EGRESOS.MONTO
-78243>>>>>    End_Procedure
-78244>>>>>    
-78244>>>>>    Procedure Backout
-78246>>>>>        Forward Send Backout
-78248>>>>>        Subtract SUB_EGRESOS.MONTO from EGRESOS.MONTO
-78249>>>>>    End_Procedure
-78250>>>>>
-78250>>>>>End_Class
-78251>>>
-78251>>>Deferred_View Activate_Egresos for ;Object Egresos is a dbView
-78276>>>    Object oTARJETA_DD is a TARJETA_DataDictionary
-78278>>>    End_Object
-78279>>>
-78279>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
-78281>>>    End_Object
-78282>>>
-78282>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
-78284>>>        Procedure Relate_Main_File
-78287>>>            Forward Send Relate_Main_File 
-78289>>>            Send Totales
-78290>>>        End_Procedure
-78291>>>    End_Object
-78292>>>
-78292>>>    Object oEGRESOS_DD is a cEGRESOSDataDictionary
-78294>>>        Set DDO_Server to oTARJETA_DD
-78295>>>        Set Constrain_file to PRESUPUESTO.File_number
-78296>>>        Set DDO_Server to oPRESUPUESTO_DD
-78297>>>        Set DDO_Server to oTIPO_GASTO_DD
-78298>>>    End_Object
-78299>>>
-78299>>>    Object oSUB_EGRESOS_DD is a SUB_EGRESOS_DataDictionary
-78301>>>        Set Constrain_file to EGRESOS.File_number
-78302>>>        Set DDO_Server to oEGRESOS_DD
-78303>>>    End_Object
-78304>>>
-78304>>>    Set Main_DD to oPRESUPUESTO_DD
-78305>>>    Set Server to oPRESUPUESTO_DD
-78306>>>    
-78306>>>    Procedure Request_Delete
-78309>>>        Send Totales
-78310>>>    End_Procedure
-78311>>>    
-78311>>>    
-78311>>>    Procedure Request_Clear
-78314>>>        Forward Send Request_Clear
-78316>>>        Set Shadow_State of oPRESUPUESTO_CLAVE          to False
-78317>>>        Set Shadow_State of oPRESUPUESTO_FECHA_INICIO   to False
-78318>>>        Set Shadow_State of oPRESUPUESTO_FECHA_FIN      to False
-78319>>>        Set Shadow_State of oPRESUPUESTO_VLR_QUINCENA   to False 
-78320>>>        Set Value of oTOTAL_E    to ''
-78321>>>        Set Value of oTOTAL_PGDO to ''
-78322>>>        Set Value of oDISPONIBLE to ''
-78323>>>        Set Color of Egresos  to 16641499
-78324>>>        Set Color of oTOTAL_E to 16777088 
-78325>>>    End_Procedure
-78326>>>    Procedure Request_Clear_All
-78329>>>        Forward Send Request_Clear_All
-78331>>>        Set Shadow_State of oPRESUPUESTO_CLAVE          to False
-78332>>>        Set Shadow_State of oPRESUPUESTO_FECHA_INICIO   to False
-78333>>>        Set Shadow_State of oPRESUPUESTO_FECHA_FIN      to False
-78334>>>        Set Shadow_State of oPRESUPUESTO_VLR_QUINCENA   to False 
-78335>>>        Set Value of oTOTAL_E    to ''
-78336>>>        Set Value of oTOTAL_PGDO to ''
-78337>>>        Set Value of oDISPONIBLE to ''
-78338>>>        Set Color of Egresos  to 16641499
-78339>>>        Set Color of oTOTAL_E to 16777088 
-78340>>>    End_Procedure
-78341>>>    Set Color to 16641499
-78342>>>    Set Auto_Top_View_State to True
-78343>>>
-78343>>>    //FUNCIONES Y PROCEDIMIENTOS
-78343>>>    
-78343>>>    Procedure Liquidar 
-78346>>>        Local String sQ 
-78346>>>        Local Handle hdbc69 hstmt69
-78346>>>        Local Number nValor_Disponible nValor_Liquidar
-78346>>>        
-78346>>>        Move '' to sQ
-78347>>>        Move 0  to nValor_Disponible
-78348>>>        Append sQ " SELECT DISPONIBLE FROM dbo.fn_ObtenerTotalesPresupuesto(" PRESUPUESTO.NUMERO ",3, 'todos'); " 
-78351>>>        SQLFileConnect EGRESOS to hdbc69
-78352>>>        SQLOpen hdbc69 to hstmt69
-78355>>>        SQLExecDirect hstmt69 sQ
-78358>>>        Repeat
-78358>>>>
-78358>>>           SQLFileFetch hstmt69
-78364>>>           If (SQLResult) Begin
-78366>>>              Get SQLColumnValue of hstmt69   1 to nValor_Disponible
-78367>>>           End
-78367>>>>
-78367>>>        Until (not(SQLResult))
-78369>>>        SQLClose hstmt69
-78372>>>        SQLDisconnect hdbc69
-78375>>>        
-78375>>>        Move '' to sQ
-78376>>>        Move 0  to nValor_Liquidar
-78377>>>        Append sQ " SELECT SUM(MONTO) FROM EGRESOS WHERE LIQUIDAR = 'S' AND PRESUPUESTO = " PRESUPUESTO.NUMERO 
-78379>>>        SQLFileConnect EGRESOS to hdbc69
-78380>>>        SQLOpen hdbc69 to hstmt69
-78383>>>        SQLExecDirect hstmt69 sQ
-78386>>>        Repeat
-78386>>>>
-78386>>>           SQLFileFetch hstmt69
-78392>>>           If (SQLResult) Begin
-78394>>>              Get SQLColumnValue of hstmt69   1 to nValor_Liquidar
-78395>>>           End
-78395>>>>
-78395>>>        Until (not(SQLResult))
-78397>>>        SQLClose hstmt69
-78400>>>        SQLDisconnect hdbc69
-78403>>>        
-78403>>>        If (nValor_Disponible < nValor_Liquidar) Begin
-78405>>>            Local Integer iRespuesta
-78405>>>            Get Confirm 'Monto a liquidar es mayor al disponible. Desea usar todo el disponible?' to iRespuesta
-78406>>>            
-78406>>>            If (iRespuesta eq 1) Begin
-78408>>>                Send Stop_Box 'Liquidacion detenida...' '!'
-78409>>>                Procedure_Return
-78410>>>            End
-78410>>>>
-78410>>>        End
-78410>>>>
-78410>>>    
-78410>>>        Move '' to sQ
-78411>>>        Append sQ " UPDATE EGRESOS SET LIQUIDAR = 'N', LIQUIDADO = 'S', PAGADO_SN = 'S' where LIQUIDAR = 'S' AND PRESUPUESTO = " PRESUPUESTO.NUMERO 
-78413>>>        SQLFileConnect EGRESOS to hdbc69
-78414>>>        SQLOpen hdbc69 to hstmt69
-78417>>>        SQLExecDirect hstmt69 sQ
-78420>>>        SQLClose hstmt69
-78423>>>        SQLDisconnect hdbc69
+78220>>>>>Use DataDict.pkg
+78220>>>>>
+78220>>>>>Open SUB_EGRESOS
+78222>>>>>Open EGRESOS
+78224>>>>>
+78224>>>>>Class SUB_EGRESOS_DataDictionary is a DataDictionary
+78225>>>>>    
+78225>>>>>    Procedure Construct_Object
+78227>>>>>        Forward Send Construct_Object
+78229>>>>>        Set Main_File to SUB_EGRESOS.File_Number
+78230>>>>>
+78230>>>>>        Set Add_Server_File to EGRESOS.File_Number
+78231>>>>>
+78231>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+78232>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+78233>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+78234>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+78235>>>>>
+78235>>>>>    End_Procedure
+78236>>>>>    
+78236>>>>>    Procedure Update 
+78238>>>>>        Forward Send Update
+78240>>>>>        Add SUB_EGRESOS.MONTO to EGRESOS.MONTO
+78241>>>>>    End_Procedure
+78242>>>>>    
+78242>>>>>    Procedure Backout
+78244>>>>>        Forward Send Backout
+78246>>>>>        Subtract SUB_EGRESOS.MONTO from EGRESOS.MONTO
+78247>>>>>    End_Procedure
+78248>>>>>
+78248>>>>>End_Class
+78249>>>
+78249>>>Deferred_View Activate_Egresos for ;Object Egresos is a dbView
+78274>>>
+78274>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
+78276>>>    End_Object
+78277>>>
+78277>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
+78279>>>        Procedure Relate_Main_File
+78282>>>            Forward Send Relate_Main_File 
+78284>>>            Send Totales
+78285>>>        End_Procedure
+78286>>>    End_Object
+78287>>>
+78287>>>    Object oEGRESOS_DD is a cEGRESOSDataDictionary
+78289>>>        Set Constrain_file to PRESUPUESTO.File_number
+78290>>>        Set DDO_Server to oPRESUPUESTO_DD
+78291>>>        Set DDO_Server to oTIPO_GASTO_DD
+78292>>>    End_Object
+78293>>>
+78293>>>    Object oSUB_EGRESOS_DD is a SUB_EGRESOS_DataDictionary
+78295>>>        Set Constrain_file to EGRESOS.File_number
+78296>>>        Set DDO_Server to oEGRESOS_DD
+78297>>>    End_Object
+78298>>>
+78298>>>    Set Main_DD to oPRESUPUESTO_DD
+78299>>>    Set Server to oPRESUPUESTO_DD
+78300>>>    
+78300>>>    Procedure Request_Delete
+78303>>>        Send Totales
+78304>>>    End_Procedure
+78305>>>    
+78305>>>    
+78305>>>    Procedure Request_Clear
+78308>>>        Forward Send Request_Clear
+78310>>>        Set Shadow_State of oPRESUPUESTO_CLAVE          to False
+78311>>>        Set Shadow_State of oPRESUPUESTO_FECHA_INICIO   to False
+78312>>>        Set Shadow_State of oPRESUPUESTO_FECHA_FIN      to False
+78313>>>        Set Shadow_State of oPRESUPUESTO_VLR_QUINCENA   to False 
+78314>>>        Set Value of oTOTAL_E    to ''
+78315>>>        Set Value of oTOTAL_PGDO to ''
+78316>>>        Set Value of oDISPONIBLE to ''
+78317>>>        Set Color of Egresos  to 16641499
+78318>>>        Set Color of oTOTAL_E to 16777088 
+78319>>>    End_Procedure
+78320>>>    Procedure Request_Clear_All
+78323>>>        Forward Send Request_Clear_All
+78325>>>        Set Shadow_State of oPRESUPUESTO_CLAVE          to False
+78326>>>        Set Shadow_State of oPRESUPUESTO_FECHA_INICIO   to False
+78327>>>        Set Shadow_State of oPRESUPUESTO_FECHA_FIN      to False
+78328>>>        Set Shadow_State of oPRESUPUESTO_VLR_QUINCENA   to False 
+78329>>>        Set Value of oTOTAL_E    to ''
+78330>>>        Set Value of oTOTAL_PGDO to ''
+78331>>>        Set Value of oDISPONIBLE to ''
+78332>>>        Set Color of Egresos  to 16641499
+78333>>>        Set Color of oTOTAL_E to 16777088 
+78334>>>    End_Procedure
+78335>>>    Set Color to 16641499
+78336>>>    Set Auto_Top_View_State to True
+78337>>>
+78337>>>    //FUNCIONES Y PROCEDIMIENTOS
+78337>>>    
+78337>>>    Procedure Liquidar 
+78340>>>        Local String sQ 
+78340>>>        Local Handle hdbc69 hstmt69
+78340>>>        Local Number nValor_Disponible nValor_Liquidar
+78340>>>        
+78340>>>        Move '' to sQ
+78341>>>        Move 0  to nValor_Disponible
+78342>>>        Append sQ " SELECT DISPONIBLE FROM dbo.fn_ObtenerTotalesPresupuesto(" PRESUPUESTO.NUMERO ",3, 'todos'); " 
+78345>>>        SQLFileConnect EGRESOS to hdbc69
+78346>>>        SQLOpen hdbc69 to hstmt69
+78349>>>        SQLExecDirect hstmt69 sQ
+78352>>>        Repeat
+78352>>>>
+78352>>>           SQLFileFetch hstmt69
+78358>>>           If (SQLResult) Begin
+78360>>>              Get SQLColumnValue of hstmt69   1 to nValor_Disponible
+78361>>>           End
+78361>>>>
+78361>>>        Until (not(SQLResult))
+78363>>>        SQLClose hstmt69
+78366>>>        SQLDisconnect hdbc69
+78369>>>        
+78369>>>        Move '' to sQ
+78370>>>        Move 0  to nValor_Liquidar
+78371>>>        Append sQ " SELECT SUM(MONTO) FROM EGRESOS WHERE LIQUIDAR = 'S' AND PRESUPUESTO = " PRESUPUESTO.NUMERO 
+78373>>>        SQLFileConnect EGRESOS to hdbc69
+78374>>>        SQLOpen hdbc69 to hstmt69
+78377>>>        SQLExecDirect hstmt69 sQ
+78380>>>        Repeat
+78380>>>>
+78380>>>           SQLFileFetch hstmt69
+78386>>>           If (SQLResult) Begin
+78388>>>              Get SQLColumnValue of hstmt69   1 to nValor_Liquidar
+78389>>>           End
+78389>>>>
+78389>>>        Until (not(SQLResult))
+78391>>>        SQLClose hstmt69
+78394>>>        SQLDisconnect hdbc69
+78397>>>        
+78397>>>        If (nValor_Disponible < nValor_Liquidar) Begin
+78399>>>            Local Integer iRespuesta
+78399>>>            Get Confirm 'Monto a liquidar es mayor al disponible. Desea usar todo el disponible?' to iRespuesta
+78400>>>            
+78400>>>            If (iRespuesta eq 1) Begin
+78402>>>                Send Stop_Box 'Liquidacion detenida...' '!'
+78403>>>                Procedure_Return
+78404>>>            End
+78404>>>>
+78404>>>        End
+78404>>>>
+78404>>>    
+78404>>>        Move '' to sQ
+78405>>>        Append sQ " UPDATE EGRESOS SET LIQUIDAR = 'N', LIQUIDADO = 'S', PAGADO_SN = 'S' where LIQUIDAR = 'S' AND PRESUPUESTO = " PRESUPUESTO.NUMERO 
+78407>>>        SQLFileConnect EGRESOS to hdbc69
+78408>>>        SQLOpen hdbc69 to hstmt69
+78411>>>        SQLExecDirect hstmt69 sQ
+78414>>>        SQLClose hstmt69
+78417>>>        SQLDisconnect hdbc69
+78420>>>        
+78420>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
+78421>>>        Send Refresh of oEgresos 2
+78422>>>    End_Procedure
+78423>>>    
+78423>>>    Procedure Totales 
+78426>>>        Local String sQ sOptionTipoPago
+78426>>>        Local Handle hdbc69 hstmt69
+78426>>>        local Integer iOptionTipoPago iOpcionVista
+78426>>>        Local Number nVal_TD nValPgdo nValPgdo_EF nValDispo nValDispo_EF nEgresos_EF nTotalTD_EF
+78426>>>        Local Number nTOTAL_EGRESOS nTOTAL_INGRESOS nDIFERENCIA nPENDIENTE_PAGO nTOTAL_PGO nDISPONIBLE
 78426>>>        
-78426>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
-78427>>>        Send Refresh of oEgresos 2
-78428>>>    End_Procedure
-78429>>>    
-78429>>>    Procedure Totales 
-78432>>>        Local String sQ sOptionTipoPago
-78432>>>        Local Handle hdbc69 hstmt69
-78432>>>        local Integer iOptionTipoPago iOpcionVista
-78432>>>        Local Number nVal_TD nValPgdo nValPgdo_EF nValDispo nValDispo_EF nEgresos_EF nTotalTD_EF
-78432>>>        Local Number nTOTAL_EGRESOS nTOTAL_INGRESOS nDIFERENCIA nPENDIENTE_PAGO nTOTAL_PGO nDISPONIBLE
-78432>>>        
-78432>>>        Get piOpcionVista of (oClientArea(oMain(Current_object))) to iOpcionVista
-78433>>>        Get psOpcionPago  of (oClientArea(oMain(Current_object))) to sOptionTipoPago
-78434>>>    
-78434>>>        Move '' to sQ
-78435>>>        Move 0  to nVal_TD
-78436>>>        Append sQ " SELECT * FROM dbo.fn_ObtenerTotalesPresupuesto(" PRESUPUESTO.NUMERO ", " iOpcionVista ", '" sOptionTipoPago "'); " 
-78443>>>        SQLFileConnect EGRESOS to hdbc69
-78444>>>        SQLOpen hdbc69 to hstmt69
-78447>>>        SQLExecDirect hstmt69 sQ
-78450>>>        Repeat
-78450>>>>
-78450>>>           SQLFileFetch hstmt69
-78456>>>           If (SQLResult) Begin
-78458>>>              Get SQLColumnValue of hstmt69   1 to nTOTAL_INGRESOS
-78459>>>              Get SQLColumnValue of hstmt69   2 to nTOTAL_EGRESOS
-78460>>>              Get SQLColumnValue of hstmt69   3 to nDIFERENCIA
-78461>>>              Get SQLColumnValue of hstmt69   4 to nTOTAL_PGO
-78462>>>              Get SQLColumnValue of hstmt69   5 to nPENDIENTE_PAGO
-78463>>>              Get SQLColumnValue of hstmt69   6 to nDISPONIBLE
-78464>>>           End
-78464>>>>
-78464>>>        Until (not(SQLResult))
-78466>>>        SQLClose hstmt69
-78469>>>        SQLDisconnect hdbc69
+78426>>>        Get piOpcionVista of (oClientArea(oMain(Current_object))) to iOpcionVista
+78427>>>        Get psOpcionPago  of (oClientArea(oMain(Current_object))) to sOptionTipoPago
+78428>>>    
+78428>>>        Move '' to sQ
+78429>>>        Move 0  to nVal_TD
+78430>>>        Append sQ " SELECT * FROM dbo.fn_ObtenerTotalesPresupuesto(" PRESUPUESTO.NUMERO ", " iOpcionVista ", '" sOptionTipoPago "'); " 
+78437>>>        SQLFileConnect EGRESOS to hdbc69
+78438>>>        SQLOpen hdbc69 to hstmt69
+78441>>>        SQLExecDirect hstmt69 sQ
+78444>>>        Repeat
+78444>>>>
+78444>>>           SQLFileFetch hstmt69
+78450>>>           If (SQLResult) Begin
+78452>>>              Get SQLColumnValue of hstmt69   1 to nTOTAL_INGRESOS
+78453>>>              Get SQLColumnValue of hstmt69   2 to nTOTAL_EGRESOS
+78454>>>              Get SQLColumnValue of hstmt69   3 to nDIFERENCIA
+78455>>>              Get SQLColumnValue of hstmt69   4 to nTOTAL_PGO
+78456>>>              Get SQLColumnValue of hstmt69   5 to nPENDIENTE_PAGO
+78457>>>              Get SQLColumnValue of hstmt69   6 to nDISPONIBLE
+78458>>>           End
+78458>>>>
+78458>>>        Until (not(SQLResult))
+78460>>>        SQLClose hstmt69
+78463>>>        SQLDisconnect hdbc69
+78466>>>        
+78466>>>        Set Value of oTOTAL_E           to nTOTAL_EGRESOS
+78467>>>        Set Value of oTOTAL_INGRESOS    to nTOTAL_INGRESOS
+78468>>>        Set Value of oDIFERENCIA2       to nDIFERENCIA
+78469>>>        Set Value of oPENDIENTE         to nPENDIENTE_PAGO
+78470>>>        Set Value of oTOTAL_PGDO        to nTOTAL_PGO
+78471>>>        Set Value of oDISPONIBLE        to nDISPONIBLE
 78472>>>        
-78472>>>        Set Value of oTOTAL_E           to nTOTAL_EGRESOS
-78473>>>        Set Value of oTOTAL_INGRESOS    to nTOTAL_INGRESOS
-78474>>>        Set Value of oDIFERENCIA2       to nDIFERENCIA
-78475>>>        Set Value of oPENDIENTE         to nPENDIENTE_PAGO
-78476>>>        Set Value of oTOTAL_PGDO        to nTOTAL_PGO
-78477>>>        Set Value of oDISPONIBLE        to nDISPONIBLE
+78472>>>        
+78472>>>        If (nTOTAL_EGRESOS > nTOTAL_INGRESOS) Begin
+78474>>>            Set Color of oTOTAL_E to 9079551
+78475>>>        End
+78475>>>>
+78475>>>        
+78475>>>        If (nDISPONIBLE > 0) Begin
+78477>>>            Set Color of oDISPONIBLE to 16777088
+78478>>>        End
+78478>>>>
+78478>>>        
+78478>>>       
 78478>>>        
 78478>>>        
-78478>>>        If (nTOTAL_EGRESOS > nTOTAL_INGRESOS) Begin
-78480>>>            Set Color of oTOTAL_E to 9079551
-78481>>>        End
-78481>>>>
-78481>>>        
-78481>>>        If (nDISPONIBLE > 0) Begin
-78483>>>            Set Color of oDISPONIBLE to 16777088
-78484>>>        End
-78484>>>>
-78484>>>        
-78484>>>       
-78484>>>        
-78484>>>        
-78484>>>//        //COLOREA TOTAL SEGUN RANGO
-78484>>>//        If (oTOTAL_E < oTOTAL_INGRESOS) Begin
-78484>>>//            Set Color of oTOTAL_E  to 16777088 
-78484>>>//            Set Color of Egresos   to 16641499
-78484>>>//        End
-78484>>>//        Else Begin
-78484>>>//            Set Color of oTOTAL_E to 4227327
-78484>>>//            Set Color of Egresos  to 12111868
-78484>>>//        End
-78484>>>//        //COLOREA TOTAL SEGUN RANGO
-78484>>>//        If (nValDispo > 0) Set Color of oDISPONIBLE to 16777088 
-78484>>>//        Else Set Color of oDISPONIBLE_EF to 16777088 
-78484>>>//        
-78484>>>//        If (nValorDiferencia gt 0) Set Color of oDiferencia to 16777088
-78484>>>//        Else Set color of oDiferencia to 4227327
-78484>>>//
-78484>>>//        
-78484>>>//        //DIFERENCUAL VISUAL
-78484>>>//        Local Number nValorDiferencia
-78484>>>//        Move ((nIngreso+nIngreso_EF)-nTotalTD_EF) to nValorDiferencia
-78484>>>//        Set Value of oText_TOT_INGRESOS to  ("+ Q."+(String(nIngreso+nIngreso_EF)))
-78484>>>//        Set value of oText_TOT_EGRESOS  to  ("- Q."+(String(nTotalTD_EF)))
-78484>>>//        Set Value of oDiferencia to ("= Q."+(String(nValorDiferencia)))
-78484>>>//        
-78484>>>        
-78484>>>        
-78484>>>        
-78484>>>        
-78484>>>    End_Procedure
-78485>>>    
-78485>>>    Procedure Cargar_Eg_Fijos 
-78488>>>        Local String sQ
-78488>>>        Local Handle hdbc69 hstmt69
-78488>>>        Local Integer iProx
-78488>>>        Local Date dToday
-78488>>>        Sysdate dToday
-78489>>>    
-78489>>>        Move '' to sQ
-78490>>>        Append sQ "INSERT INTO EGRESOS (NUMERO, TIPO, DESCRIPCION, FECHA_REALIZADO, ES_FIJO_SN, MONTO, MONTO_PROYECTADO, PRESUPUESTO, FORMA_PAGO) "
-78491>>>        Append sQ "SELECT (SELECT COALESCE(MAX(NUMERO), 0) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO ") + ROW_NUMBER() OVER (ORDER BY TIPO), TIPO, DESCRIPCION, " (fSQL_date(dToday)) ", 'S', 0, MONTO_PROYECTADO, " PRESUPUESTO.NUMERO ", 'TD'"
-78498>>>        Append sQ " FROM EGRESOS WHERE ES_FIJO_SN = 'S' AND PRESUPUESTO = " (PRESUPUESTO.NUMERO-1)
-78500>>>        SQLFileConnect EGRESOS to hdbc69
-78501>>>        SQLOpen hdbc69 to hstmt69
-78504>>>        SQLExecDirect hstmt69 sQ
-78507>>>        
-78507>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
-78508>>>        
-78508>>>        SQLClose hstmt69
-78511>>>        SQLDisconnect hdbc69
-78514>>>    End_Procedure
-78515>>>    
-78515>>>     Procedure Cargar_Eg_Pendientes 
-78518>>>        Local String sQ
-78518>>>        Local Handle hdbc69 hstmt69
-78518>>>        Local Integer iProx
-78518>>>        Local Date dToday
-78518>>>        Sysdate dToday
-78519>>>    
-78519>>>        Move '' to sQ
-78520>>>        Append sQ "INSERT INTO EGRESOS (NUMERO, TIPO, DESCRIPCION, FECHA_REALIZADO, ES_FIJO_SN, MONTO, MONTO_PROYECTADO, PRESUPUESTO, FORMA_PAGO) "
-78521>>>        Append sQ "SELECT (SELECT COALESCE(MAX(NUMERO), 0) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO ") + ROW_NUMBER() OVER (ORDER BY TIPO), TIPO, DESCRIPCION, " (fSQL_date(dToday)) ", 'N', 0, MONTO_PROYECTADO, " PRESUPUESTO.NUMERO ", 'TD'"
-78528>>>        Append sQ " FROM EGRESOS WHERE FORMA_PAGO = 'TC' AND PAGADO_SN = 'S' AND PRESUPUESTO = " (PRESUPUESTO.NUMERO-1)
-78530>>>        SQLFileConnect EGRESOS to hdbc69
-78531>>>        SQLOpen hdbc69 to hstmt69
-78534>>>        SQLExecDirect hstmt69 sQ
-78537>>>        
-78537>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
-78538>>>        
-78538>>>        SQLClose hstmt69
-78541>>>        SQLDisconnect hdbc69
-78544>>>    End_Procedure
-78545>>>    Set Size to 380 501
-78546>>>    Set Location to 2 2
-78547>>>    Set Label to "„gados"
-78548>>>    
-78548>>>    Object oDbContainer3d2 is a dbContainer3d
-78550>>>        Set Size to 226 460
-78551>>>        Set Location to 117 16
-78552>>>
-78552>>>        Object oEgresos is a cDbCJGrid
-78554>>>            Set Server to oEGRESOS_DD
-78555>>>            Set Size to 117 444
-78556>>>            Set Location to 6 4
-78557>>>            Set peHorizontalGridStyle to xtpGridSmallDots
-78558>>>            Set peVerticalGridStyle to xtpGridSmallDots
-78559>>>            Set piFocusCellBackColor to 16776960
-78560>>>            Set piSelectedRowBackColor to clRed
-78561>>>            Set peBorderStyle to xtpBorderNone
-78562>>>            Set piHighlightBackColor to clBlue
-78563>>>            Set pbUseAlternateRowBackgroundColor to  True
-78564>>>
-78564>>>            Object oEGRESOS_NUMERO is a cDbCJGridColumn
-78566>>>                Entry_Item EGRESOS.NUMERO
-78567>>>                Set piWidth to 34
-78568>>>                Set psCaption to "#"
-78569>>>                //Set pbEditable to False
-78569>>>            End_Object
-78570>>>
-78570>>>            Object oEGRESOS_TIPO is a cDbCJGridColumn
-78572>>>                Entry_Item EGRESOS.TIPO
-78573>>>                Set piWidth to 56
-78574>>>                Set psCaption to "Tipo"
-78575>>>                Set pbCapslock to True 
-78576>>>                Set Prompt_Button_Mode to PB_PromptOn
-78577>>>            End_Object
-78578>>>
-78578>>>            Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
-78580>>>                Entry_Item EGRESOS.DESCRIPCION
-78581>>>                Set piWidth to 234
-78582>>>                Set psCaption to "Descripcion"
-78583>>>            End_Object
-78584>>>
-78584>>>            Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
-78586>>>                Entry_Item EGRESOS.FECHA_REALIZADO
-78587>>>                Set piWidth to 83
-78588>>>                Set psCaption to "Fecha"
-78589>>>            End_Object
-78590>>>
-78590>>>            Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
-78592>>>                Entry_Item EGRESOS.ES_FIJO_SN
-78593>>>                Set piWidth to 55
-78594>>>                Set psCaption to "Es fijo?"
-78595>>>                Set pbCapslock to True 
-78596>>>                Set pbCheckbox to True
-78597>>>            End_Object
-78598>>>
-78598>>>            Object oEGRESOS_MONTO_PROYECTADO is a cDbCJGridColumn
-78600>>>                Entry_Item EGRESOS.MONTO_PROYECTADO
-78601>>>                Set piWidth to 81
-78602>>>                Set psCaption to "Proyectado"
-78603>>>            End_Object
-78604>>>
-78604>>>            Object oEGRESOS_MONTO is a cDbCJGridColumn
-78606>>>                Entry_Item EGRESOS.MONTO
-78607>>>                Set piWidth to 84
-78608>>>                Set psCaption to "Monto"
-78609>>>            End_Object
-78610>>>
-78610>>>            Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
-78612>>>                Entry_Item EGRESOS.PAGADO_SN
-78613>>>                Set piWidth to 51
-78614>>>                Set psCaption to "Pgdo?"
-78615>>>                Set pbCapslock to True 
-78616>>>                Set pbCheckbox to True
-78617>>>            End_Object
-78618>>>
-78618>>>            Object oEGRESOS_FORMA_PAGO is a cDbCJGridColumn
-78620>>>                Entry_Item EGRESOS.FORMA_PAGO
-78621>>>                Set piWidth to 65
-78622>>>                Set psCaption to "F.Pago"
-78623>>>                Set pbCapslock to True
-78624>>>
-78624>>>                Procedure OnExit
-78627>>>                    Forward Send OnExit
-78629>>>                    
-78629>>>                    If (EGRESOS.FORMA_PAGO eq 'TC') Begin
-78631>>>                        Send Popup to oPanel_TC
-78632>>>                    End
-78632>>>>
-78632>>>                End_Procedure
-78633>>>            End_Object
-78634>>>
-78634>>>            Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
-78636>>>                Entry_Item EGRESOS.LIQUIDAR
-78637>>>                Set piWidth to 69
-78638>>>                Set psCaption to "Liquidar?"
-78639>>>                Set pbCheckbox to True
-78640>>>            End_Object
+78478>>>//        //COLOREA TOTAL SEGUN RANGO
+78478>>>//        If (oTOTAL_E < oTOTAL_INGRESOS) Begin
+78478>>>//            Set Color of oTOTAL_E  to 16777088 
+78478>>>//            Set Color of Egresos   to 16641499
+78478>>>//        End
+78478>>>//        Else Begin
+78478>>>//            Set Color of oTOTAL_E to 4227327
+78478>>>//            Set Color of Egresos  to 12111868
+78478>>>//        End
+78478>>>//        //COLOREA TOTAL SEGUN RANGO
+78478>>>//        If (nValDispo > 0) Set Color of oDISPONIBLE to 16777088 
+78478>>>//        Else Set Color of oDISPONIBLE_EF to 16777088 
+78478>>>//        
+78478>>>//        If (nValorDiferencia gt 0) Set Color of oDiferencia to 16777088
+78478>>>//        Else Set color of oDiferencia to 4227327
+78478>>>//
+78478>>>//        
+78478>>>//        //DIFERENCUAL VISUAL
+78478>>>//        Local Number nValorDiferencia
+78478>>>//        Move ((nIngreso+nIngreso_EF)-nTotalTD_EF) to nValorDiferencia
+78478>>>//        Set Value of oText_TOT_INGRESOS to  ("+ Q."+(String(nIngreso+nIngreso_EF)))
+78478>>>//        Set value of oText_TOT_EGRESOS  to  ("- Q."+(String(nTotalTD_EF)))
+78478>>>//        Set Value of oDiferencia to ("= Q."+(String(nValorDiferencia)))
+78478>>>//        
+78478>>>        
+78478>>>        
+78478>>>        
+78478>>>        
+78478>>>    End_Procedure
+78479>>>    
+78479>>>    Procedure Cargar_Eg_Fijos 
+78482>>>        Local String sQ
+78482>>>        Local Handle hdbc69 hstmt69
+78482>>>        Local Integer iProx
+78482>>>        Local Date dToday
+78482>>>        Sysdate dToday
+78483>>>    
+78483>>>        Move '' to sQ
+78484>>>        Append sQ "INSERT INTO EGRESOS (NUMERO, TIPO, DESCRIPCION, FECHA_REALIZADO, ES_FIJO_SN, MONTO, MONTO_PROYECTADO, PRESUPUESTO, FORMA_PAGO) "
+78485>>>        Append sQ "SELECT (SELECT COALESCE(MAX(NUMERO), 0) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO ") + ROW_NUMBER() OVER (ORDER BY TIPO), TIPO, DESCRIPCION, " (fSQL_date(dToday)) ", 'S', 0, MONTO_PROYECTADO, " PRESUPUESTO.NUMERO ", 'TD'"
+78492>>>        Append sQ " FROM EGRESOS WHERE ES_FIJO_SN = 'S' AND PRESUPUESTO = " (PRESUPUESTO.NUMERO-1)
+78494>>>        SQLFileConnect EGRESOS to hdbc69
+78495>>>        SQLOpen hdbc69 to hstmt69
+78498>>>        SQLExecDirect hstmt69 sQ
+78501>>>        
+78501>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
+78502>>>        
+78502>>>        SQLClose hstmt69
+78505>>>        SQLDisconnect hdbc69
+78508>>>    End_Procedure
+78509>>>    
+78509>>>     Procedure Cargar_Eg_Pendientes 
+78512>>>        Local String sQ
+78512>>>        Local Handle hdbc69 hstmt69
+78512>>>        Local Integer iProx
+78512>>>        Local Date dToday
+78512>>>        Sysdate dToday
+78513>>>    
+78513>>>        Move '' to sQ
+78514>>>        Append sQ "INSERT INTO EGRESOS (NUMERO, TIPO, DESCRIPCION, FECHA_REALIZADO, ES_FIJO_SN, MONTO, MONTO_PROYECTADO, PRESUPUESTO, FORMA_PAGO) "
+78515>>>        Append sQ "SELECT (SELECT COALESCE(MAX(NUMERO), 0) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO ") + ROW_NUMBER() OVER (ORDER BY TIPO), TIPO, DESCRIPCION, " (fSQL_date(dToday)) ", 'N', 0, MONTO_PROYECTADO, " PRESUPUESTO.NUMERO ", 'TD'"
+78522>>>        Append sQ " FROM EGRESOS WHERE FORMA_PAGO = 'TC' AND PAGADO_SN = 'S' AND PRESUPUESTO = " (PRESUPUESTO.NUMERO-1)
+78524>>>        SQLFileConnect EGRESOS to hdbc69
+78525>>>        SQLOpen hdbc69 to hstmt69
+78528>>>        SQLExecDirect hstmt69 sQ
+78531>>>        
+78531>>>        Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
+78532>>>        
+78532>>>        SQLClose hstmt69
+78535>>>        SQLDisconnect hdbc69
+78538>>>    End_Procedure
+78539>>>    Set Size to 380 501
+78540>>>    Set Location to 2 2
+78541>>>    Set Label to "„gados"
+78542>>>    
+78542>>>    Object oDbContainer3d2 is a dbContainer3d
+78544>>>        Set Size to 226 460
+78545>>>        Set Location to 117 16
+78546>>>
+78546>>>        Object oEgresos is a cDbCJGrid
+78548>>>            Set Server to oEGRESOS_DD
+78549>>>            Set Size to 117 444
+78550>>>            Set Location to 6 4
+78551>>>            Set peHorizontalGridStyle to xtpGridSmallDots
+78552>>>            Set peVerticalGridStyle to xtpGridSmallDots
+78553>>>            Set piFocusCellBackColor to 16776960
+78554>>>            Set piSelectedRowBackColor to clRed
+78555>>>            Set peBorderStyle to xtpBorderNone
+78556>>>            Set piHighlightBackColor to clBlue
+78557>>>            Set pbUseAlternateRowBackgroundColor to  True
+78558>>>
+78558>>>            Object oEGRESOS_NUMERO is a cDbCJGridColumn
+78560>>>                Entry_Item EGRESOS.NUMERO
+78561>>>                Set piWidth to 34
+78562>>>                Set psCaption to "#"
+78563>>>
+78563>>>                Procedure OnEntry
+78566>>>                    Forward Send OnEntry
+78568>>>                        Local String sQ 
+78568>>>                        Local Handle hdbc69 hstmt69
+78568>>>                        Local Integer iProx iNumero
+78568>>>                        
+78568>>>                        Get Value item 0 to iNumero
+78569>>>                        
+78569>>>                        If (iNumero eq 0 and PRESUPUESTO.Recnum ne 0) Begin
+78571>>>                            Move '' to sQ
+78572>>>                            Move 0  to iProx
+78573>>>                            Append sQ " SELECT MAX(NUMERO) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO 
+78575>>>                            SQLFileConnect EGRESOS to hdbc69
+78576>>>                            SQLOpen hdbc69 to hstmt69
+78579>>>                            SQLExecDirect hstmt69 sQ
+78582>>>                            Repeat
+78582>>>>
+78582>>>                               SQLFileFetch hstmt69
+78588>>>                               If (SQLResult) Begin
+78590>>>                                  Get SQLColumnValue of hstmt69   1 to iProx
+78591>>>                               End
+78591>>>>
+78591>>>                            Until (not(SQLResult))
+78593>>>                            SQLClose hstmt69
+78596>>>                            SQLDisconnect hdbc69
+78599>>>                            
+78599>>>                            Set Value of oEGRESOS_NUMERO to (iProx+1)
+78600>>>                        End 
+78600>>>>
+78600>>>                End_Procedure
+78601>>>
+78601>>>                //Set pbEditable to False
+78601>>>            End_Object
+78602>>>
+78602>>>            Object oEGRESOS_TIPO is a cDbCJGridColumn
+78604>>>                Entry_Item EGRESOS.TIPO
+78605>>>                Set piWidth to 56
+78606>>>                Set psCaption to "Tipo"
+78607>>>                Set pbCapslock to True 
+78608>>>                Set Prompt_Button_Mode to PB_PromptOn
+78609>>>
+78609>>>                Procedure OnExit
+78612>>>                    Forward Send OnExit
+78614>>>                    Local String sTipoEgreso 
+78614>>>                    Get Value item 1 to sTipoEgreso
+78615>>>                    
+78615>>>                    Clear TIPO_GASTO
+78616>>>                    Move sTipoEgreso to TIPO_GASTO.CLAVE
+78617>>>                    Find eq TIPO_GASTO by Index.2
+78618>>>>
+78618>>>                End_Procedure
+78619>>>            End_Object
+78620>>>
+78620>>>            Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
+78622>>>                Entry_Item EGRESOS.DESCRIPCION
+78623>>>                Set piWidth to 234
+78624>>>                Set psCaption to "Descripcion"
+78625>>>
+78625>>>                Procedure OnEntry
+78628>>>                    Forward Send OnEntry
+78630>>>                    Local String sDescripcion
+78630>>>                    
+78630>>>                    Get Value item 2 to sDescripcion
+78631>>>                    If (sDescripcion eq '') Set Value of oEGRESOS_DESCRIPCION to  TIPO_GASTO.DESCRIPCION 
+78634>>>                End_Procedure
+78635>>>            End_Object
+78636>>>
+78636>>>            Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
+78638>>>                Entry_Item EGRESOS.FECHA_REALIZADO
+78639>>>                Set piWidth to 83
+78640>>>                Set psCaption to "Fecha"
 78641>>>
-78641>>>            Object oEGRESOS_LIQUIDADO is a cDbCJGridColumn
-78643>>>                Entry_Item EGRESOS.LIQUIDADO
-78644>>>                Set piWidth to 76
-78645>>>                Set psCaption to "Liquidado"
-78646>>>                Set pbCheckbox to True
-78647>>>                Set pbEditable to False
-78648>>>            End_Object
-78649>>>        End_Object
-78650>>>
-78650>>>        Object oDbGroup2 is a dbGroup
-78652>>>            Set Size to 90 440
-78653>>>            Set Location to 130 5
-78654>>>            Set Label to 'Integraci¢n de Gastos'
-78655>>>            Set Color to clScrollBar
-78656>>>
-78656>>>            Object oSubdetalle_title is a TextBox
-78658>>>                Set Auto_Size_State to False
-78659>>>                Set Size to 9 290
-78660>>>                Set Location to 9 75
-78661>>>                Set Label to "-"
-78662>>>                Set Color to 16777088
-78663>>>            End_Object
-78664>>>            Object oDbCJGrid1 is a cDbCJGrid
-78666>>>                Set Server to oSUB_EGRESOS_DD
-78667>>>                Set Size to 61 290
-78668>>>                Set Location to 20 75
-78669>>>                Set pbUseAlternateRowBackgroundColor to True
-78670>>>    
-78670>>>                Object oSUB_EGRESOS_NUMERO is a cDbCJGridColumn
-78672>>>                    Entry_Item SUB_EGRESOS.NUMERO
-78673>>>                    Set piWidth to 34
-78674>>>                    Set psCaption to "#"
-78675>>>                End_Object
-78676>>>    
-78676>>>                Object oSUB_EGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
-78678>>>                    Entry_Item SUB_EGRESOS.FECHA_REALIZADO
-78679>>>                    Set piWidth to 116
-78680>>>                    Set psCaption to "Fecha"
-78681>>>                End_Object
-78682>>>    
-78682>>>                Object oSUB_EGRESOS_DESCRIPCION is a cDbCJGridColumn
-78684>>>                    Entry_Item SUB_EGRESOS.DESCRIPCION
-78685>>>                    Set piWidth to 345
-78686>>>                    Set psCaption to "Descripcion"
-78687>>>                End_Object
-78688>>>    
-78688>>>                Object oSUB_EGRESOS_MONTO is a cDbCJGridColumn
-78690>>>                    Entry_Item SUB_EGRESOS.MONTO
-78691>>>                    Set piWidth to 85
-78692>>>                    Set psCaption to "Monto"
-78693>>>                End_Object
-78694>>>            End_Object
-78695>>>        End_Object
+78641>>>                Procedure OnEntry
+78644>>>                    Forward Send OnEntry
+78646>>>                    Local Date dSysdate dFecha
+78646>>>                    Sysdate dSysdate
+78647>>>                    
+78647>>>                    Get value of oEGRESOS_FECHA_REALIZADO to dFecha
+78648>>>                    If (dFecha eq '') Set Value of oEGRESOS_FECHA_REALIZADO to dSysdate
+78651>>>                End_Procedure
+78652>>>            End_Object
+78653>>>
+78653>>>            Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
+78655>>>                Entry_Item EGRESOS.ES_FIJO_SN
+78656>>>                Set piWidth to 55
+78657>>>                Set psCaption to "Es fijo?"
+78658>>>                Set pbCapslock to True 
+78659>>>                Set pbCheckbox to True
+78660>>>            End_Object
+78661>>>
+78661>>>            Object oEGRESOS_MONTO_PROYECTADO is a cDbCJGridColumn
+78663>>>                Entry_Item EGRESOS.MONTO_PROYECTADO
+78664>>>                Set piWidth to 81
+78665>>>                Set psCaption to "Proyectado"
+78666>>>            End_Object
+78667>>>
+78667>>>            Object oEGRESOS_MONTO is a cDbCJGridColumn
+78669>>>                Entry_Item EGRESOS.MONTO
+78670>>>                Set piWidth to 84
+78671>>>                Set psCaption to "Monto"
+78672>>>            End_Object
+78673>>>
+78673>>>            Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
+78675>>>                Entry_Item EGRESOS.PAGADO_SN
+78676>>>                Set piWidth to 51
+78677>>>                Set psCaption to "Pgdo?"
+78678>>>                Set pbCapslock to True 
+78679>>>                Set pbCheckbox to True
+78680>>>            End_Object
+78681>>>
+78681>>>            Object oEGRESOS_FORMA_PAGO is a cDbCJGridColumn
+78683>>>                Entry_Item EGRESOS.FORMA_PAGO
+78684>>>                Set piWidth to 65
+78685>>>                Set psCaption to "F.Pago"
+78686>>>                Set pbCapslock to True
+78687>>>
+78687>>>                Procedure OnExit
+78690>>>                    Forward Send OnExit
+78692>>>                    Local String sFma_pago sLiquidado
+78692>>>                    Get Value item 8 to sFma_pago
+78693>>>                    Get Value item 10 to sLiquidado
+78694>>>                    
+78694>>>//                    If (sFma_pago eq 'TC' and sLiquidado ne 'S') Begin
+78694>>>//                        Send Popup to oPanel_TC
+78694>>>//                    End
+78694>>>                End_Procedure
+78695>>>            End_Object
 78696>>>
-78696>>>        Object oPanel_TC is a dbContainer3d
-78698>>>            Set Size to 40 124
-78699>>>            Set Location to 28 268
-78700>>>            Set Color to 16776960
-78701>>>            Set Popup_State to true
-78702>>>    
-78702>>>            Object oEGRESOS_TC is a dbForm
-78704>>>                Entry_Item EGRESOS.TC
-78705>>>    
-78705>>>                Set Server to oEGRESOS_DD
-78706>>>                Set Location to 15 16
-78707>>>                Set Size to 13 51
-78708>>>                Set Label to "Tarjeta Credito"
-78709>>>                Set Label_Justification_Mode to JMode_Top
-78710>>>                Set Label_Col_Offset to 1
-78711>>>                Set Prompt_Button_Mode to PB_PromptOn
-78712>>>            End_Object
-78713>>>    
-78713>>>            Object oButton1 is a Button
-78715>>>                Set Size to 20 25
-78716>>>                Set Location to 10 80
-78717>>>                Set Label to 'ok'
-78718>>>                Set Bitmap to 'aceptar.bmp'
-78719>>>            
-78719>>>                // fires when the button is clicked
-78719>>>                Procedure OnClick
-78722>>>                    Send Msg_Exit to oPanel_TC
-78723>>>                End_Procedure
-78724>>>            
-78724>>>            End_Object
-78725>>>        End_Object
-78726>>>    End_Object
-78727>>>
-78727>>>    Object oDbContainer3d1 is a dbContainer3d
-78729>>>        Set Size to 112 458
-78730>>>        Set Location to 3 17
-78731>>>
-78731>>>        Object oDbGroup1 is a dbGroup
-78733>>>            Set Size to 45 360
-78734>>>            Set Location to 3 6
-78735>>>            Set Label to "PRESUPUESTO"
-78736>>>
-78736>>>            Object oPRESUPUESTO_NUMERO is a dbForm
-78738>>>                Entry_Item PRESUPUESTO.NUMERO
-78739>>>                Set Location to 10 83
-78740>>>                Set Size to 13 48
-78741>>>                Set Label to "N£mero:"
-78742>>>                Set Label_Col_Offset to 2
-78743>>>                Set Label_Justification_Mode to JMode_Right
-78744>>>            End_Object
-78745>>>            Object oPRESUPUESTO_FECHA_INICIO is a dbForm
-78747>>>                Entry_Item PRESUPUESTO.FECHA_INICIO
-78748>>>                Set Location to 10 267
-78749>>>                Set Size to 13 48
-78750>>>                Set Label to "Fecha Inicio:"
-78751>>>                Set Label_Col_Offset to 2
-78752>>>                Set Label_Justification_Mode to JMode_Right
-78753>>>            End_Object
-78754>>>            Object oPRESUPUESTO_FECHA_FIN is a dbForm
-78756>>>                Entry_Item PRESUPUESTO.FECHA_FIN
-78757>>>                Set Location to 25 267
-78758>>>                Set Size to 13 48
-78759>>>                Set Label to "Fecha Fin:"
-78760>>>                Set Label_Col_Offset to 2
-78761>>>                Set Label_Justification_Mode to JMode_Right
-78762>>>            End_Object
-78763>>>            Object oPRESUPUESTO_CLAVE is a dbForm
-78765>>>                Entry_Item PRESUPUESTO.CLAVE
-78766>>>                Set Location to 10 173
-78767>>>                Set Size to 13 48
-78768>>>                Set Label to "Clave:"
-78769>>>                Set Label_Justification_Mode to JMode_Right
-78770>>>                Set Label_Col_Offset to 2
-78771>>>            End_Object
-78772>>>            Object oPRESUPUESTO_VLR_QUINCENA is a dbForm
-78774>>>                Entry_Item PRESUPUESTO.VLR_QUINCENA
-78775>>>                Set Location to 25 173
-78776>>>                Set Size to 13 48
-78777>>>                Set Label to "Quincena"
-78778>>>                Set Numeric_Mask 0 to 4 2
-78779>>>                Set Label_Col_Offset to 2
-78780>>>                Set Label_Justification_Mode to JMode_Right
-78781>>>            End_Object
-78782>>>            Object oPRESUPUESTO_VLR_EFECTIVO is a dbForm
-78784>>>                Entry_Item PRESUPUESTO.VLR_EFECTIVO
-78785>>>                Set Location to 25 83
-78786>>>                Set Size to 13 48
-78787>>>                Set Label to "Efectivo"
-78788>>>                Set Numeric_Mask 0 to 4 2
-78789>>>                Set Label_Col_Offset to 2
-78790>>>                Set Label_Justification_Mode to JMode_Right
-78791>>>            End_Object
-78792>>>        End_Object
-78793>>>
-78793>>>        Object oDbContainer3d4 is a dbContainer3d
-78795>>>            Set Size to 37 360
-78796>>>            Set Location to 50 6
-78797>>>            Set Border_Style to Border_StaticEdge
-78798>>>
-78798>>>            Object oTOTAL_INGRESOS is a Form
-78800>>>                Set Size to 13 47
-78801>>>                Set Location to 4 73
-78802>>>                Set Label_Col_Offset to 2
-78803>>>                Set Label to "Total Ingresos:"
-78804>>>                Set Label_Justification_Mode to JMode_Right
-78805>>>                Set Entry_State to False
-78806>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78807>>>            
-78807>>>                // OnChange is called on every changed character
-78807>>>            //    Procedure OnChange
-78807>>>            //        String sValue
-78807>>>            //    
-78807>>>            //        Get Value to sValue
-78807>>>            //    End_Procedure
-78807>>>            
-78807>>>            End_Object
-78808>>>            Object oTOTAL_E is a Form
-78810>>>                Set Size to 13 47
-78811>>>                Set Location to 19 73
-78812>>>                Set Numeric_Mask 0 to 4 2
-78813>>>                Set Entry_State to False
-78814>>>                Set Label to "Total Egresos:"
-78815>>>                Set Label_Col_Offset to 2
-78816>>>                Set Label_Justification_Mode to JMode_Right
-78817>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78818>>>            End_Object
-78819>>>
-78819>>>            Object oDIFERENCIA2 is a Form
-78821>>>                Set Size to 13 47
-78822>>>                Set Location to 19 124
-78823>>>                Set Numeric_Mask 0 to 4 2
-78824>>>                Set Entry_State to False
-78825>>>                Set Label_Col_Offset to -1
-78826>>>                Set Label to "Diferencia:"
-78827>>>                Set Label_Justification_Mode to JMode_Top
-78828>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78829>>>                Set Enabled_State to False
-78830>>>            End_Object
-78831>>>
-78831>>>            Object oTOTAL_PGDO is a Form
-78833>>>                Set Size to 13 47
-78834>>>                Set Location to 4 231
-78835>>>                Set Numeric_Mask 0 to 4 2
-78836>>>                Set Entry_State to False
-78837>>>                Set Label to "Total Pagado:"
-78838>>>                Set Label_Col_Offset to 2
-78839>>>                Set Label_Justification_Mode to JMode_Right
-78840>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78841>>>                Set Enabled_State to False
-78842>>>            End_Object
-78843>>>            Object oPENDIENTE is a Form
-78845>>>                Set Size to 13 47
-78846>>>                Set Location to 19 231
-78847>>>                Set Numeric_Mask 0 to 4 2
-78848>>>                Set Entry_State to False
-78849>>>                Set Label to "Pendiente Pgo:"
-78850>>>                Set Label_Col_Offset to 2
-78851>>>                Set Label_Justification_Mode to JMode_Right
-78852>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78853>>>            End_Object
-78854>>>
-78854>>>            Object oDISPONIBLE is a Form
-78856>>>                Set Size to 13 47
-78857>>>                Set Location to 19 280
-78858>>>                Set Numeric_Mask 0 to 4 2
-78859>>>                Set Entry_State to False
-78860>>>                Set Label_Col_Offset to 0
-78861>>>                Set Label_Justification_Mode to JMode_Top
-78862>>>                Set Label to "Disponible:"
-78863>>>                Set Numeric_Mask item 0 to 8 2 ",*"
-78864>>>            End_Object
-78865>>>        End_Object
-78866>>>
-78866>>>        Object oVISTA is a RadioGroup
-78868>>>            Set Location to 86 6
-78869>>>            Set Size to 21 207
-78870>>>        
-78870>>>            Object oRadio1 is a Radio
-78872>>>                Set Label to "Pendientes"
-78873>>>                Set Size to 10 47
-78874>>>                Set Location to 8 5
-78875>>>            End_Object
-78876>>>        
-78876>>>            Object oRadio2 is a Radio
-78878>>>                Set Label to "Pagados"
-78879>>>                Set Size to 10 40
-78880>>>                Set Location to 8 58
-78881>>>            End_Object
-78882>>>        
-78882>>>            Object oRadio3 is a Radio
-78884>>>                Set Label to "No esperados"
-78885>>>                Set Size to 10 60
-78886>>>                Set Location to 8 102
-78887>>>            End_Object
-78888>>>        
-78888>>>            Procedure Notify_Select_State Integer iToItem Integer iFromItem
-78891>>>                Forward Send Notify_Select_State iToItem iFromItem
-78893>>>                If (iToItem eq 0) Set psFiltro to " PAGADO_SN = 'N'"
-78896>>>                If (iToItem eq 1) Set psFiltro to " PAGADO_SN = 'S'"
-78899>>>                If (iToItem eq 2) Set psFiltro to " MONTO > MONTO_PROYECTADO "
-78902>>>                If (iToItem eq 3) Set psFiltro to ""
-78905>>>                Set piOpcionVista to iToItem
-78906>>>                Send Totales
-78907>>>                Send OnConstrain of oEGRESOS_DD
-78908>>>                Send Refresh of oEgresos 2
-78909>>>            End_Procedure
-78910>>>
-78910>>>            Object oRadio4 is a Radio
-78912>>>                Set Size to 10 50
-78913>>>                Set Location to 9 169
-78914>>>                Set Label to "Todos"
-78915>>>            End_Object
-78916>>>        
-78916>>>            // If you set Current_Radio, you must set it AFTER the
-78916>>>            // radio objects have been created AND AFTER Notify_Select_State has been
-78916>>>            // created. i.e. Set in bottom-code of object at the end!!
-78916>>>        //    Set Current_Radio to 0
-78916>>>        
-78916>>>        End_Object
-78917>>>
-78917>>>        Object oTIPO_GASTO is a RadioGroup
-78919>>>            Set Location to 86 217
-78920>>>            Set Size to 21 149
-78921>>>        
-78921>>>            Procedure Notify_Select_State Integer iToItem Integer iFromItem
-78924>>>                Forward Send Notify_Select_State iToItem iFromItem
-78926>>>                If (iToItem eq 0) Set psOpcionPago to 'TODOS'
-78929>>>                If (iToItem eq 1) Set psOpcionPago to 'TD'
-78932>>>                If (iToItem eq 2) Set psOpcionPago to 'TC'
-78935>>>                If (iToItem eq 3) Set psOpcionPago to 'EF'
-78938>>>                Send Totales
-78939>>>                Send OnConstrain of oEGRESOS_DD
-78940>>>                Send Refresh of oEgresos 2
-78941>>>                // for augmentation
-78941>>>            End_Procedure
-78942>>>
-78942>>>            Object oRadio1 is a Radio
-78944>>>                Set Label to "Todos"
-78945>>>                Set Size to 10 32
-78946>>>                Set Location to 8 10
-78947>>>            End_Object
-78948>>>            Object oRadio2 is a Radio
-78950>>>                Set Label to "TD"
-78951>>>                Set Size to 10 23
-78952>>>                Set Location to 8 50
-78953>>>            End_Object
-78954>>>            Object oRadio3 is a Radio
-78956>>>                Set Label to "TC"
-78957>>>                Set Size to 10 23
-78958>>>                Set Location to 8 83
-78959>>>            End_Object
-78960>>>            Object oRadio4 is a Radio
-78962>>>                Set Size to 10 23
-78963>>>                Set Location to 9 116
-78964>>>                Set Label to "EF"
-78965>>>            End_Object
-78966>>>        
-78966>>>            // If you set Current_Radio, you must set it AFTER the
-78966>>>            // radio objects have been created AND AFTER Notify_Select_State has been
-78966>>>            // created. i.e. Set in bottom-code of object at the end!!
-78966>>>        //    Set Current_Radio to 0
-78966>>>        
-78966>>>        End_Object
-78967>>>
-78967>>>        Object oCargaFijos is a Button
-78969>>>            Set Size to 23 30
-78970>>>            Set Location to 8 374
-78971>>>            Set Label to 'CargaFijos'
-78972>>>            Set Bitmap to 'upload.bmp'
-78973>>>        
-78973>>>            // fires when the button is clicked
-78973>>>            Procedure OnClick
-78976>>>                Send Cargar_Eg_Fijos
-78977>>>            End_Procedure
-78978>>>        
-78978>>>        End_Object
-78979>>>        Object oTextBox1 is a TextBox
-78981>>>            Set Size to 9 40
-78982>>>            Set Location to 33 371
-78983>>>            Set Label to 'Cargar Fijos'
-78984>>>        End_Object
-78985>>>        Object oCargaPendientes is a Button
-78987>>>            Set Size to 23 30
-78988>>>            Set Location to 50 375
-78989>>>            Set Label to 'Carga Pendientes'
-78990>>>            Set Bitmap to 'getmoney.bmp'
-78991>>>        
-78991>>>            // fires when the button is clicked
-78991>>>            Procedure OnClick
-78994>>>                Local Integer iConfirm
-78994>>>                Get Confirm 'Se cargar n los Movimientos a cr‚dito pagados de la quincena anterior, desea continuar?' 'Atencion!' to iConfirm
-78995>>>                
-78995>>>                If (iConfirm eq 1) Procedure_Return
-78998>>>                
-78998>>>                Send Cargar_Eg_Pendientes
-78999>>>            End_Procedure
-79000>>>        
-79000>>>        End_Object
-79001>>>        Object oTextBox2 is a TextBox
-79003>>>            Set Auto_Size_State to False
-79004>>>            Set Size to 23 38
-79005>>>            Set Location to 76 376
-79006>>>            Set Label to 'Cargar Gastos Pendientes'
-79007>>>            Set Justification_Mode to JMode_Left
-79008>>>        End_Object
-79009>>>
-79009>>>        Object oLiquidar is a Button
-79011>>>            Set Size to 23 30
-79012>>>            Set Location to 8 417
-79013>>>            Set Label to 'CargaFijos'
-79014>>>            Set Bitmap to 'Tarjeta_mini.bmp'
-79015>>>        
-79015>>>            // fires when the button is clicked
-79015>>>            Procedure OnClick
-79018>>>                Send Liquidar
-79019>>>            End_Procedure
-79020>>>        
-79020>>>        End_Object
-79021>>>
-79021>>>        Object oTextBox1 is a TextBox
-79023>>>            Set Size to 9 40
-79024>>>            Set Location to 33 419
-79025>>>            Set Label to "Liquidar"
-79026>>>        End_Object
-79027>>>    End_Object
-79028>>>
-79028>>>Cd_End_Object
-79030>>>>
-79030>        Use TIPO_GASTO.vw
-Including file: TIPO_GASTO.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\TIPO_GASTO.vw)
-79030>>>Use Windows.pkg
-79030>>>Use DFClient.pkg
-79030>>>Use cTIPO_GASTO_DataDictionary.dd
-79030>>>Use cDbCJGrid.pkg
-79030>>>Use cdbCJGridColumn.pkg
-79030>>>
-79030>>>Deferred_View Activate_TIPO_GASTO for ;Object TIPO_GASTO is a dbView
-79055>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
-79057>>>    End_Object
-79058>>>
-79058>>>    Set Main_DD to oTIPO_GASTO_DD
-79059>>>    Set Server to oTIPO_GASTO_DD
-79060>>>
-79060>>>    Set Border_Style to Border_Thick
-79061>>>    Set Size to 142 300
-79062>>>    Set Location to 2 2
-79063>>>    Set Label to "Catalogo Tipos de Gastos"
-79064>>>
-79064>>>    Object oDbGroup1 is a dbGroup
-79066>>>        Set Size to 130 277
-79067>>>        Set Location to 6 9
-79068>>>        Set Label to 'Cat logo Tipo de Gastos'
-79069>>>
-79069>>>        Object oDbCJGrid1 is a cDbCJGrid
-79071>>>            Set Size to 100 267
-79072>>>            Set Location to 12 5
-79073>>>
-79073>>>            Object oTIPO_GASTO_NUMERO is a cDbCJGridColumn
-79075>>>                Entry_Item TIPO_GASTO.NUMERO
-79076>>>                Set piWidth to 70
-79077>>>                Set psCaption to "#"
-79078>>>            End_Object
-79079>>>
-79079>>>            Object oTIPO_GASTO_CLAVE is a cDbCJGridColumn
-79081>>>                Entry_Item TIPO_GASTO.CLAVE
-79082>>>                Set piWidth to 77
-79083>>>                Set psCaption to "Clave"
-79084>>>                Set pbCapslock to True
-79085>>>            End_Object
-79086>>>
-79086>>>            Object oTIPO_GASTO_DESCRIPCION is a cDbCJGridColumn
-79088>>>                Entry_Item TIPO_GASTO.DESCRIPCION
-79089>>>                Set piWidth to 387
-79090>>>                Set psCaption to "Descripcion"
-79091>>>            End_Object
-79092>>>        End_Object
-79093>>>    End_Object
-79094>>>
-79094>>>Cd_End_Object
-79096>>>>
-79096>        Use GASTOS_01.rv
-Including file: GASTOS_01.rv    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\GASTOS_01.rv)
-79096>>>Use Windows.pkg
-79096>>>Use DFRptVw.pkg
-79096>>>Use DFRpt.pkg
-79096>>>Use File_Dlg.Pkg
-79096>>>Use PRESUPUESTO.sl
+78696>>>            Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
+78698>>>                Entry_Item EGRESOS.LIQUIDAR
+78699>>>                Set piWidth to 69
+78700>>>                Set psCaption to "Liquidar?"
+78701>>>                Set pbCheckbox to True
+78702>>>            End_Object
+78703>>>
+78703>>>            Object oEGRESOS_LIQUIDADO is a cDbCJGridColumn
+78705>>>                Entry_Item EGRESOS.LIQUIDADO
+78706>>>                Set piWidth to 76
+78707>>>                Set psCaption to "Liquidado"
+78708>>>                Set pbCheckbox to True
+78709>>>                Set pbEditable to False
+78710>>>            End_Object
+78711>>>        End_Object
+78712>>>
+78712>>>        Object oDbGroup2 is a dbGroup
+78714>>>            Set Size to 90 440
+78715>>>            Set Location to 130 5
+78716>>>            Set Label to 'Integraci¢n de Gastos'
+78717>>>            Set Color to clScrollBar
+78718>>>
+78718>>>            Object oSubdetalle_title is a TextBox
+78720>>>                Set Auto_Size_State to False
+78721>>>                Set Size to 9 290
+78722>>>                Set Location to 9 75
+78723>>>                Set Label to "-"
+78724>>>                Set Color to 16777088
+78725>>>            End_Object
+78726>>>            Object oDbCJGrid1 is a cDbCJGrid
+78728>>>                Set Server to oSUB_EGRESOS_DD
+78729>>>                Set Size to 61 290
+78730>>>                Set Location to 20 75
+78731>>>                Set pbUseAlternateRowBackgroundColor to True
+78732>>>    
+78732>>>                Object oSUB_EGRESOS_NUMERO is a cDbCJGridColumn
+78734>>>                    Entry_Item SUB_EGRESOS.NUMERO
+78735>>>                    Set piWidth to 34
+78736>>>                    Set psCaption to "#"
+78737>>>                End_Object
+78738>>>    
+78738>>>                Object oSUB_EGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
+78740>>>                    Entry_Item SUB_EGRESOS.FECHA_REALIZADO
+78741>>>                    Set piWidth to 116
+78742>>>                    Set psCaption to "Fecha"
+78743>>>                End_Object
+78744>>>    
+78744>>>                Object oSUB_EGRESOS_DESCRIPCION is a cDbCJGridColumn
+78746>>>                    Entry_Item SUB_EGRESOS.DESCRIPCION
+78747>>>                    Set piWidth to 345
+78748>>>                    Set psCaption to "Descripcion"
+78749>>>
+78749>>>                    Procedure OnEntry
+78752>>>                        Forward Send OnEntry
+78754>>>                        Local String sDescripcion
+78754>>>                        Local Date dSysdate
+78754>>>                        Sysdate dSysdate
+78755>>>                        Get Value of oSUB_EGRESOS_DESCRIPCION to sDescripcion
+78756>>>                        If (sDescripcion eq '') Set Value of  oSUB_EGRESOS_DESCRIPCION to (TIPO_GASTO.DESCRIPCION+ String(dSysdate))
+78759>>>                    End_Procedure
+78760>>>                End_Object
+78761>>>    
+78761>>>                Object oSUB_EGRESOS_MONTO is a cDbCJGridColumn
+78763>>>                    Entry_Item SUB_EGRESOS.MONTO
+78764>>>                    Set piWidth to 85
+78765>>>                    Set psCaption to "Monto"
+78766>>>                End_Object
+78767>>>            End_Object
+78768>>>        End_Object
+78769>>>
+78769>>>        Object oPanel_TC is a dbContainer3d
+78771>>>            Set Size to 40 124
+78772>>>            Set Location to 28 268
+78773>>>            Set Color to 16776960
+78774>>>            Set Popup_State to true
+78775>>>    
+78775>>>            Object oEGRESOS_TC is a dbForm
+78777>>>                Entry_Item EGRESOS.TC
+78778>>>    
+78778>>>                Set Server to oEGRESOS_DD
+78779>>>                Set Location to 15 16
+78780>>>                Set Size to 13 51
+78781>>>                Set Label to "Tarjeta Credito"
+78782>>>                Set Label_Justification_Mode to JMode_Top
+78783>>>                Set Label_Col_Offset to 1
+78784>>>                Set Prompt_Button_Mode to PB_PromptOn
+78785>>>            End_Object
+78786>>>    
+78786>>>            Object oButton1 is a Button
+78788>>>                Set Size to 20 25
+78789>>>                Set Location to 10 80
+78790>>>                Set Label to 'ok'
+78791>>>                Set Bitmap to 'aceptar.bmp'
+78792>>>            
+78792>>>                // fires when the button is clicked
+78792>>>                Procedure OnClick
+78795>>>                    Send Msg_Exit to oPanel_TC
+78796>>>                End_Procedure
+78797>>>            
+78797>>>            End_Object
+78798>>>        End_Object
+78799>>>    End_Object
+78800>>>
+78800>>>    Object oDbContainer3d1 is a dbContainer3d
+78802>>>        Set Size to 112 458
+78803>>>        Set Location to 3 17
+78804>>>
+78804>>>        Object oDbGroup1 is a dbGroup
+78806>>>            Set Size to 45 360
+78807>>>            Set Location to 3 6
+78808>>>            Set Label to "PRESUPUESTO"
+78809>>>
+78809>>>            Object oPRESUPUESTO_NUMERO is a dbForm
+78811>>>                Use PRESUPUESTO.sl
 Including file: PRESUPUESTO.sl    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\PRESUPUESTO.sl)
-79096>>>>>Use Windows.pkg
-79096>>>>>Use DFClient.pkg
-79096>>>>>Use cDbCJGridPromptList.pkg
-79096>>>>>Use cPRESUPUESTO_DataDictionary.dd
-79096>>>>>Use cdbCJGridColumn.pkg
-79096>>>>>
-79096>>>>>Object PRESUPUESTO_SL is a dbModalPanel
-79098>>>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
-79100>>>>>    End_Object
-79101>>>>>
-79101>>>>>    Set Main_DD to oPRESUPUESTO_DD
-79102>>>>>    Set Server to oPRESUPUESTO_DD
-79103>>>>>
-79103>>>>>    Set Size to 94 197
-79104>>>>>    Set Location     to 4 5
-79105>>>>>    Set Border_Style to Border_Thick
-79106>>>>>    Set Label to "PRESUPUESTO"
-79107>>>>>
-79107>>>>>    Object oSelList is a dbList
-79109>>>>>        Set Main_File to PRESUPUESTO.File_Number
-79110>>>>>        Set Size to 65 185
-79111>>>>>        Set Location to 6 7
-79112>>>>>    
-79112>>>>>        Begin_Row
-79115>>>>>            Entry_Item PRESUPUESTO.Numero
-79116>>>>>            Entry_Item PRESUPUESTO.CLAVE
-79117>>>>>            Entry_Item PRESUPUESTO.FECHA_INICIO
-79118>>>>>            Entry_Item PRESUPUESTO.FECHA_FIN
-79119>>>>>        End_Row
-79124>>>>>    
-79124>>>>>        Set Form_Width 0 to 19
-79125>>>>>        Set Header_Label  item 0 to "#"
-79126>>>>>        
-79126>>>>>        Set Form_Width 1 to 43
-79127>>>>>        Set Header_Label  item 1 to "Clave"
-79128>>>>>        
-79128>>>>>        Set Form_Width 2 to 58
-79129>>>>>        Set Header_Label  item 2 to "Fecha Inicio"
-79130>>>>>        
-79130>>>>>        Set Form_Width 3 to 56
-79131>>>>>        Set Header_Label  item 3 to "Fecha Fin"
-79132>>>>>        
-79132>>>>>         Set Export_Column to  0
-79133>>>>>         Set Initial_Column to 0
-79134>>>>>        
-79134>>>>>    End_Object    // oSelList
-79135>>>>>
-79135>>>>>    Object oOK_bn is a Button
-79137>>>>>        Set Label     to "&OK"
-79138>>>>>        Set Location to 76 19
-79139>>>>>        Set peAnchors to anBottomRight
-79140>>>>>
-79140>>>>>        Procedure OnClick
-79143>>>>>            Send Ok of oSelList
-79144>>>>>        End_Procedure
-79145>>>>>
-79145>>>>>    End_Object
-79146>>>>>
-79146>>>>>    Object oCancel_bn is a Button
-79148>>>>>        Set Label     to "&Cancel"
-79149>>>>>        Set Location to 76 73
-79150>>>>>        Set peAnchors to anBottomRight
-79151>>>>>
-79151>>>>>        Procedure OnClick
-79154>>>>>            Send Cancel of oSelList
-79155>>>>>        End_Procedure
-79156>>>>>
-79156>>>>>    End_Object
-79157>>>>>
-79157>>>>>    Object oSearch_bn is a Button
-79159>>>>>        Set Label     to "&Search..."
-79160>>>>>        Set Location to 76 127
-79161>>>>>        Set peAnchors to anBottomRight
-79162>>>>>
-79162>>>>>        Procedure OnClick
-79165>>>>>            Send Search of oSelList
-79166>>>>>        End_Procedure
-79167>>>>>
-79167>>>>>    End_Object
-79168>>>>>
-79168>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
-79169>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
-79170>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
-79171>>>>>
-79171>>>>>End_Object
-79172>>>>>
-79172>>>
-79172>>>Activate_View Activate_GASTOS_01 for GASTOS_01
-79182>>>>
-79182>>>Object GASTOS_01 is a ReportView
-79184>>>    Set Location to 6 6
-79185>>>    Set Size to 56 181
-79186>>>    Set Label to "Grafica de Gastos"
-79187>>>
-79187>>>    Object oOkButton is a Button
-79189>>>        Set Label to "&OK"
-79190>>>        Set Location to 35 38
-79191>>>        Set Default_State to TRUE
-79192>>>
-79192>>>        Procedure OnClick
-79195>>>            Send Comenzar_reporte
-79196>>>        End_Procedure
-79197>>>
-79197>>>    End_Object
-79198>>>
-79198>>>    Object oCancelButton is a Button
-79200>>>        Set Label to "&Cancel"
-79201>>>        Set Location to 35 93
-79202>>>
-79202>>>        Procedure OnClick
-79205>>>            Send Request_Cancel
-79206>>>        End_Procedure
+78811>>>>>Use Windows.pkg
+78811>>>>>Use DFClient.pkg
+78811>>>>>Use cDbCJGridPromptList.pkg
+78811>>>>>Use cPRESUPUESTO_DataDictionary.dd
+78811>>>>>Use cdbCJGridColumn.pkg
+78811>>>>>
+78811>>>>>Object PRESUPUESTO_SL is a dbModalPanel
+78813>>>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
+78815>>>>>    End_Object
+78816>>>>>
+78816>>>>>    Set Main_DD to oPRESUPUESTO_DD
+78817>>>>>    Set Server to oPRESUPUESTO_DD
+78818>>>>>
+78818>>>>>    Set Size to 94 197
+78819>>>>>    Set Location     to 4 5
+78820>>>>>    Set Border_Style to Border_Thick
+78821>>>>>    Set Label to "PRESUPUESTO"
+78822>>>>>
+78822>>>>>    Object oSelList is a dbList
+78824>>>>>        Set Main_File to PRESUPUESTO.File_Number
+78825>>>>>        Set Size to 65 185
+78826>>>>>        Set Location to 6 7
+78827>>>>>    
+78827>>>>>        Begin_Row
+78830>>>>>            Entry_Item PRESUPUESTO.Numero
+78831>>>>>            Entry_Item PRESUPUESTO.CLAVE
+78832>>>>>            Entry_Item PRESUPUESTO.FECHA_INICIO
+78833>>>>>            Entry_Item PRESUPUESTO.FECHA_FIN
+78834>>>>>        End_Row
+78839>>>>>    
+78839>>>>>        Set Form_Width 0 to 19
+78840>>>>>        Set Header_Label  item 0 to "#"
+78841>>>>>        
+78841>>>>>        Set Form_Width 1 to 43
+78842>>>>>        Set Header_Label  item 1 to "Clave"
+78843>>>>>        
+78843>>>>>        Set Form_Width 2 to 58
+78844>>>>>        Set Header_Label  item 2 to "Fecha Inicio"
+78845>>>>>        
+78845>>>>>        Set Form_Width 3 to 56
+78846>>>>>        Set Header_Label  item 3 to "Fecha Fin"
+78847>>>>>        
+78847>>>>>         Set Export_Column to  0
+78848>>>>>         Set Initial_Column to 0
+78849>>>>>        
+78849>>>>>    End_Object    // oSelList
+78850>>>>>
+78850>>>>>    Object oOK_bn is a Button
+78852>>>>>        Set Label     to "&OK"
+78853>>>>>        Set Location to 76 19
+78854>>>>>        Set peAnchors to anBottomRight
+78855>>>>>
+78855>>>>>        Procedure OnClick
+78858>>>>>            Send Ok of oSelList
+78859>>>>>        End_Procedure
+78860>>>>>
+78860>>>>>    End_Object
+78861>>>>>
+78861>>>>>    Object oCancel_bn is a Button
+78863>>>>>        Set Label     to "&Cancel"
+78864>>>>>        Set Location to 76 73
+78865>>>>>        Set peAnchors to anBottomRight
+78866>>>>>
+78866>>>>>        Procedure OnClick
+78869>>>>>            Send Cancel of oSelList
+78870>>>>>        End_Procedure
+78871>>>>>
+78871>>>>>    End_Object
+78872>>>>>
+78872>>>>>    Object oSearch_bn is a Button
+78874>>>>>        Set Label     to "&Search..."
+78875>>>>>        Set Location to 76 127
+78876>>>>>        Set peAnchors to anBottomRight
+78877>>>>>
+78877>>>>>        Procedure OnClick
+78880>>>>>            Send Search of oSelList
+78881>>>>>        End_Procedure
+78882>>>>>
+78882>>>>>    End_Object
+78883>>>>>
+78883>>>>>    On_Key Key_Alt+Key_O Send KeyAction of oOk_bn
+78884>>>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancel_bn
+78885>>>>>    On_Key Key_Alt+Key_S Send KeyAction of oSearch_bn
+78886>>>>>
+78886>>>>>End_Object
+78887>>>>>
+78887>>>                Entry_Item PRESUPUESTO.NUMERO
+78888>>>                Set Location to 10 83
+78889>>>                Set Size to 13 48
+78890>>>                Set Label to "N£mero:"
+78891>>>                Set Label_Col_Offset to 2
+78892>>>                Set Label_Justification_Mode to JMode_Right
+78893>>>                Set Prompt_Button_Mode to PB_PromptOn
+78894>>>                Set Prompt_Object to PRESUPUESTO_SL
+78895>>>
+78895>>>                Procedure Exiting Handle hoDestination Returns Integer
+78898>>>                    Integer iRetVal
+78898>>>                    Forward Get msg_Exiting hoDestination to iRetVal
+78900>>>                    Local Integer iNumero_presupuesto
+78900>>>                    Get Value of oPRESUPUESTO_NUMERO to iNumero_presupuesto
+78901>>>                    
+78901>>>                    If (iNumero_presupuesto ne 0 or iNumero_presupuesto ne '') Begin
+78903>>>                        Clear PRESUPUESTO
+78904>>>                        Move iNumero_presupuesto to PRESUPUESTO.NUMERO
+78905>>>                        Find eq PRESUPUESTO by Index.1
+78906>>>>
+78906>>>                        If [not Found] Begin
+78908>>>                            Send Stop_Box 'Numero presupuesto Inv lido...' "!"
+78909>>>                            Move 1 to iRetVal
+78910>>>                        End
+78910>>>>
+78910>>>                        Else Begin
+78911>>>                            Send Request_Find of oPRESUPUESTO_DD GE PRESUPUESTO.File_Number 1 
+78912>>>                        End
+78912>>>>
+78912>>>                    End
+78912>>>>
+78912>>>                    
+78912>>>                    
+78912>>>                    Procedure_Return iRetVal
+78913>>>                End_Procedure
+78914>>>            End_Object
+78915>>>
+78915>>>            Object oPRESUPUESTO_CLAVE is a dbForm
+78917>>>                Entry_Item PRESUPUESTO.CLAVE
+78918>>>                Set Location to 10 173
+78919>>>                Set Size to 13 48
+78920>>>                Set Label to "Clave:"
+78921>>>                Set Label_Justification_Mode to JMode_Right
+78922>>>                Set Label_Col_Offset to 2
+78923>>>            End_Object
+78924>>>
+78924>>>            Object oPRESUPUESTO_VLR_EFECTIVO is a dbForm
+78926>>>                Entry_Item PRESUPUESTO.VLR_EFECTIVO
+78927>>>                Set Location to 25 83
+78928>>>                Set Size to 13 48
+78929>>>                Set Label to "Efectivo"
+78930>>>                Set Numeric_Mask 0 to 4 2
+78931>>>                Set Label_Col_Offset to 2
+78932>>>                Set Label_Justification_Mode to JMode_Right
+78933>>>            End_Object
+78934>>>
+78934>>>            Object oPRESUPUESTO_VLR_QUINCENA is a dbForm
+78936>>>                Entry_Item PRESUPUESTO.VLR_QUINCENA
+78937>>>                Set Location to 25 173
+78938>>>                Set Size to 13 48
+78939>>>                Set Label to "Quincena"
+78940>>>                Set Numeric_Mask 0 to 4 2
+78941>>>                Set Label_Col_Offset to 2
+78942>>>                Set Label_Justification_Mode to JMode_Right
+78943>>>            End_Object
+78944>>>            Object oPRESUPUESTO_FECHA_INICIO is a dbForm
+78946>>>                Entry_Item PRESUPUESTO.FECHA_INICIO
+78947>>>                Set Location to 10 267
+78948>>>                Set Size to 13 48
+78949>>>                Set Label to "Fecha Inicio:"
+78950>>>                Set Label_Col_Offset to 2
+78951>>>                Set Label_Justification_Mode to JMode_Right
+78952>>>            End_Object
+78953>>>            Object oPRESUPUESTO_FECHA_FIN is a dbForm
+78955>>>                Entry_Item PRESUPUESTO.FECHA_FIN
+78956>>>                Set Location to 25 267
+78957>>>                Set Size to 13 48
+78958>>>                Set Label to "Fecha Fin:"
+78959>>>                Set Label_Col_Offset to 2
+78960>>>                Set Label_Justification_Mode to JMode_Right
+78961>>>
+78961>>>                Procedure Exiting Handle hoDestination Returns Integer
+78964>>>                    Integer iRetVal
+78964>>>                    Forward Get msg_Exiting hoDestination to iRetVal
+78966>>>                    Send Request_Save of oPRESUPUESTO_DD
+78967>>>                    Procedure_Return iRetVal
+78968>>>                End_Procedure
+78969>>>            End_Object
+78970>>>        End_Object
+78971>>>
+78971>>>        Object oDbContainer3d4 is a dbContainer3d
+78973>>>            Set Size to 37 360
+78974>>>            Set Location to 50 6
+78975>>>            Set Border_Style to Border_StaticEdge
+78976>>>            Set Enabled_State to False
+78977>>>
+78977>>>            Object oTOTAL_INGRESOS is a Form
+78979>>>                Set Size to 13 47
+78980>>>                Set Location to 4 73
+78981>>>                Set Label_Col_Offset to 2
+78982>>>                Set Label to "Total Ingresos:"
+78983>>>                Set Label_Justification_Mode to JMode_Right
+78984>>>                Set Entry_State to False
+78985>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+78986>>>            
+78986>>>                // OnChange is called on every changed character
+78986>>>            //    Procedure OnChange
+78986>>>            //        String sValue
+78986>>>            //    
+78986>>>            //        Get Value to sValue
+78986>>>            //    End_Procedure
+78986>>>            
+78986>>>            End_Object
+78987>>>            Object oTOTAL_E is a Form
+78989>>>                Set Size to 13 47
+78990>>>                Set Location to 19 73
+78991>>>                Set Numeric_Mask 0 to 4 2
+78992>>>                Set Entry_State to False
+78993>>>                Set Label to "Total Egresos:"
+78994>>>                Set Label_Col_Offset to 2
+78995>>>                Set Label_Justification_Mode to JMode_Right
+78996>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+78997>>>            End_Object
+78998>>>
+78998>>>            Object oDIFERENCIA2 is a Form
+79000>>>                Set Size to 13 47
+79001>>>                Set Location to 19 124
+79002>>>                Set Numeric_Mask 0 to 4 2
+79003>>>                Set Entry_State to False
+79004>>>                Set Label_Col_Offset to -1
+79005>>>                Set Label to "Diferencia:"
+79006>>>                Set Label_Justification_Mode to JMode_Top
+79007>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+79008>>>                Set Enabled_State to False
+79009>>>            End_Object
+79010>>>
+79010>>>            Object oTOTAL_PGDO is a Form
+79012>>>                Set Size to 13 47
+79013>>>                Set Location to 4 231
+79014>>>                Set Numeric_Mask 0 to 4 2
+79015>>>                Set Entry_State to False
+79016>>>                Set Label to "Total Pagado:"
+79017>>>                Set Label_Col_Offset to 2
+79018>>>                Set Label_Justification_Mode to JMode_Right
+79019>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+79020>>>                Set Enabled_State to False
+79021>>>            End_Object
+79022>>>            Object oPENDIENTE is a Form
+79024>>>                Set Size to 13 47
+79025>>>                Set Location to 19 231
+79026>>>                Set Numeric_Mask 0 to 4 2
+79027>>>                Set Entry_State to False
+79028>>>                Set Label to "Pendiente Pgo:"
+79029>>>                Set Label_Col_Offset to 2
+79030>>>                Set Label_Justification_Mode to JMode_Right
+79031>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+79032>>>            End_Object
+79033>>>
+79033>>>            Object oDISPONIBLE is a Form
+79035>>>                Set Size to 13 47
+79036>>>                Set Location to 19 280
+79037>>>                Set Numeric_Mask 0 to 4 2
+79038>>>                Set Entry_State to False
+79039>>>                Set Label_Col_Offset to 0
+79040>>>                Set Label_Justification_Mode to JMode_Top
+79041>>>                Set Label to "Disponible:"
+79042>>>                Set Numeric_Mask item 0 to 8 2 ",*"
+79043>>>            End_Object
+79044>>>        End_Object
+79045>>>
+79045>>>        Object oVISTA is a RadioGroup
+79047>>>            Set Location to 86 6
+79048>>>            Set Size to 21 207
+79049>>>        
+79049>>>            Object oRadio1 is a Radio
+79051>>>                Set Label to "Pendientes"
+79052>>>                Set Size to 10 47
+79053>>>                Set Location to 8 5
+79054>>>            End_Object
+79055>>>        
+79055>>>            Object oRadio2 is a Radio
+79057>>>                Set Label to "Pagados"
+79058>>>                Set Size to 10 40
+79059>>>                Set Location to 8 58
+79060>>>            End_Object
+79061>>>        
+79061>>>            Object oRadio3 is a Radio
+79063>>>                Set Label to "No esperados"
+79064>>>                Set Size to 10 60
+79065>>>                Set Location to 8 102
+79066>>>            End_Object
+79067>>>        
+79067>>>            Procedure Notify_Select_State Integer iToItem Integer iFromItem
+79070>>>                Forward Send Notify_Select_State iToItem iFromItem
+79072>>>                If (iToItem eq 0) Set psFiltro to " PAGADO_SN = 'N'"
+79075>>>                If (iToItem eq 1) Set psFiltro to " PAGADO_SN = 'S'"
+79078>>>                If (iToItem eq 2) Set psFiltro to " MONTO > MONTO_PROYECTADO "
+79081>>>                If (iToItem eq 3) Set psFiltro to ""
+79084>>>                Set piOpcionVista to iToItem
+79085>>>                Send Totales
+79086>>>                Send OnConstrain of oEGRESOS_DD
+79087>>>                Send Refresh of oEgresos 2
+79088>>>            End_Procedure
+79089>>>
+79089>>>            Object oRadio4 is a Radio
+79091>>>                Set Size to 10 50
+79092>>>                Set Location to 9 169
+79093>>>                Set Label to "Todos"
+79094>>>            End_Object
+79095>>>        
+79095>>>            // If you set Current_Radio, you must set it AFTER the
+79095>>>            // radio objects have been created AND AFTER Notify_Select_State has been
+79095>>>            // created. i.e. Set in bottom-code of object at the end!!
+79095>>>        //    Set Current_Radio to 0
+79095>>>        
+79095>>>        End_Object
+79096>>>
+79096>>>        Object oTIPO_GASTO is a RadioGroup
+79098>>>            Set Location to 86 217
+79099>>>            Set Size to 21 149
+79100>>>        
+79100>>>            Procedure Notify_Select_State Integer iToItem Integer iFromItem
+79103>>>                Forward Send Notify_Select_State iToItem iFromItem
+79105>>>                If (iToItem eq 0) Set psOpcionPago to 'TODOS'
+79108>>>                If (iToItem eq 1) Set psOpcionPago to 'TD'
+79111>>>                If (iToItem eq 2) Set psOpcionPago to 'TC'
+79114>>>                If (iToItem eq 3) Set psOpcionPago to 'EF'
+79117>>>                Send Totales
+79118>>>                Send OnConstrain of oEGRESOS_DD
+79119>>>                Send Refresh of oEgresos 2
+79120>>>                // for augmentation
+79120>>>            End_Procedure
+79121>>>
+79121>>>            Object oRadio1 is a Radio
+79123>>>                Set Label to "Todos"
+79124>>>                Set Size to 10 32
+79125>>>                Set Location to 8 10
+79126>>>            End_Object
+79127>>>            Object oRadio2 is a Radio
+79129>>>                Set Label to "TD"
+79130>>>                Set Size to 10 23
+79131>>>                Set Location to 8 50
+79132>>>            End_Object
+79133>>>            Object oRadio3 is a Radio
+79135>>>                Set Label to "TC"
+79136>>>                Set Size to 10 23
+79137>>>                Set Location to 8 83
+79138>>>            End_Object
+79139>>>            Object oRadio4 is a Radio
+79141>>>                Set Size to 10 23
+79142>>>                Set Location to 9 116
+79143>>>                Set Label to "EF"
+79144>>>            End_Object
+79145>>>        
+79145>>>            // If you set Current_Radio, you must set it AFTER the
+79145>>>            // radio objects have been created AND AFTER Notify_Select_State has been
+79145>>>            // created. i.e. Set in bottom-code of object at the end!!
+79145>>>        //    Set Current_Radio to 0
+79145>>>        
+79145>>>        End_Object
+79146>>>
+79146>>>        Object oCargaFijos is a Button
+79148>>>            Set Size to 23 30
+79149>>>            Set Location to 8 374
+79150>>>            Set Label to 'CargaFijos'
+79151>>>            Set Bitmap to 'upload.bmp'
+79152>>>        
+79152>>>            // fires when the button is clicked
+79152>>>            Procedure OnClick
+79155>>>                Send Cargar_Eg_Fijos
+79156>>>            End_Procedure
+79157>>>        
+79157>>>        End_Object
+79158>>>        Object oTextBox1 is a TextBox
+79160>>>            Set Size to 9 40
+79161>>>            Set Location to 33 371
+79162>>>            Set Label to 'Cargar Fijos'
+79163>>>        End_Object
+79164>>>        Object oCargaPendientes is a Button
+79166>>>            Set Size to 23 30
+79167>>>            Set Location to 50 375
+79168>>>            Set Label to 'Carga Pendientes'
+79169>>>            Set Bitmap to 'getmoney.bmp'
+79170>>>        
+79170>>>            // fires when the button is clicked
+79170>>>            Procedure OnClick
+79173>>>                Local Integer iConfirm
+79173>>>                Get Confirm 'Se cargar n los Movimientos a cr‚dito pagados de la quincena anterior, desea continuar?' 'Atencion!' to iConfirm
+79174>>>                
+79174>>>                If (iConfirm eq 1) Procedure_Return
+79177>>>                
+79177>>>                Send Cargar_Eg_Pendientes
+79178>>>            End_Procedure
+79179>>>        
+79179>>>        End_Object
+79180>>>        Object oTextBox2 is a TextBox
+79182>>>            Set Auto_Size_State to False
+79183>>>            Set Size to 23 38
+79184>>>            Set Location to 76 376
+79185>>>            Set Label to 'Cargar Gastos Pendientes'
+79186>>>            Set Justification_Mode to JMode_Left
+79187>>>        End_Object
+79188>>>
+79188>>>        Object oLiquidar is a Button
+79190>>>            Set Size to 23 30
+79191>>>            Set Location to 8 417
+79192>>>            Set Label to 'CargaFijos'
+79193>>>            Set Bitmap to 'Tarjeta_mini.bmp'
+79194>>>        
+79194>>>            // fires when the button is clicked
+79194>>>            Procedure OnClick
+79197>>>                Send Liquidar
+79198>>>            End_Procedure
+79199>>>        
+79199>>>        End_Object
+79200>>>
+79200>>>        Object oTextBox1 is a TextBox
+79202>>>            Set Size to 9 40
+79203>>>            Set Location to 33 419
+79204>>>            Set Label to "Liquidar"
+79205>>>        End_Object
+79206>>>    End_Object
 79207>>>
-79207>>>    End_Object
-79208>>>
-79208>>>    Object oSaveAsDialog is a SaveAsDialog
-79210>>>    End_Object
-79211>>>
-79211>>>     Procedure Comenzar_reporte
-79214>>>        Set Report_name of (S4006(Current_Object)) to "Report2.rpt"
-79215>>>        Send Run_Report to (S4006(Current_Object))
-79216>>>    End_Procedure
-79217>>>    
-79217>>>    Object S4006 is a WinQLReport
-79219>>>        Set Output_Destination to WQL_PRINT_TO_WINDOW
-79220>>>    
-79220>>>        Procedure OnInitializeReport
-79223>>>            Forward Send OninitializeReport
-79225>>>            Local Number nPresupuesto
-79225>>>            Local String @Seleccion
-79225>>>            
-79225>>>            Get Value of oPRESUPUESTO to nPresupuesto
-79226>>>            Move '' to @Seleccion
-79227>>>            
-79227>>>            Clear PRESUPUESTO
-79228>>>            Move nPresupuesto to PRESUPUESTO.NUMERO
-79229>>>            Find eq PRESUPUESTO by Index.1
-79230>>>>
-79230>>>            If [not Found] Begin
-79232>>>                Send Stop_Box 'Ingrese un presupuesto valido' '!'
-79233>>>                Procedure_Return
-79234>>>            End
-79234>>>>
-79234>>>            
-79234>>>            If (nPresupuesto ne 0)   Begin
-79236>>>                Append @Seleccion '  {PRESUPUESTO.NUMERO} = ' PRESUPUESTO.NUMERO
-79238>>>            End
-79238>>>>
-79238>>>            
-79238>>>            Set SelectionFormula      to @Seleccion
-79239>>>        End_Procedure
-79240>>>        
-79240>>>    End_Object
-79241>>>
-79241>>>    Object oPRESUPUESTO is a Form
-79243>>>        Set Size to 13 69
-79244>>>        Set Location to 10 72
-79245>>>        Set Label_Col_Offset to 2
-79246>>>        Set Label to "Presupuesto:"
-79247>>>        Set Label_Justification_Mode to JMode_Right
-79248>>>        Set Prompt_Button_Mode to PB_PromptOn
-79249>>>        Set Prompt_Object to PRESUPUESTO_SL
-79250>>>    
-79250>>>        // OnChange is called on every changed character
-79250>>>    //    Procedure OnChange
-79250>>>    //        String sValue
-79250>>>    //    
-79250>>>    //        Get Value to sValue
-79250>>>    //    End_Procedure
-79250>>>    
-79250>>>    End_Object
-79251>>>    
-79251>>>    On_Key Key_Alt+Key_O Send KeyAction of oOkButton
-79252>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancelButton
-79253>>>
-79253>>>End_Object
-79254>        Use GASTOS_02.rv
-Including file: GASTOS_02.rv    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\GASTOS_02.rv)
-79254>>>Use Windows.pkg
-79254>>>Use DFRptVw.pkg
-79254>>>Use DFRpt.pkg
-79254>>>Use File_Dlg.Pkg
-79254>>>Use PRESUPUESTO.sl
-79254>>>
-79254>>>Activate_View Activate_GASTOS_02 for GASTOS_02
-79264>>>>
-79264>>>Object GASTOS_02 is a ReportView
-79266>>>    Set Location to 6 6
-79267>>>    Set Size to 59 181
-79268>>>    Set Label to "Listado de Gastos"
-79269>>>
-79269>>>    Object oOkButton is a Button
-79271>>>        Set Label to "&OK"
-79272>>>        Set Location to 34 42
-79273>>>        Set Default_State to TRUE
-79274>>>
-79274>>>        Procedure OnClick
-79277>>>            Send Comenzar_reporte
-79278>>>        End_Procedure
-79279>>>
-79279>>>    End_Object
-79280>>>
-79280>>>    Object oCancelButton is a Button
-79282>>>        Set Label to "&Cancel"
-79283>>>        Set Location to 34 97
-79284>>>
-79284>>>        Procedure OnClick
-79287>>>            Send Request_Cancel
-79288>>>        End_Procedure
-79289>>>
-79289>>>    End_Object
+79207>>>Cd_End_Object
+79209>>>>
+79209>        Use TIPO_GASTO.vw
+Including file: TIPO_GASTO.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\TIPO_GASTO.vw)
+79209>>>Use Windows.pkg
+79209>>>Use DFClient.pkg
+79209>>>Use cTIPO_GASTO_DataDictionary.dd
+79209>>>Use cDbCJGrid.pkg
+79209>>>Use cdbCJGridColumn.pkg
+79209>>>
+79209>>>Deferred_View Activate_TIPO_GASTO for ;Object TIPO_GASTO is a dbView
+79234>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
+79236>>>    End_Object
+79237>>>
+79237>>>    Set Main_DD to oTIPO_GASTO_DD
+79238>>>    Set Server to oTIPO_GASTO_DD
+79239>>>
+79239>>>    Set Border_Style to Border_Thick
+79240>>>    Set Size to 142 300
+79241>>>    Set Location to 2 2
+79242>>>    Set Label to "Catalogo Tipos de Gastos"
+79243>>>
+79243>>>    Object oDbGroup1 is a dbGroup
+79245>>>        Set Size to 130 277
+79246>>>        Set Location to 6 9
+79247>>>        Set Label to 'Cat logo Tipo de Gastos'
+79248>>>
+79248>>>        Object oDbCJGrid1 is a cDbCJGrid
+79250>>>            Set Size to 100 267
+79251>>>            Set Location to 12 5
+79252>>>
+79252>>>            Object oTIPO_GASTO_NUMERO is a cDbCJGridColumn
+79254>>>                Entry_Item TIPO_GASTO.NUMERO
+79255>>>                Set piWidth to 70
+79256>>>                Set psCaption to "#"
+79257>>>            End_Object
+79258>>>
+79258>>>            Object oTIPO_GASTO_CLAVE is a cDbCJGridColumn
+79260>>>                Entry_Item TIPO_GASTO.CLAVE
+79261>>>                Set piWidth to 77
+79262>>>                Set psCaption to "Clave"
+79263>>>                Set pbCapslock to True
+79264>>>            End_Object
+79265>>>
+79265>>>            Object oTIPO_GASTO_DESCRIPCION is a cDbCJGridColumn
+79267>>>                Entry_Item TIPO_GASTO.DESCRIPCION
+79268>>>                Set piWidth to 387
+79269>>>                Set psCaption to "Descripcion"
+79270>>>            End_Object
+79271>>>        End_Object
+79272>>>    End_Object
+79273>>>
+79273>>>Cd_End_Object
+79275>>>>
+79275>        Use GASTOS_01.rv
+Including file: GASTOS_01.rv    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\GASTOS_01.rv)
+79275>>>Use Windows.pkg
+79275>>>Use DFRptVw.pkg
+79275>>>Use DFRpt.pkg
+79275>>>Use File_Dlg.Pkg
+79275>>>Use PRESUPUESTO.sl
+79275>>>
+79275>>>Activate_View Activate_GASTOS_01 for GASTOS_01
+79285>>>>
+79285>>>Object GASTOS_01 is a ReportView
+79287>>>    Set Location to 6 6
+79288>>>    Set Size to 56 181
+79289>>>    Set Label to "Grafica de Gastos"
 79290>>>
-79290>>>    Object oSaveAsDialog is a SaveAsDialog
-79292>>>    End_Object
-79293>>>
-79293>>>     Procedure Comenzar_reporte
-79296>>>        Set Report_name of (S4006(Current_Object)) to "Report1.rpt"
-79297>>>        Send Run_Report to (S4006(Current_Object))
-79298>>>        
-79298>>>    End_Procedure
-79299>>>    
-79299>>>    Object S4006 is a WinQLReport
-79301>>>        Set Output_Destination to WQL_PRINT_TO_WINDOW
-79302>>>    
-79302>>>        Procedure OnInitializeReport
-79305>>>            Forward Send OninitializeReport
-79307>>>            Local Number nPresupuesto
-79307>>>            Local String @Seleccion
-79307>>>            
-79307>>>            Get Value of oPRESUPUESTO to nPresupuesto
-79308>>>            Move '' to @Seleccion
-79309>>>            
-79309>>>            Clear PRESUPUESTO
-79310>>>            Move nPresupuesto to PRESUPUESTO.NUMERO
-79311>>>            Find eq PRESUPUESTO by Index.1
-79312>>>>
-79312>>>            If [not Found] Begin
-79314>>>                Send Stop_Box 'Ingrese un presupuesto valido' '!'
-79315>>>                Procedure_Return
-79316>>>            End
-79316>>>>
-79316>>>            
-79316>>>            If (nPresupuesto ne 0)   Begin
-79318>>>                Append @Seleccion '  {PRESUPUESTO.NUMERO} = ' PRESUPUESTO.NUMERO
-79320>>>            End
-79320>>>>
-79320>>>            
-79320>>>            Set SelectionFormula      to @Seleccion
-79321>>>        End_Procedure
-79322>>>        
-79322>>>    End_Object
-79323>>>
-79323>>>    Object oPRESUPUESTO is a Form
-79325>>>        Set Size to 13 69
-79326>>>        Set Location to 10 67
-79327>>>        Set Label_Col_Offset to 2
-79328>>>        Set Label to "Presupuesto:"
-79329>>>        Set Label_Justification_Mode to JMode_Right
-79330>>>        Set Prompt_Button_Mode to PB_PromptOn
-79331>>>        Set Prompt_Object to PRESUPUESTO_SL
-79332>>>    
-79332>>>        // OnChange is called on every changed character
-79332>>>    //    Procedure OnChange
-79332>>>    //        String sValue
-79332>>>    //    
-79332>>>    //        Get Value to sValue
-79332>>>    //    End_Procedure
-79332>>>    
-79332>>>    End_Object
-79333>>>    
-79333>>>    On_Key Key_Alt+Key_O Send KeyAction of oOkButton
-79334>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancelButton
-79335>>>
-79335>>>End_Object
-79336>        Use AHORRO.vw
-Including file: AHORRO.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\AHORRO.vw)
-79336>>>Use Windows.pkg
-79336>>>Use DFClient.pkg
-79336>>>Use cAHORRO_H_DataDictionary.dd
-Including file: cAHORRO_H_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cAHORRO_H_DataDictionary.dd)
-79336>>>>>Use DataDict.pkg
-79336>>>>>
-79336>>>>>Open AHORRO_H
-Including file: AHORRO_H.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\AHORRO_H.fd)
-79338>>>>>Open AHORRO_D
-Including file: AHORRO_D.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\AHORRO_D.fd)
-79340>>>>>
-79340>>>>>Class cAHORRO_H_DataDictionary is a DataDictionary
-79341>>>>>    
-79341>>>>>    Procedure Construct_Object
-79343>>>>>        Forward Send Construct_Object
-79345>>>>>        Set Main_File to AHORRO_H.File_Number
-79346>>>>>
-79346>>>>>        Set Add_Client_File to AHORRO_D.File_Number
-79347>>>>>
-79347>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-79348>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-79349>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-79350>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-79351>>>>>
-79351>>>>>        Set Field_Class_Name Field AHORRO_H.PRIORIDAD to "Combo"
-79352>>>>>
-79352>>>>>    End_Procedure
-79353>>>>>
-79353>>>>>    Procedure Field_Defaults
-79355>>>>>        Forward Send Field_Defaults
-79357>>>>>    End_Procedure
-79358>>>>>
-79358>>>>>End_Class
-79359>>>Use cAHORRO_D_DataDictionary.dd
-Including file: cAHORRO_D_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cAHORRO_D_DataDictionary.dd)
-79359>>>>>Use DataDict.pkg
-79359>>>>>
-79359>>>>>Open AHORRO_D
-79361>>>>>Open AHORRO_H
-79363>>>>>
-79363>>>>>Class cAHORRO_D_DataDictionary is a DataDictionary
-79364>>>>>    
-79364>>>>>    Procedure Construct_Object
-79366>>>>>        Forward Send Construct_Object
-79368>>>>>        Set Main_File to AHORRO_D.File_Number
-79369>>>>>
-79369>>>>>        Set Add_Server_File to AHORRO_H.File_Number
-79370>>>>>
-79370>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-79371>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-79372>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-79373>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-79374>>>>>
-79374>>>>>        Set Field_Class_Name Field AHORRO_D.PAGADO_SN to "Checkbox"
-79375>>>>>        Set Field_Checkbox_Values Field AHORRO_D.PAGADO_SN to "S" "N"
-79376>>>>>
-79376>>>>>    End_Procedure
-79377>>>>>
-79377>>>>>    Procedure Field_Defaults
-79379>>>>>        Forward Send Field_Defaults
-79381>>>>>        Set Field_Changed_Value Field AHORRO_D.PAGADO_SN to "N"
-79382>>>>>    End_Procedure
-79383>>>>>
-79383>>>>>End_Class
-79384>>>Use DFEntry.pkg
-79384>>>Use cDbCJGrid.pkg
-79384>>>Use cdbCJGridColumn.pkg
-79384>>>Use DfCentry.pkg
-79384>>>
-79384>>>Deferred_View Activate_AHORRO for ;Object AHORRO is a dbView
-79409>>>    Object oAHORRO_H_DD is a cAHORRO_H_DataDictionary
-79411>>>        Procedure Relate_Main_File 
-79414>>>            Forward Send Relate_Main_File
-79416>>>                Set Shadow_State of oAHORRO_H_DESCRIPCION         to True
-79417>>>                Set Shadow_State of oAHORRO_H_FECHA_INICIO        to True
-79418>>>                Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to True 
-79419>>>                Set Shadow_State of oAHORRO_H_PRIORIDAD           to True
-79420>>>            Send Totales
-79421>>>        End_Procedure
-79422>>>    End_Object
-79423>>>    
-79423>>>    Procedure Request_Clear
-79426>>>        Forward Send Request_Clear
-79428>>>        Set Shadow_State of oAHORRO_H_DESCRIPCION         to False
-79429>>>        Set Shadow_State of oAHORRO_H_FECHA_INICIO        to False
-79430>>>        Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to False 
-79431>>>        Set Shadow_State of oAHORRO_H_PRIORIDAD           to False
-79432>>>        Set Value of oTOTAL         to ''
-79433>>>        Set Value of oTOTAL_PROYECT to ''
-79434>>>    End_Procedure
+79290>>>    Object oOkButton is a Button
+79292>>>        Set Label to "&OK"
+79293>>>        Set Location to 35 38
+79294>>>        Set Default_State to TRUE
+79295>>>
+79295>>>        Procedure OnClick
+79298>>>            Send Comenzar_reporte
+79299>>>        End_Procedure
+79300>>>
+79300>>>    End_Object
+79301>>>
+79301>>>    Object oCancelButton is a Button
+79303>>>        Set Label to "&Cancel"
+79304>>>        Set Location to 35 93
+79305>>>
+79305>>>        Procedure OnClick
+79308>>>            Send Request_Cancel
+79309>>>        End_Procedure
+79310>>>
+79310>>>    End_Object
+79311>>>
+79311>>>    Object oSaveAsDialog is a SaveAsDialog
+79313>>>    End_Object
+79314>>>
+79314>>>     Procedure Comenzar_reporte
+79317>>>        Set Report_name of (S4006(Current_Object)) to "Report2.rpt"
+79318>>>        Send Run_Report to (S4006(Current_Object))
+79319>>>    End_Procedure
+79320>>>    
+79320>>>    Object S4006 is a WinQLReport
+79322>>>        Set Output_Destination to WQL_PRINT_TO_WINDOW
+79323>>>    
+79323>>>        Procedure OnInitializeReport
+79326>>>            Forward Send OninitializeReport
+79328>>>            Local Number nPresupuesto
+79328>>>            Local String @Seleccion
+79328>>>            
+79328>>>            Get Value of oPRESUPUESTO to nPresupuesto
+79329>>>            Move '' to @Seleccion
+79330>>>            
+79330>>>            Clear PRESUPUESTO
+79331>>>            Move nPresupuesto to PRESUPUESTO.NUMERO
+79332>>>            Find eq PRESUPUESTO by Index.1
+79333>>>>
+79333>>>            If [not Found] Begin
+79335>>>                Send Stop_Box 'Ingrese un presupuesto valido' '!'
+79336>>>                Procedure_Return
+79337>>>            End
+79337>>>>
+79337>>>            
+79337>>>            If (nPresupuesto ne 0)   Begin
+79339>>>                Append @Seleccion '  {PRESUPUESTO.NUMERO} = ' PRESUPUESTO.NUMERO
+79341>>>            End
+79341>>>>
+79341>>>            
+79341>>>            Set SelectionFormula      to @Seleccion
+79342>>>        End_Procedure
+79343>>>        
+79343>>>    End_Object
+79344>>>
+79344>>>    Object oPRESUPUESTO is a Form
+79346>>>        Set Size to 13 69
+79347>>>        Set Location to 10 72
+79348>>>        Set Label_Col_Offset to 2
+79349>>>        Set Label to "Presupuesto:"
+79350>>>        Set Label_Justification_Mode to JMode_Right
+79351>>>        Set Prompt_Button_Mode to PB_PromptOn
+79352>>>        Set Prompt_Object to PRESUPUESTO_SL
+79353>>>    
+79353>>>        // OnChange is called on every changed character
+79353>>>    //    Procedure OnChange
+79353>>>    //        String sValue
+79353>>>    //    
+79353>>>    //        Get Value to sValue
+79353>>>    //    End_Procedure
+79353>>>    
+79353>>>    End_Object
+79354>>>    
+79354>>>    On_Key Key_Alt+Key_O Send KeyAction of oOkButton
+79355>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancelButton
+79356>>>
+79356>>>End_Object
+79357>        Use GASTOS_02.rv
+Including file: GASTOS_02.rv    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\GASTOS_02.rv)
+79357>>>Use Windows.pkg
+79357>>>Use DFRptVw.pkg
+79357>>>Use DFRpt.pkg
+79357>>>Use File_Dlg.Pkg
+79357>>>Use PRESUPUESTO.sl
+79357>>>
+79357>>>Activate_View Activate_GASTOS_02 for GASTOS_02
+79367>>>>
+79367>>>Object GASTOS_02 is a ReportView
+79369>>>    Set Location to 6 6
+79370>>>    Set Size to 59 181
+79371>>>    Set Label to "Listado de Gastos"
+79372>>>
+79372>>>    Object oOkButton is a Button
+79374>>>        Set Label to "&OK"
+79375>>>        Set Location to 34 42
+79376>>>        Set Default_State to TRUE
+79377>>>
+79377>>>        Procedure OnClick
+79380>>>            Send Comenzar_reporte
+79381>>>        End_Procedure
+79382>>>
+79382>>>    End_Object
+79383>>>
+79383>>>    Object oCancelButton is a Button
+79385>>>        Set Label to "&Cancel"
+79386>>>        Set Location to 34 97
+79387>>>
+79387>>>        Procedure OnClick
+79390>>>            Send Request_Cancel
+79391>>>        End_Procedure
+79392>>>
+79392>>>    End_Object
+79393>>>
+79393>>>    Object oSaveAsDialog is a SaveAsDialog
+79395>>>    End_Object
+79396>>>
+79396>>>     Procedure Comenzar_reporte
+79399>>>        Set Report_name of (S4006(Current_Object)) to "Report1.rpt"
+79400>>>        Send Run_Report to (S4006(Current_Object))
+79401>>>        
+79401>>>    End_Procedure
+79402>>>    
+79402>>>    Object S4006 is a WinQLReport
+79404>>>        Set Output_Destination to WQL_PRINT_TO_WINDOW
+79405>>>    
+79405>>>        Procedure OnInitializeReport
+79408>>>            Forward Send OninitializeReport
+79410>>>            Local Number nPresupuesto
+79410>>>            Local String @Seleccion
+79410>>>            
+79410>>>            Get Value of oPRESUPUESTO to nPresupuesto
+79411>>>            Move '' to @Seleccion
+79412>>>            
+79412>>>            Clear PRESUPUESTO
+79413>>>            Move nPresupuesto to PRESUPUESTO.NUMERO
+79414>>>            Find eq PRESUPUESTO by Index.1
+79415>>>>
+79415>>>            If [not Found] Begin
+79417>>>                Send Stop_Box 'Ingrese un presupuesto valido' '!'
+79418>>>                Procedure_Return
+79419>>>            End
+79419>>>>
+79419>>>            
+79419>>>            If (nPresupuesto ne 0)   Begin
+79421>>>                Append @Seleccion '  {PRESUPUESTO.NUMERO} = ' PRESUPUESTO.NUMERO
+79423>>>            End
+79423>>>>
+79423>>>            
+79423>>>            Set SelectionFormula      to @Seleccion
+79424>>>        End_Procedure
+79425>>>        
+79425>>>    End_Object
+79426>>>
+79426>>>    Object oPRESUPUESTO is a Form
+79428>>>        Set Size to 13 69
+79429>>>        Set Location to 10 67
+79430>>>        Set Label_Col_Offset to 2
+79431>>>        Set Label to "Presupuesto:"
+79432>>>        Set Label_Justification_Mode to JMode_Right
+79433>>>        Set Prompt_Button_Mode to PB_PromptOn
+79434>>>        Set Prompt_Object to PRESUPUESTO_SL
 79435>>>    
-79435>>>    Procedure Request_Clear_All
-79438>>>        Forward Send Request_Clear_All
-79440>>>        Set Shadow_State of oAHORRO_H_DESCRIPCION         to False
-79441>>>        Set Shadow_State of oAHORRO_H_FECHA_INICIO        to False
-79442>>>        Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to False 
-79443>>>        Set Shadow_State of oAHORRO_H_PRIORIDAD           to False
-79444>>>        Set Value of oTOTAL         to ''
-79445>>>        Set Value of oTOTAL_PROYECT to ''
-79446>>>    End_Procedure
-79447>>>
-79447>>>    Object oAHORRO_D_DD is a cAHORRO_D_DataDictionary
-79449>>>        Set Constrain_file to AHORRO_H.File_number
-79450>>>        Set DDO_Server to oAHORRO_H_DD
-79451>>>        
-79451>>>        
-79451>>>        Procedure request_save
-79454>>>            Forward Send Request_Save
-79456>>>            Move AHORRO_H.NUMERO to AHORRO_D.AHORRO_H
-79457>>>        End_Procedure
-79458>>>    End_Object
-79459>>>    
-79459>>>    //FUNCIONES Y PROCEDIMIENTOS
-79459>>>    Procedure Totales 
-79462>>>        Local String sQ
-79462>>>        Local Handle hdbc69 hstmt69
-79462>>>        Local Number nMonto nMontoEsp nValPgdo nValDispo
-79462>>>    
-79462>>>        Move '' to sQ
-79463>>>        Move 0  to nMonto
-79464>>>        Move 0  to nMontoEsp
-79465>>>        Append sQ " SELECT SUM(MONTO) FROM AHORRO_D WHERE PAGADO_SN = 'S' AND AHORRO_H =  " AHORRO_H.NUMERO 
-79467>>>        SQLFileConnect EGRESOS to hdbc69
-79468>>>        SQLOpen hdbc69 to hstmt69
-79471>>>        SQLExecDirect hstmt69 sQ
-79474>>>        Repeat
-79474>>>>
-79474>>>           SQLFileFetch hstmt69
-79480>>>           If (SQLResult) Begin
-79482>>>              Get SQLColumnValue of hstmt69   1 to nMonto
-79483>>>           End
-79483>>>>
-79483>>>        Until (not(SQLResult))
-79485>>>        SQLClose hstmt69
-79488>>>        SQLDisconnect hdbc69
-79491>>>        
-79491>>>        Move '' to sQ
-79492>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM AHORRO_D WHERE AHORRO_H =  " AHORRO_H.NUMERO //SUM(MONTO_PROYECTADO)
-79494>>>        SQLFileConnect EGRESOS to hdbc69
-79495>>>        SQLOpen hdbc69 to hstmt69
-79498>>>        SQLExecDirect hstmt69 sQ
-79501>>>        Repeat
-79501>>>>
-79501>>>           SQLFileFetch hstmt69
-79507>>>           If (SQLResult) Begin
-79509>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
-79510>>>           End
-79510>>>>
-79510>>>        Until (not(SQLResult))
-79512>>>        SQLClose hstmt69
-79515>>>        SQLDisconnect hdbc69
-79518>>>        
-79518>>>        Set Value of oTOTAL         to nMonto
-79519>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
-79520>>>        
-79520>>>    End_Procedure
-79521>>>
-79521>>>    Set Main_DD to oAHORRO_H_DD
-79522>>>    Set Server to oAHORRO_H_DD
-79523>>>
-79523>>>    Set Border_Style to Border_Thick
-79524>>>    Set Size to 266 336
-79525>>>    Set Location to 2 2
-79526>>>    Set Label to "Control De Ahorros..."
-79527>>>    Set Color to 9824917
-79528>>>
-79528>>>    Object oDbContainer3d1 is a dbContainer3d
-79530>>>        Set Size to 108 315
-79531>>>        Set Location to 3 11
-79532>>>
-79532>>>        Object oDbGroup1 is a dbGroup
-79534>>>            Set Size to 101 238
-79535>>>            Set Location to 1 5
-79536>>>            Set Label to 'Ahorro'
-79537>>>
-79537>>>            Object oAHORRO_H_NUMERO is a dbForm
-79539>>>                Entry_Item AHORRO_H.NUMERO
-79540>>>                Set Location to 17 67
-79541>>>                Set Size to 13 66
-79542>>>                Set Label to "NUMERO:"
-79543>>>            End_Object
-79544>>>
-79544>>>            Object oAHORRO_H_DESCRIPCION is a dbForm
-79546>>>                Entry_Item AHORRO_H.DESCRIPCION
-79547>>>                Set Location to 32 67
-79548>>>                Set Size to 13 139
-79549>>>                Set Label to "DESCRIPCION:"
-79550>>>            End_Object
-79551>>>
-79551>>>            Object oAHORRO_H_FECHA_INICIO is a dbForm
-79553>>>                Entry_Item AHORRO_H.FECHA_INICIO
-79554>>>                Set Location to 47 67
-79555>>>                Set Size to 13 66
-79556>>>                Set Label to "FECHA INICIO:"
-79557>>>            End_Object
-79558>>>
-79558>>>            Object oAHORRO_H_FECHA_OBJETIVO is a dbForm
-79560>>>                Entry_Item AHORRO_H.FECHA_OBJETIVO
-79561>>>                Set Location to 62 67
-79562>>>                Set Size to 13 66
-79563>>>                Set Label to "FECHA OBJETIVO:"
-79564>>>            End_Object
-79565>>>
-79565>>>            Object oAHORRO_H_PRIORIDAD is a dbComboForm
-79567>>>                Entry_Item AHORRO_H.PRIORIDAD
-79568>>>                Set Location to 79 67
-79569>>>                Set Size to 13 66
-79570>>>                Set Label to "PRIORIDAD:"
-79571>>>                
-79571>>>                Procedure Combo_Fill_List
-79574>>>                    Send Combo_Add_Item "ALTA"
-79575>>>                    Send Combo_Add_Item "MEDIA"
-79576>>>                    Send Combo_Add_Item "BAJA"
-79577>>>                End_Procedure
-79578>>>
-79578>>>            End_Object
-79579>>>        End_Object
-79580>>>
-79580>>>        Object oTOTAL is a dbForm
-79582>>>            Set Size to 13 57
-79583>>>            Set Location to 87 249
-79584>>>            Set Entry_State to False
-79585>>>            Set Color to 4643654
-79586>>>            Set Numeric_Mask 0 to 4 2
-79587>>>        End_Object
-79588>>>
-79588>>>        Object oTOTAL_PROYECT is a dbForm
-79590>>>            Set Size to 13 57
-79591>>>            Set Location to 64 249
-79592>>>            Set Entry_State to False
-79593>>>            Set Numeric_Mask 0 to 4 2
-79594>>>        End_Object
-79595>>>
-79595>>>        Object oTextBox1 is a TextBox
-79597>>>            Set Size to 9 40
-79598>>>            Set Location to 78 250
-79599>>>            Set Label to 'Total Actual'
-79600>>>        End_Object
-79601>>>
-79601>>>        Object oTextBox1 is a TextBox
-79603>>>            Set Size to 9 57
-79604>>>            Set Location to 55 250
-79605>>>            Set Label to 'Total Proyectado'
-79606>>>        End_Object
-79607>>>    End_Object
-79608>>>
-79608>>>    Object oDbContainer3d2 is a dbContainer3d
-79610>>>        Set Size to 148 314
-79611>>>        Set Location to 114 12
-79612>>>
-79612>>>        Object oDbCJGrid1 is a cDbCJGrid
-79614>>>            Set Server to oAHORRO_D_DD
-79615>>>            Set Size to 139 301
-79616>>>            Set Location to 3 4
-79617>>>
-79617>>>            Object oAHORRO_D_NUMERO is a cDbCJGridColumn
-79619>>>                Entry_Item AHORRO_D.NUMERO
-79620>>>                Set piWidth to 45
-79621>>>                Set psCaption to "#"
-79622>>>            End_Object
-79623>>>
-79623>>>            Object oAHORRO_D_DESCRIPCION is a cDbCJGridColumn
-79625>>>                Entry_Item AHORRO_D.DESCRIPCION
-79626>>>                Set piWidth to 239
-79627>>>                Set psCaption to "Descripcion"
-79628>>>            End_Object
-79629>>>
-79629>>>            Object oAHORRO_D_MONTO is a cDbCJGridColumn
-79631>>>                Entry_Item AHORRO_D.MONTO
-79632>>>                Set piWidth to 79
-79633>>>                Set psCaption to "Monto"
-79634>>>            End_Object
+79435>>>        // OnChange is called on every changed character
+79435>>>    //    Procedure OnChange
+79435>>>    //        String sValue
+79435>>>    //    
+79435>>>    //        Get Value to sValue
+79435>>>    //    End_Procedure
+79435>>>    
+79435>>>    End_Object
+79436>>>    
+79436>>>    On_Key Key_Alt+Key_O Send KeyAction of oOkButton
+79437>>>    On_Key Key_Alt+Key_C Send KeyAction of oCancelButton
+79438>>>
+79438>>>End_Object
+79439>        Use AHORRO.vw
+Including file: AHORRO.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\AHORRO.vw)
+79439>>>Use Windows.pkg
+79439>>>Use DFClient.pkg
+79439>>>Use cAHORRO_H_DataDictionary.dd
+Including file: cAHORRO_H_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cAHORRO_H_DataDictionary.dd)
+79439>>>>>Use DataDict.pkg
+79439>>>>>
+79439>>>>>Open AHORRO_H
+Including file: AHORRO_H.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\AHORRO_H.fd)
+79441>>>>>Open AHORRO_D
+Including file: AHORRO_D.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\AHORRO_D.fd)
+79443>>>>>
+79443>>>>>Class cAHORRO_H_DataDictionary is a DataDictionary
+79444>>>>>    
+79444>>>>>    Procedure Construct_Object
+79446>>>>>        Forward Send Construct_Object
+79448>>>>>        Set Main_File to AHORRO_H.File_Number
+79449>>>>>
+79449>>>>>        Set Add_Client_File to AHORRO_D.File_Number
+79450>>>>>
+79450>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+79451>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+79452>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+79453>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+79454>>>>>
+79454>>>>>        Set Field_Class_Name Field AHORRO_H.PRIORIDAD to "Combo"
+79455>>>>>
+79455>>>>>    End_Procedure
+79456>>>>>
+79456>>>>>    Procedure Field_Defaults
+79458>>>>>        Forward Send Field_Defaults
+79460>>>>>    End_Procedure
+79461>>>>>
+79461>>>>>End_Class
+79462>>>Use cAHORRO_D_DataDictionary.dd
+Including file: cAHORRO_D_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cAHORRO_D_DataDictionary.dd)
+79462>>>>>Use DataDict.pkg
+79462>>>>>
+79462>>>>>Open AHORRO_D
+79464>>>>>Open AHORRO_H
+79466>>>>>
+79466>>>>>Class cAHORRO_D_DataDictionary is a DataDictionary
+79467>>>>>    
+79467>>>>>    Procedure Construct_Object
+79469>>>>>        Forward Send Construct_Object
+79471>>>>>        Set Main_File to AHORRO_D.File_Number
+79472>>>>>
+79472>>>>>        Set Add_Server_File to AHORRO_H.File_Number
+79473>>>>>
+79473>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+79474>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+79475>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+79476>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+79477>>>>>
+79477>>>>>        Set Field_Class_Name Field AHORRO_D.PAGADO_SN to "Checkbox"
+79478>>>>>        Set Field_Checkbox_Values Field AHORRO_D.PAGADO_SN to "S" "N"
+79479>>>>>
+79479>>>>>    End_Procedure
+79480>>>>>
+79480>>>>>    Procedure Field_Defaults
+79482>>>>>        Forward Send Field_Defaults
+79484>>>>>        Set Field_Changed_Value Field AHORRO_D.PAGADO_SN to "N"
+79485>>>>>    End_Procedure
+79486>>>>>
+79486>>>>>End_Class
+79487>>>Use DFEntry.pkg
+79487>>>Use cDbCJGrid.pkg
+79487>>>Use cdbCJGridColumn.pkg
+79487>>>Use DfCentry.pkg
+79487>>>
+79487>>>Deferred_View Activate_AHORRO for ;Object AHORRO is a dbView
+79512>>>    Object oAHORRO_H_DD is a cAHORRO_H_DataDictionary
+79514>>>        Procedure Relate_Main_File 
+79517>>>            Forward Send Relate_Main_File
+79519>>>                Set Shadow_State of oAHORRO_H_DESCRIPCION         to True
+79520>>>                Set Shadow_State of oAHORRO_H_FECHA_INICIO        to True
+79521>>>                Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to True 
+79522>>>                Set Shadow_State of oAHORRO_H_PRIORIDAD           to True
+79523>>>            Send Totales
+79524>>>        End_Procedure
+79525>>>    End_Object
+79526>>>    
+79526>>>    Procedure Request_Clear
+79529>>>        Forward Send Request_Clear
+79531>>>        Set Shadow_State of oAHORRO_H_DESCRIPCION         to False
+79532>>>        Set Shadow_State of oAHORRO_H_FECHA_INICIO        to False
+79533>>>        Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to False 
+79534>>>        Set Shadow_State of oAHORRO_H_PRIORIDAD           to False
+79535>>>        Set Value of oTOTAL         to ''
+79536>>>        Set Value of oTOTAL_PROYECT to ''
+79537>>>    End_Procedure
+79538>>>    
+79538>>>    Procedure Request_Clear_All
+79541>>>        Forward Send Request_Clear_All
+79543>>>        Set Shadow_State of oAHORRO_H_DESCRIPCION         to False
+79544>>>        Set Shadow_State of oAHORRO_H_FECHA_INICIO        to False
+79545>>>        Set Shadow_State of oAHORRO_H_FECHA_OBJETIVO      to False 
+79546>>>        Set Shadow_State of oAHORRO_H_PRIORIDAD           to False
+79547>>>        Set Value of oTOTAL         to ''
+79548>>>        Set Value of oTOTAL_PROYECT to ''
+79549>>>    End_Procedure
+79550>>>
+79550>>>    Object oAHORRO_D_DD is a cAHORRO_D_DataDictionary
+79552>>>        Set Constrain_file to AHORRO_H.File_number
+79553>>>        Set DDO_Server to oAHORRO_H_DD
+79554>>>        
+79554>>>        
+79554>>>        Procedure request_save
+79557>>>            Forward Send Request_Save
+79559>>>            Move AHORRO_H.NUMERO to AHORRO_D.AHORRO_H
+79560>>>        End_Procedure
+79561>>>    End_Object
+79562>>>    
+79562>>>    //FUNCIONES Y PROCEDIMIENTOS
+79562>>>    Procedure Totales 
+79565>>>        Local String sQ
+79565>>>        Local Handle hdbc69 hstmt69
+79565>>>        Local Number nMonto nMontoEsp nValPgdo nValDispo
+79565>>>    
+79565>>>        Move '' to sQ
+79566>>>        Move 0  to nMonto
+79567>>>        Move 0  to nMontoEsp
+79568>>>        Append sQ " SELECT SUM(MONTO) FROM AHORRO_D WHERE PAGADO_SN = 'S' AND AHORRO_H =  " AHORRO_H.NUMERO 
+79570>>>        SQLFileConnect EGRESOS to hdbc69
+79571>>>        SQLOpen hdbc69 to hstmt69
+79574>>>        SQLExecDirect hstmt69 sQ
+79577>>>        Repeat
+79577>>>>
+79577>>>           SQLFileFetch hstmt69
+79583>>>           If (SQLResult) Begin
+79585>>>              Get SQLColumnValue of hstmt69   1 to nMonto
+79586>>>           End
+79586>>>>
+79586>>>        Until (not(SQLResult))
+79588>>>        SQLClose hstmt69
+79591>>>        SQLDisconnect hdbc69
+79594>>>        
+79594>>>        Move '' to sQ
+79595>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM AHORRO_D WHERE AHORRO_H =  " AHORRO_H.NUMERO //SUM(MONTO_PROYECTADO)
+79597>>>        SQLFileConnect EGRESOS to hdbc69
+79598>>>        SQLOpen hdbc69 to hstmt69
+79601>>>        SQLExecDirect hstmt69 sQ
+79604>>>        Repeat
+79604>>>>
+79604>>>           SQLFileFetch hstmt69
+79610>>>           If (SQLResult) Begin
+79612>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
+79613>>>           End
+79613>>>>
+79613>>>        Until (not(SQLResult))
+79615>>>        SQLClose hstmt69
+79618>>>        SQLDisconnect hdbc69
+79621>>>        
+79621>>>        Set Value of oTOTAL         to nMonto
+79622>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
+79623>>>        
+79623>>>    End_Procedure
+79624>>>
+79624>>>    Set Main_DD to oAHORRO_H_DD
+79625>>>    Set Server to oAHORRO_H_DD
+79626>>>
+79626>>>    Set Border_Style to Border_Thick
+79627>>>    Set Size to 266 336
+79628>>>    Set Location to 2 2
+79629>>>    Set Label to "Control De Ahorros..."
+79630>>>    Set Color to 9824917
+79631>>>
+79631>>>    Object oDbContainer3d1 is a dbContainer3d
+79633>>>        Set Size to 108 315
+79634>>>        Set Location to 3 11
 79635>>>
-79635>>>            Object oAHORRO_D_MONTO_PROYECTADO is a cDbCJGridColumn
-79637>>>                Entry_Item AHORRO_D.MONTO_PROYECTADO
-79638>>>                Set piWidth to 89
-79639>>>                Set psCaption to "Mnto Espe."
-79640>>>            End_Object
-79641>>>
-79641>>>            Object oAHORRO_D_PAGADO_SN is a cDbCJGridColumn
-79643>>>                Entry_Item AHORRO_D.PAGADO_SN
-79644>>>                Set piWidth to 52
-79645>>>                Set psCaption to "Pgdo?"
-79646>>>                Set pbCheckbox to True
-79647>>>            End_Object
-79648>>>
-79648>>>            Object oAHORRO_D_FECHA_REALIZADO is a cDbCJGridColumn
-79650>>>                Entry_Item AHORRO_D.FECHA_REALIZADO
-79651>>>                Set piWidth to 98
-79652>>>                Set psCaption to "Fecha"
+79635>>>        Object oDbGroup1 is a dbGroup
+79637>>>            Set Size to 101 238
+79638>>>            Set Location to 1 5
+79639>>>            Set Label to 'Ahorro'
+79640>>>
+79640>>>            Object oAHORRO_H_NUMERO is a dbForm
+79642>>>                Entry_Item AHORRO_H.NUMERO
+79643>>>                Set Location to 17 67
+79644>>>                Set Size to 13 66
+79645>>>                Set Label to "NUMERO:"
+79646>>>            End_Object
+79647>>>
+79647>>>            Object oAHORRO_H_DESCRIPCION is a dbForm
+79649>>>                Entry_Item AHORRO_H.DESCRIPCION
+79650>>>                Set Location to 32 67
+79651>>>                Set Size to 13 139
+79652>>>                Set Label to "DESCRIPCION:"
 79653>>>            End_Object
-79654>>>        End_Object
-79655>>>    End_Object
-79656>>>
-79656>>>Cd_End_Object
-79658>>>>
-79658>        Use Deudas.vw
+79654>>>
+79654>>>            Object oAHORRO_H_FECHA_INICIO is a dbForm
+79656>>>                Entry_Item AHORRO_H.FECHA_INICIO
+79657>>>                Set Location to 47 67
+79658>>>                Set Size to 13 66
+79659>>>                Set Label to "FECHA INICIO:"
+79660>>>            End_Object
+79661>>>
+79661>>>            Object oAHORRO_H_FECHA_OBJETIVO is a dbForm
+79663>>>                Entry_Item AHORRO_H.FECHA_OBJETIVO
+79664>>>                Set Location to 62 67
+79665>>>                Set Size to 13 66
+79666>>>                Set Label to "FECHA OBJETIVO:"
+79667>>>            End_Object
+79668>>>
+79668>>>            Object oAHORRO_H_PRIORIDAD is a dbComboForm
+79670>>>                Entry_Item AHORRO_H.PRIORIDAD
+79671>>>                Set Location to 79 67
+79672>>>                Set Size to 13 66
+79673>>>                Set Label to "PRIORIDAD:"
+79674>>>                
+79674>>>                Procedure Combo_Fill_List
+79677>>>                    Send Combo_Add_Item "ALTA"
+79678>>>                    Send Combo_Add_Item "MEDIA"
+79679>>>                    Send Combo_Add_Item "BAJA"
+79680>>>                End_Procedure
+79681>>>
+79681>>>            End_Object
+79682>>>        End_Object
+79683>>>
+79683>>>        Object oTOTAL is a dbForm
+79685>>>            Set Size to 13 57
+79686>>>            Set Location to 87 249
+79687>>>            Set Entry_State to False
+79688>>>            Set Color to 4643654
+79689>>>            Set Numeric_Mask 0 to 4 2
+79690>>>        End_Object
+79691>>>
+79691>>>        Object oTOTAL_PROYECT is a dbForm
+79693>>>            Set Size to 13 57
+79694>>>            Set Location to 64 249
+79695>>>            Set Entry_State to False
+79696>>>            Set Numeric_Mask 0 to 4 2
+79697>>>        End_Object
+79698>>>
+79698>>>        Object oTextBox1 is a TextBox
+79700>>>            Set Size to 9 40
+79701>>>            Set Location to 78 250
+79702>>>            Set Label to 'Total Actual'
+79703>>>        End_Object
+79704>>>
+79704>>>        Object oTextBox1 is a TextBox
+79706>>>            Set Size to 9 57
+79707>>>            Set Location to 55 250
+79708>>>            Set Label to 'Total Proyectado'
+79709>>>        End_Object
+79710>>>    End_Object
+79711>>>
+79711>>>    Object oDbContainer3d2 is a dbContainer3d
+79713>>>        Set Size to 148 314
+79714>>>        Set Location to 114 12
+79715>>>
+79715>>>        Object oDbCJGrid1 is a cDbCJGrid
+79717>>>            Set Server to oAHORRO_D_DD
+79718>>>            Set Size to 139 301
+79719>>>            Set Location to 3 4
+79720>>>
+79720>>>            Object oAHORRO_D_NUMERO is a cDbCJGridColumn
+79722>>>                Entry_Item AHORRO_D.NUMERO
+79723>>>                Set piWidth to 45
+79724>>>                Set psCaption to "#"
+79725>>>            End_Object
+79726>>>
+79726>>>            Object oAHORRO_D_DESCRIPCION is a cDbCJGridColumn
+79728>>>                Entry_Item AHORRO_D.DESCRIPCION
+79729>>>                Set piWidth to 239
+79730>>>                Set psCaption to "Descripcion"
+79731>>>            End_Object
+79732>>>
+79732>>>            Object oAHORRO_D_MONTO is a cDbCJGridColumn
+79734>>>                Entry_Item AHORRO_D.MONTO
+79735>>>                Set piWidth to 79
+79736>>>                Set psCaption to "Monto"
+79737>>>            End_Object
+79738>>>
+79738>>>            Object oAHORRO_D_MONTO_PROYECTADO is a cDbCJGridColumn
+79740>>>                Entry_Item AHORRO_D.MONTO_PROYECTADO
+79741>>>                Set piWidth to 89
+79742>>>                Set psCaption to "Mnto Espe."
+79743>>>            End_Object
+79744>>>
+79744>>>            Object oAHORRO_D_PAGADO_SN is a cDbCJGridColumn
+79746>>>                Entry_Item AHORRO_D.PAGADO_SN
+79747>>>                Set piWidth to 52
+79748>>>                Set psCaption to "Pgdo?"
+79749>>>                Set pbCheckbox to True
+79750>>>            End_Object
+79751>>>
+79751>>>            Object oAHORRO_D_FECHA_REALIZADO is a cDbCJGridColumn
+79753>>>                Entry_Item AHORRO_D.FECHA_REALIZADO
+79754>>>                Set piWidth to 98
+79755>>>                Set psCaption to "Fecha"
+79756>>>            End_Object
+79757>>>        End_Object
+79758>>>    End_Object
+79759>>>
+79759>>>Cd_End_Object
+79761>>>>
+79761>        Use Deudas.vw
 Including file: Deudas.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\Deudas.vw)
-79658>>>Use Windows.pkg
-79658>>>Use DFClient.pkg
-79658>>>Use cDEUDA_H_DataDictionary.dd
+79761>>>Use Windows.pkg
+79761>>>Use DFClient.pkg
+79761>>>Use cDEUDA_H_DataDictionary.dd
 Including file: cDEUDA_H_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cDEUDA_H_DataDictionary.dd)
-79658>>>>>Use DataDict.pkg
-79658>>>>>
-79658>>>>>Open DEUDA_H
+79761>>>>>Use DataDict.pkg
+79761>>>>>
+79761>>>>>Open DEUDA_H
 Including file: DEUDA_H.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\DEUDA_H.fd)
-79660>>>>>Open DEUDA_D
+79763>>>>>Open DEUDA_D
 Including file: DEUDA_D.fd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\DEUDA_D.fd)
-79662>>>>>
-79662>>>>>Class cDEUDA_H_DataDictionary is a DataDictionary
-79663>>>>>    
-79663>>>>>    Procedure Construct_Object
-79665>>>>>        Forward Send Construct_Object
-79667>>>>>        Set Main_File to DEUDA_H.File_Number
-79668>>>>>
-79668>>>>>        Set Add_Client_File to DEUDA_D.File_Number
-79669>>>>>
-79669>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-79670>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-79671>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-79672>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-79673>>>>>
-79673>>>>>        Set Field_Checkbox_Values Field DEUDA_H.A_FAVOR to "S" "N"
-79674>>>>>        Set Field_Class_Name Field DEUDA_H.A_FAVOR to "Checkbox"
-79675>>>>>
-79675>>>>>    End_Procedure
-79676>>>>>
-79676>>>>>    Procedure Field_Defaults
-79678>>>>>        Forward Send Field_Defaults
-79680>>>>>        Set Field_Changed_Value Field DEUDA_H.A_FAVOR to "N"
-79681>>>>>    End_Procedure
-79682>>>>>
-79682>>>>>End_Class
-79683>>>Use cDEUDA_D_DataDictionary.dd
+79765>>>>>
+79765>>>>>Class cDEUDA_H_DataDictionary is a DataDictionary
+79766>>>>>    
+79766>>>>>    Procedure Construct_Object
+79768>>>>>        Forward Send Construct_Object
+79770>>>>>        Set Main_File to DEUDA_H.File_Number
+79771>>>>>
+79771>>>>>        Set Add_Client_File to DEUDA_D.File_Number
+79772>>>>>
+79772>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+79773>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+79774>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+79775>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+79776>>>>>
+79776>>>>>        Set Field_Checkbox_Values Field DEUDA_H.A_FAVOR to "S" "N"
+79777>>>>>        Set Field_Class_Name Field DEUDA_H.A_FAVOR to "Checkbox"
+79778>>>>>
+79778>>>>>    End_Procedure
+79779>>>>>
+79779>>>>>    Procedure Field_Defaults
+79781>>>>>        Forward Send Field_Defaults
+79783>>>>>        Set Field_Changed_Value Field DEUDA_H.A_FAVOR to "N"
+79784>>>>>    End_Procedure
+79785>>>>>
+79785>>>>>End_Class
+79786>>>Use cDEUDA_D_DataDictionary.dd
 Including file: cDEUDA_D_DataDictionary.dd    (C:\DataFlex Projects\PRESUPUESTO18\DDSrc\cDEUDA_D_DataDictionary.dd)
-79683>>>>>Use DataDict.pkg
-79683>>>>>
-79683>>>>>Open DEUDA_D
-79685>>>>>Open DEUDA_H
-79687>>>>>
-79687>>>>>Class cDEUDA_D_DataDictionary is a DataDictionary
-79688>>>>>    
-79688>>>>>    Procedure Construct_Object
-79690>>>>>        Forward Send Construct_Object
-79692>>>>>        Set Main_File to DEUDA_D.File_Number
-79693>>>>>
-79693>>>>>        Set Add_Server_File to DEUDA_H.File_Number
-79694>>>>>
-79694>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
-79695>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
-79696>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
-79697>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
-79698>>>>>
-79698>>>>>        Set Field_Class_Name Field DEUDA_D.PAGADO_SN to "Checkbox"
-79699>>>>>        Set Field_Checkbox_Values Field DEUDA_D.PAGADO_SN to "S" "N"
-79700>>>>>
-79700>>>>>    End_Procedure
-79701>>>>>
-79701>>>>>    Procedure Field_Defaults
-79703>>>>>        Forward Send Field_Defaults
-79705>>>>>        Set Field_Changed_Value Field DEUDA_D.PAGADO_SN to "N"
-79706>>>>>    End_Procedure
-79707>>>>>
-79707>>>>>End_Class
-79708>>>Use DFEntry.pkg
-79708>>>Use cDbCJGrid.pkg
-79708>>>Use cdbCJGridColumn.pkg
-79708>>>Use DFEnChk.pkg
-79708>>>
-79708>>>Deferred_View Activate_Deudas for ;Object Deudas is a dbView
-79733>>>    Procedure Request_Clear
-79736>>>        Forward Send Request_Clear
-79738>>>            Set Shadow_State of oDEUDA_H_CLAVE        to False
-79739>>>            Set Shadow_State of oDEUDA_H_MONTO        to False
-79740>>>            Set Shadow_State of oDEUDA_H_TIPO         to False 
-79741>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to False
-79742>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to False
-79743>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to False
-79744>>>            Set Value of oTOTAL         to ''
-79745>>>            Set Value of oTOTAL_PROYECT to ''
-79746>>>    End_Procedure
-79747>>>    
-79747>>>    Procedure Request_Clear_All
-79750>>>        Forward Send Request_Clear_All
-79752>>>            Set Shadow_State of oDEUDA_H_CLAVE        to False
-79753>>>            Set Shadow_State of oDEUDA_H_MONTO        to False
-79754>>>            Set Shadow_State of oDEUDA_H_TIPO         to False 
-79755>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to False
-79756>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to False
-79757>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to False
-79758>>>            Set Value of oTOTAL         to ''
-79759>>>            Set Value of oTOTAL_PROYECT to ''
-79760>>>    End_Procedure
-79761>>>    
-79761>>>    
-79761>>>    Object oDEUDA_H_DD is a cDEUDA_H_DataDictionary
-79763>>>        Procedure Relate_Main_File
-79766>>>            Forward Send Relate_Main_File
-79768>>>            
-79768>>>            // SI ES A FAVOR LOS TOTALES SON CON DIFERENTE LOGICA 
-79768>>>            If (DEUDA_H.A_FAVOR eq 'N') Send Totales
-79771>>>            Else Send Totales2
-79773>>>            
-79773>>>            Set Shadow_State of oDEUDA_H_CLAVE        to True
-79774>>>            Set Shadow_State of oDEUDA_H_MONTO        to True
-79775>>>            Set Shadow_State of oDEUDA_H_TIPO         to True 
-79776>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to True
-79777>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to True
-79778>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to True
-79779>>>        End_Procedure
-79780>>>        
-79780>>>    End_Object
-79781>>>
-79781>>>    Object oDEUDA_D_DD is a cDEUDA_D_DataDictionary
-79783>>>        Set Constrain_file to DEUDA_H.File_number
-79784>>>        Set DDO_Server to oDEUDA_H_DD
-79785>>>        
-79785>>>        
-79785>>>        Procedure Request_Save 
-79788>>>            Forward Send Request_Save
-79790>>>                Move DEUDA_H.NUMERO to DEUDA_D.DEUDA_H
-79791>>>        End_Procedure
-79792>>>        
-79792>>>    End_Object
-79793>>>    
-79793>>>    
-79793>>>    //FUNCIONES Y PROCEDIMIENTOS
-79793>>>    Procedure Totales 
-79796>>>        Local String sQ
-79796>>>        Local Handle hdbc69 hstmt69
-79796>>>        Local Number nMonto nMontoEsp nTotalDeuda 
-79796>>>    
-79796>>>        Move '' to sQ
-79797>>>        Move 0  to nMonto
-79798>>>        Move 0  to nMontoEsp
-79799>>>        Append sQ " SELECT SUM(MONTO) FROM DEUDA_D WHERE PAGADO_SN = 'S' AND DEUDA_H =  " DEUDA_H.NUMERO 
-79801>>>        SQLFileConnect EGRESOS to hdbc69
-79802>>>        SQLOpen hdbc69 to hstmt69
-79805>>>        SQLExecDirect hstmt69 sQ
-79808>>>        Repeat
-79808>>>>
-79808>>>           SQLFileFetch hstmt69
-79814>>>           If (SQLResult) Begin
-79816>>>              Get SQLColumnValue of hstmt69   1 to nMonto
-79817>>>           End
-79817>>>>
-79817>>>        Until (not(SQLResult))
-79819>>>        SQLClose hstmt69
-79822>>>        SQLDisconnect hdbc69
-79825>>>        
-79825>>>        Move '' to sQ
-79826>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM DEUDA_D WHERE DEUDA_H =  " DEUDA_H.NUMERO 
-79828>>>        SQLFileConnect EGRESOS to hdbc69
-79829>>>        SQLOpen hdbc69 to hstmt69
-79832>>>        SQLExecDirect hstmt69 sQ
-79835>>>        Repeat
-79835>>>>
-79835>>>           SQLFileFetch hstmt69
-79841>>>           If (SQLResult) Begin
-79843>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
-79844>>>           End
-79844>>>>
-79844>>>        Until (not(SQLResult))
-79846>>>        SQLClose hstmt69
-79849>>>        SQLDisconnect hdbc69
-79852>>>        
-79852>>>        Get Value of oDEUDA_H_MONTO to nTotalDeuda
-79853>>>        
-79853>>>        Move (DEUDA_H.MONTO -nMonto)    to nMonto
-79854>>>        Move (DEUDA_H.MONTO -nMontoEsp) to nMontoEsp
-79855>>>        
-79855>>>        Set Value of oTOTAL         to nMonto
-79856>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
-79857>>>        Set Value of oTextDIFERENCIA to '--'
-79858>>>        
-79858>>>    End_Procedure
-79859>>>    
-79859>>>    
-79859>>>    //FUNCIONES Y PROCEDIMIENTOS
-79859>>>    Procedure Totales2 
-79862>>>        Local String sQ
-79862>>>        Local Handle hdbc69 hstmt69
-79862>>>        Local Number nMonto nMontoEsp nTotalDeuda nDiferencia
-79862>>>    
-79862>>>        Move '' to sQ
-79863>>>        Move 0  to nMonto
-79864>>>        Move 0  to nMontoEsp
-79865>>>        Append sQ " SELECT SUM(MONTO) FROM DEUDA_D WHERE PAGADO_SN = 'S' AND DEUDA_H =  " DEUDA_H.NUMERO 
-79867>>>        SQLFileConnect EGRESOS to hdbc69
-79868>>>        SQLOpen hdbc69 to hstmt69
-79871>>>        SQLExecDirect hstmt69 sQ
-79874>>>        Repeat
-79874>>>>
-79874>>>           SQLFileFetch hstmt69
-79880>>>           If (SQLResult) Begin
-79882>>>              Get SQLColumnValue of hstmt69   1 to nMonto
-79883>>>           End
-79883>>>>
-79883>>>        Until (not(SQLResult))
-79885>>>        SQLClose hstmt69
-79888>>>        SQLDisconnect hdbc69
-79891>>>        
-79891>>>        Move '' to sQ
-79892>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM DEUDA_D WHERE DEUDA_H =  " DEUDA_H.NUMERO 
-79894>>>        SQLFileConnect EGRESOS to hdbc69
-79895>>>        SQLOpen hdbc69 to hstmt69
-79898>>>        SQLExecDirect hstmt69 sQ
-79901>>>        Repeat
-79901>>>>
-79901>>>           SQLFileFetch hstmt69
-79907>>>           If (SQLResult) Begin
-79909>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
-79910>>>           End
-79910>>>>
-79910>>>        Until (not(SQLResult))
-79912>>>        SQLClose hstmt69
-79915>>>        SQLDisconnect hdbc69
-79918>>>        
-79918>>>        Set Value of oTOTAL         to nMonto
-79919>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
-79920>>>        Move (nMontoEsp-nMonto) to nDiferencia
-79921>>>        Set Value of oTextDIFERENCIA to ("Pendiente: "+String(nDiferencia))
-79922>>>        
-79922>>>        
-79922>>>        Reread DEUDA_H
-79926>>>        Move nMontoEsp to DEUDA_H.MONTO
-79927>>>        SaveRecord DEUDA_H
-79928>>>        Unlock
-79929>>>>
-79929>>>        
-79929>>>    End_Procedure
-79930>>>
-79930>>>    Set Main_DD to oDEUDA_H_DD
-79931>>>    Set Server to oDEUDA_H_DD
-79932>>>
-79932>>>    Set Border_Style to Border_Thick
-79933>>>    Set Size to 284 263
-79934>>>    Set Location to 2 2
-79935>>>    Set Label to "Deudas"
-79936>>>    Set Delegation_Mode to No_Delegate_Or_Error
-79937>>>    Set Color to 16641499
-79938>>>
-79938>>>    Object oDbContainer3d1 is a dbContainer3d
-79940>>>        Set Size to 122 247
-79941>>>        Set Location to 4 9
-79942>>>        Set Color to clMenu
-79943>>>
-79943>>>        Object oDEUDA_H_NUMERO is a dbForm
-79945>>>            Entry_Item DEUDA_H.NUMERO
-79946>>>            Set Location to 4 56
-79947>>>            Set Size to 12 66
-79948>>>            Set Label to "NUMERO:"
-79949>>>            Set Label_Col_Offset to 2
-79950>>>            Set Label_Justification_Mode to JMode_Right
-79951>>>        End_Object
-79952>>>
-79952>>>        Object oDEUDA_H_CLAVE is a dbForm
-79954>>>            Entry_Item DEUDA_H.CLAVE
-79955>>>            Set Location to 4 165
-79956>>>            Set Size to 12 66
-79957>>>            Set Label to "CLAVE:"
-79958>>>            Set Label_Col_Offset to 2
-79959>>>            Set Label_Justification_Mode to JMode_Right
-79960>>>        End_Object
-79961>>>
-79961>>>        Object oDEUDA_H_DESCRIPCION is a dbForm
-79963>>>            Entry_Item DEUDA_H.DESCRIPCION
-79964>>>            Set Location to 52 55
-79965>>>            Set Size to 12 176
-79966>>>            Set Label to "DESCRIPCION:"
-79967>>>            Set Label_Col_Offset to 2
-79968>>>            Set Label_Justification_Mode to JMode_Right
-79969>>>        End_Object
-79970>>>
-79970>>>        Object oDEUDA_H_MONTO is a dbForm
-79972>>>            Entry_Item DEUDA_H.MONTO
-79973>>>            Set Location to 20 56
-79974>>>            Set Size to 12 66
-79975>>>            Set Label to "MONTO:"
-79976>>>            Set Label_Col_Offset to 2
-79977>>>            Set Label_Justification_Mode to JMode_Right
-79978>>>        End_Object
-79979>>>
-79979>>>        Object oDEUDA_H_FECHA_INICIO is a dbForm
-79981>>>            Entry_Item DEUDA_H.FECHA_INICIO
-79982>>>            Set Location to 36 56
-79983>>>            Set Size to 12 66
-79984>>>            Set Label to "FECHA INICIO:"
-79985>>>            Set Label_Col_Offset to 2
-79986>>>            Set Label_Justification_Mode to JMode_Right
-79987>>>        End_Object
-79988>>>
-79988>>>        Object oDEUDA_H_FECHA_FIN is a dbForm
-79990>>>            Entry_Item DEUDA_H.FECHA_FIN
-79991>>>            Set Location to 36 165
-79992>>>            Set Size to 12 66
-79993>>>            Set Label to "FECHA FIN:"
-79994>>>            Set Label_Col_Offset to 2
-79995>>>            Set Label_Justification_Mode to JMode_Right
-79996>>>        End_Object
-79997>>>
-79997>>>        Object oDEUDA_H_TIPO is a dbForm
-79999>>>            Entry_Item DEUDA_H.TIPO
-80000>>>            Set Location to 20 165
-80001>>>            Set Size to 12 20
-80002>>>            Set Label to "TIPO:"
-80003>>>            Set Label_Col_Offset to 2
-80004>>>            Set Label_Justification_Mode to JMode_Right
-80005>>>        End_Object
-80006>>>
-80006>>>        Object oDbGroup1 is a dbGroup
-80008>>>            Set Size to 43 225
-80009>>>            Set Location to 66 7
-80010>>>            Set Label to 'Totales'
-80011>>>            Set Color to 16641499
-80012>>>
-80012>>>            Object oTextBox1 is a TextBox
-80014>>>                Set Size to 9 38
-80015>>>                Set Location to 11 18
-80016>>>                Set Label to 'Proyect.'
-80017>>>            End_Object
-80018>>>            Object oTOTAL_PROYECT is a dbForm
-80020>>>                Set Size to 13 68
-80021>>>                Set Location to 8 48
-80022>>>                Set Entry_State to False
-80023>>>                Set Numeric_Mask 0 to 4 2
-80024>>>                Set Color to 16744576
-80025>>>            End_Object
-80026>>>
-80026>>>            Object oTextBox1 is a TextBox
-80028>>>                Set Size to 9 19
-80029>>>                Set Location to 27 23
-80030>>>                Set Label to 'Pdgo.'
-80031>>>            End_Object
-80032>>>            Object oTOTAL is a dbForm
-80034>>>                Set Size to 13 68
-80035>>>                Set Location to 24 48
-80036>>>                Set Entry_State to False
-80037>>>                Set Color to 16776960
-80038>>>                Set Numeric_Mask 0 to 4 2
-80039>>>            End_Object
-80040>>>
-80040>>>            Object oTextDIFERENCIA is a TextBox
-80042>>>                Set Auto_Size_State to False
-80043>>>                Set Size to 10 83
-80044>>>                Set Location to 25 125
-80045>>>                Set Label to '--'
-80046>>>                Set Color to 16641499
-80047>>>                Set Justification_Mode to JMode_Right
-80048>>>            End_Object
-80049>>>        End_Object
-80050>>>
-80050>>>        Object oDEUDA_H_A_FAVOR is a dbCheckBox
-80052>>>            Entry_Item DEUDA_H.A_FAVOR
-80053>>>            Set Location to 22 192
-80054>>>            Set Size to 10 60
-80055>>>            Set Label to "A FAVOR"
-80056>>>        End_Object
-80057>>>    End_Object
-80058>>>
-80058>>>    Object oDbContainer3d2 is a dbContainer3d
-80060>>>        Set Size to 154 247
-80061>>>        Set Location to 131 9
-80062>>>
-80062>>>        Object oDbCJGrid1 is a cDbCJGrid
-80064>>>            Set Server to oDEUDA_D_DD
-80065>>>            Set Size to 157 236
-80066>>>            Set Location to 5 3
-80067>>>            Set piSelectedRowBackColor to 65535
-80068>>>            Set piGridLineColor to clScrollBar
-80069>>>            Set piSelectedRowForeColor to 65408
-80070>>>            Set peVisualTheme to xtpReportThemeVisualStudio2012Light
-80071>>>
-80071>>>            Object oDEUDA_D_NUMERO is a cDbCJGridColumn
-80073>>>                Entry_Item DEUDA_D.RENGLON
-80074>>>                Set piWidth to 20
-80075>>>                Set psCaption to "#"
-80076>>>            End_Object
-80077>>>
-80077>>>            Object oDEUDA_H_DESCRIPCION1 is a cDbCJGridColumn
-80079>>>                Entry_Item DEUDA_D.DESCRIPCION
-80080>>>                Set piWidth to 131
-80081>>>                Set psCaption to "Descripcion"
-80082>>>            End_Object
-80083>>>
-80083>>>            Object oDEUDA_D_MONTO is a cDbCJGridColumn
-80085>>>                Entry_Item DEUDA_D.MONTO
-80086>>>                Set piWidth to 93
-80087>>>                Set psCaption to "Monto"
-80088>>>            End_Object
-80089>>>
-80089>>>            Object oDEUDA_D_MONTO_PROYECTADO is a cDbCJGridColumn
-80091>>>                Entry_Item DEUDA_D.MONTO_PROYECTADO
-80092>>>                Set piWidth to 84
-80093>>>                Set psCaption to "Proyectado"
-80094>>>            End_Object
-80095>>>
-80095>>>            Object oDEUDA_D_FECHA_REALIZADO is a cDbCJGridColumn
-80097>>>                Entry_Item DEUDA_D.FECHA_REALIZADO
-80098>>>                Set piWidth to 91
-80099>>>                Set psCaption to "F. Realizado"
-80100>>>            End_Object
-80101>>>
-80101>>>            Object oDEUDA_D_PAGADO_SN is a cDbCJGridColumn
-80103>>>                Entry_Item DEUDA_D.PAGADO_SN
-80104>>>                Set piWidth to 53
-80105>>>                Set psCaption to "Pgdo?"
-80106>>>                Set pbCheckbox to True
-80107>>>            End_Object
+79786>>>>>Use DataDict.pkg
+79786>>>>>
+79786>>>>>Open DEUDA_D
+79788>>>>>Open DEUDA_H
+79790>>>>>
+79790>>>>>Class cDEUDA_D_DataDictionary is a DataDictionary
+79791>>>>>    
+79791>>>>>    Procedure Construct_Object
+79793>>>>>        Forward Send Construct_Object
+79795>>>>>        Set Main_File to DEUDA_D.File_Number
+79796>>>>>
+79796>>>>>        Set Add_Server_File to DEUDA_H.File_Number
+79797>>>>>
+79797>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+79798>>>>>        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+79799>>>>>        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+79800>>>>>        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+79801>>>>>
+79801>>>>>        Set Field_Class_Name Field DEUDA_D.PAGADO_SN to "Checkbox"
+79802>>>>>        Set Field_Checkbox_Values Field DEUDA_D.PAGADO_SN to "S" "N"
+79803>>>>>
+79803>>>>>    End_Procedure
+79804>>>>>
+79804>>>>>    Procedure Field_Defaults
+79806>>>>>        Forward Send Field_Defaults
+79808>>>>>        Set Field_Changed_Value Field DEUDA_D.PAGADO_SN to "N"
+79809>>>>>    End_Procedure
+79810>>>>>
+79810>>>>>End_Class
+79811>>>Use DFEntry.pkg
+79811>>>Use cDbCJGrid.pkg
+79811>>>Use cdbCJGridColumn.pkg
+79811>>>Use DFEnChk.pkg
+79811>>>
+79811>>>Deferred_View Activate_Deudas for ;Object Deudas is a dbView
+79836>>>    Procedure Request_Clear
+79839>>>        Forward Send Request_Clear
+79841>>>            Set Shadow_State of oDEUDA_H_CLAVE        to False
+79842>>>            Set Shadow_State of oDEUDA_H_MONTO        to False
+79843>>>            Set Shadow_State of oDEUDA_H_TIPO         to False 
+79844>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to False
+79845>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to False
+79846>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to False
+79847>>>            Set Value of oTOTAL         to ''
+79848>>>            Set Value of oTOTAL_PROYECT to ''
+79849>>>    End_Procedure
+79850>>>    
+79850>>>    Procedure Request_Clear_All
+79853>>>        Forward Send Request_Clear_All
+79855>>>            Set Shadow_State of oDEUDA_H_CLAVE        to False
+79856>>>            Set Shadow_State of oDEUDA_H_MONTO        to False
+79857>>>            Set Shadow_State of oDEUDA_H_TIPO         to False 
+79858>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to False
+79859>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to False
+79860>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to False
+79861>>>            Set Value of oTOTAL         to ''
+79862>>>            Set Value of oTOTAL_PROYECT to ''
+79863>>>    End_Procedure
+79864>>>    
+79864>>>    
+79864>>>    Object oDEUDA_H_DD is a cDEUDA_H_DataDictionary
+79866>>>        Procedure Relate_Main_File
+79869>>>            Forward Send Relate_Main_File
+79871>>>            
+79871>>>            // SI ES A FAVOR LOS TOTALES SON CON DIFERENTE LOGICA 
+79871>>>            If (DEUDA_H.A_FAVOR eq 'N') Send Totales
+79874>>>            Else Send Totales2
+79876>>>            
+79876>>>            Set Shadow_State of oDEUDA_H_CLAVE        to True
+79877>>>            Set Shadow_State of oDEUDA_H_MONTO        to True
+79878>>>            Set Shadow_State of oDEUDA_H_TIPO         to True 
+79879>>>            Set Shadow_State of oDEUDA_H_FECHA_INICIO to True
+79880>>>            Set Shadow_State of oDEUDA_H_FECHA_FIN    to True
+79881>>>            Set Shadow_State of oDEUDA_H_DESCRIPCION  to True
+79882>>>        End_Procedure
+79883>>>        
+79883>>>    End_Object
+79884>>>
+79884>>>    Object oDEUDA_D_DD is a cDEUDA_D_DataDictionary
+79886>>>        Set Constrain_file to DEUDA_H.File_number
+79887>>>        Set DDO_Server to oDEUDA_H_DD
+79888>>>        
+79888>>>        
+79888>>>        Procedure Request_Save 
+79891>>>            Forward Send Request_Save
+79893>>>                Move DEUDA_H.NUMERO to DEUDA_D.DEUDA_H
+79894>>>        End_Procedure
+79895>>>        
+79895>>>    End_Object
+79896>>>    
+79896>>>    
+79896>>>    //FUNCIONES Y PROCEDIMIENTOS
+79896>>>    Procedure Totales 
+79899>>>        Local String sQ
+79899>>>        Local Handle hdbc69 hstmt69
+79899>>>        Local Number nMonto nMontoEsp nTotalDeuda 
+79899>>>    
+79899>>>        Move '' to sQ
+79900>>>        Move 0  to nMonto
+79901>>>        Move 0  to nMontoEsp
+79902>>>        Append sQ " SELECT SUM(MONTO) FROM DEUDA_D WHERE PAGADO_SN = 'S' AND DEUDA_H =  " DEUDA_H.NUMERO 
+79904>>>        SQLFileConnect EGRESOS to hdbc69
+79905>>>        SQLOpen hdbc69 to hstmt69
+79908>>>        SQLExecDirect hstmt69 sQ
+79911>>>        Repeat
+79911>>>>
+79911>>>           SQLFileFetch hstmt69
+79917>>>           If (SQLResult) Begin
+79919>>>              Get SQLColumnValue of hstmt69   1 to nMonto
+79920>>>           End
+79920>>>>
+79920>>>        Until (not(SQLResult))
+79922>>>        SQLClose hstmt69
+79925>>>        SQLDisconnect hdbc69
+79928>>>        
+79928>>>        Move '' to sQ
+79929>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM DEUDA_D WHERE DEUDA_H =  " DEUDA_H.NUMERO 
+79931>>>        SQLFileConnect EGRESOS to hdbc69
+79932>>>        SQLOpen hdbc69 to hstmt69
+79935>>>        SQLExecDirect hstmt69 sQ
+79938>>>        Repeat
+79938>>>>
+79938>>>           SQLFileFetch hstmt69
+79944>>>           If (SQLResult) Begin
+79946>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
+79947>>>           End
+79947>>>>
+79947>>>        Until (not(SQLResult))
+79949>>>        SQLClose hstmt69
+79952>>>        SQLDisconnect hdbc69
+79955>>>        
+79955>>>        Get Value of oDEUDA_H_MONTO to nTotalDeuda
+79956>>>        
+79956>>>        Move (DEUDA_H.MONTO -nMonto)    to nMonto
+79957>>>        Move (DEUDA_H.MONTO -nMontoEsp) to nMontoEsp
+79958>>>        
+79958>>>        Set Value of oTOTAL         to nMonto
+79959>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
+79960>>>        Set Value of oTextDIFERENCIA to '--'
+79961>>>        
+79961>>>    End_Procedure
+79962>>>    
+79962>>>    
+79962>>>    //FUNCIONES Y PROCEDIMIENTOS
+79962>>>    Procedure Totales2 
+79965>>>        Local String sQ
+79965>>>        Local Handle hdbc69 hstmt69
+79965>>>        Local Number nMonto nMontoEsp nTotalDeuda nDiferencia
+79965>>>    
+79965>>>        Move '' to sQ
+79966>>>        Move 0  to nMonto
+79967>>>        Move 0  to nMontoEsp
+79968>>>        Append sQ " SELECT SUM(MONTO) FROM DEUDA_D WHERE PAGADO_SN = 'S' AND DEUDA_H =  " DEUDA_H.NUMERO 
+79970>>>        SQLFileConnect EGRESOS to hdbc69
+79971>>>        SQLOpen hdbc69 to hstmt69
+79974>>>        SQLExecDirect hstmt69 sQ
+79977>>>        Repeat
+79977>>>>
+79977>>>           SQLFileFetch hstmt69
+79983>>>           If (SQLResult) Begin
+79985>>>              Get SQLColumnValue of hstmt69   1 to nMonto
+79986>>>           End
+79986>>>>
+79986>>>        Until (not(SQLResult))
+79988>>>        SQLClose hstmt69
+79991>>>        SQLDisconnect hdbc69
+79994>>>        
+79994>>>        Move '' to sQ
+79995>>>        Append sQ " SELECT SUM(MONTO_PROYECTADO) FROM DEUDA_D WHERE DEUDA_H =  " DEUDA_H.NUMERO 
+79997>>>        SQLFileConnect EGRESOS to hdbc69
+79998>>>        SQLOpen hdbc69 to hstmt69
+80001>>>        SQLExecDirect hstmt69 sQ
+80004>>>        Repeat
+80004>>>>
+80004>>>           SQLFileFetch hstmt69
+80010>>>           If (SQLResult) Begin
+80012>>>              Get SQLColumnValue of hstmt69   1 to nMontoEsp
+80013>>>           End
+80013>>>>
+80013>>>        Until (not(SQLResult))
+80015>>>        SQLClose hstmt69
+80018>>>        SQLDisconnect hdbc69
+80021>>>        
+80021>>>        Set Value of oTOTAL         to nMonto
+80022>>>        Set Value of oTOTAL_PROYECT to nMontoEsp
+80023>>>        Move (nMontoEsp-nMonto) to nDiferencia
+80024>>>        Set Value of oTextDIFERENCIA to ("Pendiente: "+String(nDiferencia))
+80025>>>        
+80025>>>        
+80025>>>        Reread DEUDA_H
+80029>>>        Move nMontoEsp to DEUDA_H.MONTO
+80030>>>        SaveRecord DEUDA_H
+80031>>>        Unlock
+80032>>>>
+80032>>>        
+80032>>>    End_Procedure
+80033>>>
+80033>>>    Set Main_DD to oDEUDA_H_DD
+80034>>>    Set Server to oDEUDA_H_DD
+80035>>>
+80035>>>    Set Border_Style to Border_Thick
+80036>>>    Set Size to 284 263
+80037>>>    Set Location to 2 2
+80038>>>    Set Label to "Deudas"
+80039>>>    Set Delegation_Mode to No_Delegate_Or_Error
+80040>>>    Set Color to 16641499
+80041>>>
+80041>>>    Object oDbContainer3d1 is a dbContainer3d
+80043>>>        Set Size to 122 247
+80044>>>        Set Location to 4 9
+80045>>>        Set Color to clMenu
+80046>>>
+80046>>>        Object oDEUDA_H_NUMERO is a dbForm
+80048>>>            Entry_Item DEUDA_H.NUMERO
+80049>>>            Set Location to 4 56
+80050>>>            Set Size to 12 66
+80051>>>            Set Label to "NUMERO:"
+80052>>>            Set Label_Col_Offset to 2
+80053>>>            Set Label_Justification_Mode to JMode_Right
+80054>>>        End_Object
+80055>>>
+80055>>>        Object oDEUDA_H_CLAVE is a dbForm
+80057>>>            Entry_Item DEUDA_H.CLAVE
+80058>>>            Set Location to 4 165
+80059>>>            Set Size to 12 66
+80060>>>            Set Label to "CLAVE:"
+80061>>>            Set Label_Col_Offset to 2
+80062>>>            Set Label_Justification_Mode to JMode_Right
+80063>>>        End_Object
+80064>>>
+80064>>>        Object oDEUDA_H_DESCRIPCION is a dbForm
+80066>>>            Entry_Item DEUDA_H.DESCRIPCION
+80067>>>            Set Location to 52 55
+80068>>>            Set Size to 12 176
+80069>>>            Set Label to "DESCRIPCION:"
+80070>>>            Set Label_Col_Offset to 2
+80071>>>            Set Label_Justification_Mode to JMode_Right
+80072>>>        End_Object
+80073>>>
+80073>>>        Object oDEUDA_H_MONTO is a dbForm
+80075>>>            Entry_Item DEUDA_H.MONTO
+80076>>>            Set Location to 20 56
+80077>>>            Set Size to 12 66
+80078>>>            Set Label to "MONTO:"
+80079>>>            Set Label_Col_Offset to 2
+80080>>>            Set Label_Justification_Mode to JMode_Right
+80081>>>        End_Object
+80082>>>
+80082>>>        Object oDEUDA_H_FECHA_INICIO is a dbForm
+80084>>>            Entry_Item DEUDA_H.FECHA_INICIO
+80085>>>            Set Location to 36 56
+80086>>>            Set Size to 12 66
+80087>>>            Set Label to "FECHA INICIO:"
+80088>>>            Set Label_Col_Offset to 2
+80089>>>            Set Label_Justification_Mode to JMode_Right
+80090>>>        End_Object
+80091>>>
+80091>>>        Object oDEUDA_H_FECHA_FIN is a dbForm
+80093>>>            Entry_Item DEUDA_H.FECHA_FIN
+80094>>>            Set Location to 36 165
+80095>>>            Set Size to 12 66
+80096>>>            Set Label to "FECHA FIN:"
+80097>>>            Set Label_Col_Offset to 2
+80098>>>            Set Label_Justification_Mode to JMode_Right
+80099>>>        End_Object
+80100>>>
+80100>>>        Object oDEUDA_H_TIPO is a dbForm
+80102>>>            Entry_Item DEUDA_H.TIPO
+80103>>>            Set Location to 20 165
+80104>>>            Set Size to 12 20
+80105>>>            Set Label to "TIPO:"
+80106>>>            Set Label_Col_Offset to 2
+80107>>>            Set Label_Justification_Mode to JMode_Right
 80108>>>        End_Object
-80109>>>    End_Object
-80110>>>
-80110>>>Cd_End_Object
-80112>>>>
-80112>        Set Bitmap of (oClientArea(oMain(Current_object))) to "logo_sid.bmp"
-80113>        Set Bitmap_Style to Bitmap_Center
-80114>        Use PRESUPUESTO.sl
-80114>        Use TARJETA.vw
+80109>>>
+80109>>>        Object oDbGroup1 is a dbGroup
+80111>>>            Set Size to 43 225
+80112>>>            Set Location to 66 7
+80113>>>            Set Label to 'Totales'
+80114>>>            Set Color to 16641499
+80115>>>
+80115>>>            Object oTextBox1 is a TextBox
+80117>>>                Set Size to 9 38
+80118>>>                Set Location to 11 18
+80119>>>                Set Label to 'Proyect.'
+80120>>>            End_Object
+80121>>>            Object oTOTAL_PROYECT is a dbForm
+80123>>>                Set Size to 13 68
+80124>>>                Set Location to 8 48
+80125>>>                Set Entry_State to False
+80126>>>                Set Numeric_Mask 0 to 4 2
+80127>>>                Set Color to 16744576
+80128>>>            End_Object
+80129>>>
+80129>>>            Object oTextBox1 is a TextBox
+80131>>>                Set Size to 9 19
+80132>>>                Set Location to 27 23
+80133>>>                Set Label to 'Pdgo.'
+80134>>>            End_Object
+80135>>>            Object oTOTAL is a dbForm
+80137>>>                Set Size to 13 68
+80138>>>                Set Location to 24 48
+80139>>>                Set Entry_State to False
+80140>>>                Set Color to 16776960
+80141>>>                Set Numeric_Mask 0 to 4 2
+80142>>>            End_Object
+80143>>>
+80143>>>            Object oTextDIFERENCIA is a TextBox
+80145>>>                Set Auto_Size_State to False
+80146>>>                Set Size to 10 83
+80147>>>                Set Location to 25 125
+80148>>>                Set Label to '--'
+80149>>>                Set Color to 16641499
+80150>>>                Set Justification_Mode to JMode_Right
+80151>>>            End_Object
+80152>>>        End_Object
+80153>>>
+80153>>>        Object oDEUDA_H_A_FAVOR is a dbCheckBox
+80155>>>            Entry_Item DEUDA_H.A_FAVOR
+80156>>>            Set Location to 22 192
+80157>>>            Set Size to 10 60
+80158>>>            Set Label to "A FAVOR"
+80159>>>        End_Object
+80160>>>    End_Object
+80161>>>
+80161>>>    Object oDbContainer3d2 is a dbContainer3d
+80163>>>        Set Size to 154 247
+80164>>>        Set Location to 131 9
+80165>>>
+80165>>>        Object oDbCJGrid1 is a cDbCJGrid
+80167>>>            Set Server to oDEUDA_D_DD
+80168>>>            Set Size to 157 236
+80169>>>            Set Location to 5 3
+80170>>>            Set piSelectedRowBackColor to 65535
+80171>>>            Set piGridLineColor to clScrollBar
+80172>>>            Set piSelectedRowForeColor to 65408
+80173>>>            Set peVisualTheme to xtpReportThemeVisualStudio2012Light
+80174>>>
+80174>>>            Object oDEUDA_D_NUMERO is a cDbCJGridColumn
+80176>>>                Entry_Item DEUDA_D.RENGLON
+80177>>>                Set piWidth to 20
+80178>>>                Set psCaption to "#"
+80179>>>            End_Object
+80180>>>
+80180>>>            Object oDEUDA_H_DESCRIPCION1 is a cDbCJGridColumn
+80182>>>                Entry_Item DEUDA_D.DESCRIPCION
+80183>>>                Set piWidth to 131
+80184>>>                Set psCaption to "Descripcion"
+80185>>>            End_Object
+80186>>>
+80186>>>            Object oDEUDA_D_MONTO is a cDbCJGridColumn
+80188>>>                Entry_Item DEUDA_D.MONTO
+80189>>>                Set piWidth to 93
+80190>>>                Set psCaption to "Monto"
+80191>>>            End_Object
+80192>>>
+80192>>>            Object oDEUDA_D_MONTO_PROYECTADO is a cDbCJGridColumn
+80194>>>                Entry_Item DEUDA_D.MONTO_PROYECTADO
+80195>>>                Set piWidth to 84
+80196>>>                Set psCaption to "Proyectado"
+80197>>>            End_Object
+80198>>>
+80198>>>            Object oDEUDA_D_FECHA_REALIZADO is a cDbCJGridColumn
+80200>>>                Entry_Item DEUDA_D.FECHA_REALIZADO
+80201>>>                Set piWidth to 91
+80202>>>                Set psCaption to "F. Realizado"
+80203>>>            End_Object
+80204>>>
+80204>>>            Object oDEUDA_D_PAGADO_SN is a cDbCJGridColumn
+80206>>>                Entry_Item DEUDA_D.PAGADO_SN
+80207>>>                Set piWidth to 53
+80208>>>                Set psCaption to "Pgdo?"
+80209>>>                Set pbCheckbox to True
+80210>>>            End_Object
+80211>>>        End_Object
+80212>>>    End_Object
+80213>>>
+80213>>>Cd_End_Object
+80215>>>>
+80215>        Set Bitmap of (oClientArea(oMain(Current_object))) to "logo_sid.bmp"
+80216>        Set Bitmap_Style to Bitmap_Center
+80217>        Use PRESUPUESTO.sl
+80217>        Use TARJETA.vw
 Including file: TARJETA.vw    (C:\DataFlex Projects\PRESUPUESTO18\AppSrc\TARJETA.vw)
-80114>>>Use Windows.pkg
-80114>>>Use DFClient.pkg
-80114>>>Use cDbCJGrid.pkg
-80114>>>Use TARJETA.dd
-80114>>>Use cPRESUPUESTO_DataDictionary.dd
-80114>>>Use cEGRESOSDataDictionary.dd
-80114>>>Use cdbCJGridColumn.pkg
-80114>>>Use DFEntry.pkg
-80114>>>
-80114>>>Deferred_View Activate_TARJETA for ;Object TARJETA is a dbView
-80139>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
-80141>>>    End_Object
-80142>>>
-80142>>>    Object oEGRESOS_DD is a cEGRESOSDataDictionary
-80144>>>        Set DDO_Server to oPRESUPUESTO_DD
-80145>>>        
-80145>>>        Procedure OnConstrain
-80148>>>            Forward Send OnConstrain
-80150>>>            
-80150>>>            Constrain EGRESOS.TC eq TARJETA.NUMERO
-80152>>>        End_Procedure
-80153>>>        
-80153>>>    End_Object
-80154>>>
-80154>>>    Object oTARJETA_DD is a TARJETA_DataDictionary
-80156>>>    End_Object
-80157>>>
-80157>>>    Set Main_DD to oTARJETA_DD
-80158>>>    Set Server to oTARJETA_DD
-80159>>>
-80159>>>    Set Border_Style to Border_Thick
-80160>>>    Set Size to 217 479
-80161>>>    Set Location to 2 2
-80162>>>    Set Label to "TARJETA"
-80163>>>    Set Color to 16641499
-80164>>>
-80164>>>    Object oDbContainer3d1 is a dbContainer3d
-80166>>>        Set Size to 176 449
-80167>>>        Set Location to 12 15
-80168>>>
-80168>>>        Object oDbGroup1 is a dbGroup
-80170>>>            Set Size to 53 414
-80171>>>            Set Location to 7 19
-80172>>>            Set Label to "Tarjetas de Credito:"
-80173>>>
-80173>>>            Object oTARJETA_NUMERO is a dbForm
-80175>>>                Entry_Item TARJETA.NUMERO
-80176>>>                Set Location to 12 34
-80177>>>                Set Size to 13 53
-80178>>>                Set Label to "#"
-80179>>>                Set Label_Justification_Mode to JMode_Right
-80180>>>                Set Label_Col_Offset to 2
-80181>>>            End_Object
-80182>>>            Object oTARJETA_CLAVE is a dbForm
-80184>>>                Entry_Item TARJETA.CLAVE
-80185>>>                Set Location to 28 34
-80186>>>                Set Size to 13 53
-80187>>>                Set Label to "Clave:"
-80188>>>                Set Label_Col_Offset to 2
-80189>>>                Set Label_Justification_Mode to JMode_Right
-80190>>>            End_Object
-80191>>>
-80191>>>            Object oTARJETA_DESCRIPCION is a dbForm
-80193>>>                Entry_Item TARJETA.DESCRIPCION
-80194>>>                Set Location to 28 145
-80195>>>                Set Size to 13 124
-80196>>>                Set Label to "Descripcion:"
-80197>>>                Set Label_Col_Offset to 2
-80198>>>                Set Label_Justification_Mode to JMode_Right
-80199>>>            End_Object
-80200>>>
-80200>>>            Object oTARJETA_LIMITE is a dbForm
-80202>>>                Entry_Item TARJETA.LIMITE
-80203>>>                Set Location to 12 145
-80204>>>                Set Size to 13 33
-80205>>>                Set Label to "Limite TC:"
-80206>>>                Set Label_Col_Offset to 2
-80207>>>                Set Label_Justification_Mode to JMode_Right
-80208>>>            End_Object
-80209>>>
-80209>>>            Object oTARJETA_LIMITE_MAX is a dbForm
-80211>>>                Entry_Item TARJETA.LIMITE_MAX
-80212>>>                Set Location to 11 235
-80213>>>                Set Size to 13 33
-80214>>>                Set Label to "Limite Personal:"
-80215>>>                Set Label_Col_Offset to 2
-80216>>>                Set Label_Justification_Mode to JMode_Right
-80217>>>            End_Object
-80218>>>
-80218>>>            Object oTARJETA_DIA_PAGO is a dbForm
-80220>>>                Entry_Item TARJETA.DIA_PAGO
-80221>>>                Set Location to 11 319
-80222>>>                Set Size to 13 54
-80223>>>                Set Label to "D¡a Pago:"
-80224>>>                Set Label_Col_Offset to 2
-80225>>>                Set Label_Justification_Mode to JMode_Right
-80226>>>            End_Object
-80227>>>
-80227>>>            Object oTARJETA_DIA_CORTE is a dbForm
-80229>>>                Entry_Item TARJETA.DIA_CORTE
-80230>>>                Set Location to 28 319
-80231>>>                Set Size to 13 54
-80232>>>                Set Label to "D¡a Corte:"
-80233>>>                Set Label_Col_Offset to 2
-80234>>>                Set Label_Justification_Mode to JMode_Right
-80235>>>            End_Object
-80236>>>        End_Object
-80237>>>
-80237>>>        Object oDbGroup2 is a dbGroup
-80239>>>            Set Size to 104 414
-80240>>>            Set Location to 61 18
-80241>>>            Set Label to 'Movimientos'
-80242>>>
-80242>>>            Object oDbCJGrid1 is a cDbCJGrid
-80244>>>                Set Server to oEGRESOS_DD
-80245>>>                Set Size to 81 397
-80246>>>                Set Location to 14 11
-80247>>>
-80247>>>                Object oEGRESOS_TIPO is a cDbCJGridColumn
-80249>>>                    Entry_Item EGRESOS.TIPO
-80250>>>                    Set piWidth to 41
-80251>>>                    Set psCaption to "Tipo"
-80252>>>                End_Object
-80253>>>
-80253>>>                Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
-80255>>>                    Entry_Item EGRESOS.DESCRIPCION
-80256>>>                    Set piWidth to 153
-80257>>>                    Set psCaption to "Descripcion"
-80258>>>                End_Object
-80259>>>
-80259>>>                Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
-80261>>>                    Entry_Item EGRESOS.FECHA_REALIZADO
-80262>>>                    Set piWidth to 83
-80263>>>                    Set psCaption to "F.Realizado"
-80264>>>                End_Object
-80265>>>
-80265>>>                Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
-80267>>>                    Entry_Item EGRESOS.ES_FIJO_SN
-80268>>>                    Set piWidth to 38
-80269>>>                    Set psCaption to "Fijo?"
-80270>>>                    Set pbCheckbox to True
-80271>>>                End_Object
-80272>>>
-80272>>>                Object oEGRESOS_MONTO is a cDbCJGridColumn
-80274>>>                    Entry_Item EGRESOS.MONTO
-80275>>>                    Set piWidth to 72
-80276>>>                    Set psCaption to "Pagado"
-80277>>>                End_Object
-80278>>>
-80278>>>                Object oEGRESOS_MONTO_PROYECTADO is a cDbCJGridColumn
-80280>>>                    Entry_Item EGRESOS.MONTO_PROYECTADO
-80281>>>                    Set piWidth to 80
-80282>>>                    Set psCaption to "Proyectado"
-80283>>>                End_Object
-80284>>>
-80284>>>                Object oEGRESOS_PRESUPUESTO is a cDbCJGridColumn
-80286>>>                    Entry_Item PRESUPUESTO.NUMERO
-80287>>>                    Set piWidth to 87
-80288>>>                    Set psCaption to "Presupuesto"
-80289>>>                End_Object
-80290>>>
-80290>>>                Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
-80292>>>                    Entry_Item EGRESOS.PAGADO_SN
-80293>>>                    Set piWidth to 60
-80294>>>                    Set psCaption to "Pgdo?"
-80295>>>                    Set pbCheckbox to True
-80296>>>                End_Object
-80297>>>
-80297>>>                Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
-80299>>>                    Entry_Item EGRESOS.LIQUIDAR
-80300>>>                    Set piWidth to 96
-80301>>>                    Set psCaption to "Liquidar"
-80302>>>                    Set pbCheckbox to True
-80303>>>                End_Object
-80304>>>
-80304>>>                Object oEGRESOS_LIQUIDADO is a cDbCJGridColumn
-80306>>>                    Entry_Item EGRESOS.LIQUIDADO
-80307>>>                    Set piWidth to 84
-80308>>>                    Set psCaption to "Liquidado"
-80309>>>                    Set pbCheckbox to True
-80310>>>                End_Object
-80311>>>            End_Object
-80312>>>        End_Object
-80313>>>    End_Object
-80314>>>
-80314>>>Cd_End_Object
-80316>>>>
-80316>
-80316>        Procedure Activate_About
-80319>            Send DoAbout "" "" "" "" ""
-80320>        End_Procedure
-80321>        
-80321>        // VARIABLES GLOBALES / PROPERTIES
-80321>        
-80321>        Property String psFiltro ''
-80323>        Property String psOpcionPago ''
-80325>        Property Integer piOpcionVista 0
-80327>
-80327>    End_Object
-80328>
-80328>End_Object
-80329>
-80329>
-80329>Send Activate_Egresos to (oClientArea(oMain(Current_object)))
-80330>
-80330>Start_UI
-80331>
+80217>>>Use Windows.pkg
+80217>>>Use DFClient.pkg
+80217>>>Use cDbCJGrid.pkg
+80217>>>Use TARJETA.dd
+80217>>>Use cPRESUPUESTO_DataDictionary.dd
+80217>>>Use cEGRESOSDataDictionary.dd
+80217>>>Use cTIPO_GASTO_DataDictionary.dd
+80217>>>Use cdbCJGridColumn.pkg
+80217>>>Use DFEntry.pkg
+80217>>>
+80217>>>Deferred_View Activate_TARJETA for ;Object TARJETA is a dbView
+80242>>>    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
+80244>>>    End_Object
+80245>>>
+80245>>>    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
+80247>>>    End_Object
+80248>>>
+80248>>>    Object oEGRESOS_DD is a cEGRESOSDataDictionary
+80250>>>        Set DDO_Server to oPRESUPUESTO_DD
+80251>>>        
+80251>>>        Procedure OnConstrain
+80254>>>            Forward Send OnConstrain
+80256>>>                Local String @Filtro
+80256>>>                Set pbUseDDSQLFilters to True
+80257>>>                
+80257>>>                Move " TC <> 0 AND FORMA_PAGO = 'TC'" to @Filtro
+80258>>>                
+80258>>>                Set psSQLFilter to @Filtro
+80259>>>        End_Procedure
+80260>>>        
+80260>>>    End_Object
+80261>>>
+80261>>>    Object oTARJETA_DD is a TARJETA_DataDictionary
+80263>>>    End_Object
+80264>>>
+80264>>>    Set Main_DD to oTARJETA_DD
+80265>>>    Set Server to oTARJETA_DD
+80266>>>
+80266>>>    Set Border_Style to Border_Thick
+80267>>>    Set Size to 217 479
+80268>>>    Set Location to 2 2
+80269>>>    Set Label to "TARJETA"
+80270>>>    Set Color to 16641499
+80271>>>
+80271>>>    Object oDbContainer3d1 is a dbContainer3d
+80273>>>        Set Size to 176 449
+80274>>>        Set Location to 12 15
+80275>>>
+80275>>>        Object oDbGroup1 is a dbGroup
+80277>>>            Set Size to 53 414
+80278>>>            Set Location to 7 19
+80279>>>            Set Label to "Tarjetas de Credito:"
+80280>>>
+80280>>>            Object oTARJETA_NUMERO is a dbForm
+80282>>>                Use TARJETAS.sl
+80282>>>                Entry_Item TARJETA.NUMERO
+80283>>>                Set Location to 12 34
+80284>>>                Set Size to 13 53
+80285>>>                Set Label to "#"
+80286>>>                Set Label_Justification_Mode to JMode_Right
+80287>>>                Set Label_Col_Offset to 2
+80288>>>                Set Prompt_Button_Mode to PB_PromptOn
+80289>>>                Set Prompt_Object to TARJETAS_SL
+80290>>>            End_Object
+80291>>>            Object oTARJETA_CLAVE is a dbForm
+80293>>>                Entry_Item TARJETA.CLAVE
+80294>>>                Set Location to 28 34
+80295>>>                Set Size to 13 53
+80296>>>                Set Label to "Clave:"
+80297>>>                Set Label_Col_Offset to 2
+80298>>>                Set Label_Justification_Mode to JMode_Right
+80299>>>            End_Object
+80300>>>
+80300>>>            Object oTARJETA_DESCRIPCION is a dbForm
+80302>>>                Entry_Item TARJETA.DESCRIPCION
+80303>>>                Set Location to 28 145
+80304>>>                Set Size to 13 124
+80305>>>                Set Label to "Descripcion:"
+80306>>>                Set Label_Col_Offset to 2
+80307>>>                Set Label_Justification_Mode to JMode_Right
+80308>>>            End_Object
+80309>>>
+80309>>>            Object oTARJETA_LIMITE is a dbForm
+80311>>>                Entry_Item TARJETA.LIMITE
+80312>>>                Set Location to 12 145
+80313>>>                Set Size to 13 33
+80314>>>                Set Label to "Limite TC:"
+80315>>>                Set Label_Col_Offset to 2
+80316>>>                Set Label_Justification_Mode to JMode_Right
+80317>>>            End_Object
+80318>>>
+80318>>>            Object oTARJETA_LIMITE_MAX is a dbForm
+80320>>>                Entry_Item TARJETA.LIMITE_MAX
+80321>>>                Set Location to 11 235
+80322>>>                Set Size to 13 33
+80323>>>                Set Label to "Limite Personal:"
+80324>>>                Set Label_Col_Offset to 2
+80325>>>                Set Label_Justification_Mode to JMode_Right
+80326>>>            End_Object
+80327>>>
+80327>>>            Object oTARJETA_DIA_PAGO is a dbForm
+80329>>>                Entry_Item TARJETA.DIA_PAGO
+80330>>>                Set Location to 11 319
+80331>>>                Set Size to 13 54
+80332>>>                Set Label to "D¡a Pago:"
+80333>>>                Set Label_Col_Offset to 2
+80334>>>                Set Label_Justification_Mode to JMode_Right
+80335>>>            End_Object
+80336>>>
+80336>>>            Object oTARJETA_DIA_CORTE is a dbForm
+80338>>>                Entry_Item TARJETA.DIA_CORTE
+80339>>>                Set Location to 28 319
+80340>>>                Set Size to 13 54
+80341>>>                Set Label to "D¡a Corte:"
+80342>>>                Set Label_Col_Offset to 2
+80343>>>                Set Label_Justification_Mode to JMode_Right
+80344>>>            End_Object
+80345>>>        End_Object
+80346>>>
+80346>>>        Object oDbGroup2 is a dbGroup
+80348>>>            Set Size to 104 414
+80349>>>            Set Location to 61 18
+80350>>>            Set Label to 'Movimientos'
+80351>>>
+80351>>>            Object oDbCJGrid1 is a cDbCJGrid
+80353>>>                Set Server to oEGRESOS_DD
+80354>>>                Set Size to 81 397
+80355>>>                Set Location to 14 11
+80356>>>
+80356>>>                Object oEGRESOS_TIPO is a cDbCJGridColumn
+80358>>>                    Entry_Item EGRESOS.TIPO
+80359>>>                    Set piWidth to 41
+80360>>>                    Set psCaption to "Tipo"
+80361>>>                End_Object
+80362>>>
+80362>>>                Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
+80364>>>                    Entry_Item EGRESOS.DESCRIPCION
+80365>>>                    Set piWidth to 153
+80366>>>                    Set psCaption to "Descripcion"
+80367>>>                End_Object
+80368>>>
+80368>>>                Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
+80370>>>                    Entry_Item EGRESOS.FECHA_REALIZADO
+80371>>>                    Set piWidth to 83
+80372>>>                    Set psCaption to "F.Realizado"
+80373>>>                End_Object
+80374>>>
+80374>>>//                Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
+80374>>>//                    Entry_Item EGRESOS.ES_FIJO_SN
+80374>>>//                    Set piWidth to 38
+80374>>>//                    Set psCaption to "Fijo?"
+80374>>>//                    Set pbCheckbox to True
+80374>>>//                End_Object
+80374>>>
+80374>>>//                Object oEGRESOS_MONTO is a cDbCJGridColumn
+80374>>>//                    Entry_Item EGRESOS.MONTO
+80374>>>//                    Set piWidth to 72
+80374>>>//                    Set psCaption to "Pagado"
+80374>>>//                End_Object
+80374>>>
+80374>>>                Object oEGRESOS_MONTO is a cDbCJGridColumn
+80376>>>                    Entry_Item EGRESOS.MONTO
+80377>>>                    Set piWidth to 80
+80378>>>                    Set psCaption to "Pagado"
+80379>>>                End_Object
+80380>>>
+80380>>>                Object oEGRESOS_PRESUPUESTO is a cDbCJGridColumn
+80382>>>                    Entry_Item PRESUPUESTO.NUMERO
+80383>>>                    Set piWidth to 87
+80384>>>                    Set psCaption to "Presupuesto"
+80385>>>                End_Object
+80386>>>
+80386>>>//                Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
+80386>>>//                    Entry_Item EGRESOS.PAGADO_SN
+80386>>>//                    Set piWidth to 60
+80386>>>//                    Set psCaption to "Pgdo?"
+80386>>>//                    Set pbCheckbox to True
+80386>>>//                End_Object
+80386>>>
+80386>>>                Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
+80388>>>                    Entry_Item EGRESOS.LIQUIDAR
+80389>>>                    Set piWidth to 96
+80390>>>                    Set psCaption to "Liquidar"
+80391>>>                    Set pbCheckbox to True
+80392>>>                End_Object
+80393>>>
+80393>>>                Object oEGRESOS_LIQUIDADO is a cDbCJGridColumn
+80395>>>                    Entry_Item EGRESOS.LIQUIDADO
+80396>>>                    Set piWidth to 84
+80397>>>                    Set psCaption to "Liquidado"
+80398>>>                    Set pbCheckbox to True
+80399>>>                End_Object
+80400>>>            End_Object
+80401>>>        End_Object
+80402>>>    End_Object
+80403>>>
+80403>>>Cd_End_Object
+80405>>>>
+80405>
+80405>        Procedure Activate_About
+80408>            Send DoAbout "" "" "" "" ""
+80409>        End_Procedure
+80410>        
+80410>        // VARIABLES GLOBALES / PROPERTIES
+80410>        
+80410>        Property String psFiltro ''
+80412>        Property String psOpcionPago ''
+80414>        Property Integer piOpcionVista 0
+80416>
+80416>    End_Object
+80417>
+80417>End_Object
+80418>
+80418>
+80418>Send Activate_Egresos to (oClientArea(oMain(Current_object)))
+80419>
+80419>Start_UI
+80420>
 Summary
-Memory Available: 2147483647
+Memory Available: 39239680
 Total Warnings : 0
 Total Errors   : 0
-Total Symbols  : 45123
+Total Symbols  : 45148
 Total Resources: 0
-Total Commands : 80330
+Total Commands : 80419
 Total Windows  : 1
 Total Pages    : 1
-Static Data    : 489257
-Message area   : 561108
-Total Blocks   : 28709
+Static Data    : 489833
+Message area   : 561419
+Total Blocks   : 28733

@@ -4,11 +4,15 @@ Use cDbCJGrid.pkg
 Use TARJETA.dd
 Use cPRESUPUESTO_DataDictionary.dd
 Use cEGRESOSDataDictionary.dd
+Use cTIPO_GASTO_DataDictionary.dd
 Use cdbCJGridColumn.pkg
 Use DFEntry.pkg
 
 Deferred_View Activate_TARJETA for ;
 Object TARJETA is a dbView
+    Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
+    End_Object
+
     Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
     End_Object
 
@@ -17,8 +21,12 @@ Object TARJETA is a dbView
         
         Procedure OnConstrain
             Forward Send OnConstrain
-            
-            Constrain EGRESOS.TC eq TARJETA.NUMERO
+                Local String @Filtro
+                Set pbUseDDSQLFilters to True
+                
+                Move " TC <> 0 AND FORMA_PAGO = 'TC'" to @Filtro
+                
+                Set psSQLFilter to @Filtro
         End_Procedure
         
     End_Object
@@ -45,12 +53,15 @@ Object TARJETA is a dbView
             Set Label to "Tarjetas de Credito:"
 
             Object oTARJETA_NUMERO is a dbForm
+                Use TARJETAS.sl
                 Entry_Item TARJETA.NUMERO
                 Set Location to 12 34
                 Set Size to 13 53
                 Set Label to "#"
                 Set Label_Justification_Mode to JMode_Right
                 Set Label_Col_Offset to 2
+                Set Prompt_Button_Mode to PB_PromptOn
+                Set Prompt_Object to TARJETAS_SL
             End_Object
             Object oTARJETA_CLAVE is a dbForm
                 Entry_Item TARJETA.CLAVE
@@ -135,23 +146,23 @@ Object TARJETA is a dbView
                     Set psCaption to "F.Realizado"
                 End_Object
 
-                Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
-                    Entry_Item EGRESOS.ES_FIJO_SN
-                    Set piWidth to 38
-                    Set psCaption to "Fijo?"
-                    Set pbCheckbox to True
-                End_Object
+//                Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
+//                    Entry_Item EGRESOS.ES_FIJO_SN
+//                    Set piWidth to 38
+//                    Set psCaption to "Fijo?"
+//                    Set pbCheckbox to True
+//                End_Object
+
+//                Object oEGRESOS_MONTO is a cDbCJGridColumn
+//                    Entry_Item EGRESOS.MONTO
+//                    Set piWidth to 72
+//                    Set psCaption to "Pagado"
+//                End_Object
 
                 Object oEGRESOS_MONTO is a cDbCJGridColumn
                     Entry_Item EGRESOS.MONTO
-                    Set piWidth to 72
-                    Set psCaption to "Pagado"
-                End_Object
-
-                Object oEGRESOS_MONTO_PROYECTADO is a cDbCJGridColumn
-                    Entry_Item EGRESOS.MONTO_PROYECTADO
                     Set piWidth to 80
-                    Set psCaption to "Proyectado"
+                    Set psCaption to "Pagado"
                 End_Object
 
                 Object oEGRESOS_PRESUPUESTO is a cDbCJGridColumn
@@ -160,12 +171,12 @@ Object TARJETA is a dbView
                     Set psCaption to "Presupuesto"
                 End_Object
 
-                Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
-                    Entry_Item EGRESOS.PAGADO_SN
-                    Set piWidth to 60
-                    Set psCaption to "Pgdo?"
-                    Set pbCheckbox to True
-                End_Object
+//                Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
+//                    Entry_Item EGRESOS.PAGADO_SN
+//                    Set piWidth to 60
+//                    Set psCaption to "Pgdo?"
+//                    Set pbCheckbox to True
+//                End_Object
 
                 Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
                     Entry_Item EGRESOS.LIQUIDAR

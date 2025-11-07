@@ -10,8 +10,6 @@ Class TARJETA_DataDictionary is a DataDictionary
         Forward Send Construct_Object
         Set Main_File to TARJETA.File_Number
 
-        Set Add_Client_File to EGRESOS.File_Number
-
         Set Add_System_File to NPROX.File_Number DD_Lock_On_All
 
         Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True

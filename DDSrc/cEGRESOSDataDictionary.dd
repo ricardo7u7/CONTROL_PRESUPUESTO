@@ -41,7 +41,6 @@ Class cEGRESOSDataDictionary is a DataDictionary
 
         Set Add_Server_File to TIPO_GASTO.File_Number
         Set Add_Server_File to PRESUPUESTO.File_Number
-        Set Add_Server_File to TARJETA.File_Number
 
         Set Add_Client_File to SUB_EGRESOS.File_Number
 

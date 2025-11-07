@@ -9,14 +9,11 @@ Use dfTabDlg.pkg
 Use TARJETAS.sl
 Use cPRESUPUESTO_DataDictionary.dd
 Use cTIPO_GASTO_DataDictionary.dd
-Use TARJETA.dd
 Use cEGRESOSDataDictionary.dd
 Use SUB_EGRESOS.dd
 
 Deferred_View Activate_Egresos for ;
 Object Egresos is a dbView
-    Object oTARJETA_DD is a TARJETA_DataDictionary
-    End_Object
 
     Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
     End_Object
@@ -29,7 +26,6 @@ Object Egresos is a dbView
     End_Object
 
     Object oEGRESOS_DD is a cEGRESOSDataDictionary
-        Set DDO_Server to oTARJETA_DD
         Set Constrain_file to PRESUPUESTO.File_number
         Set DDO_Server to oPRESUPUESTO_DD
         Set DDO_Server to oTIPO_GASTO_DD
@@ -278,6 +274,35 @@ Object Egresos is a dbView
                 Entry_Item EGRESOS.NUMERO
                 Set piWidth to 34
                 Set psCaption to "#"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                        Local String sQ 
+                        Local Handle hdbc69 hstmt69
+                        Local Integer iProx iNumero
+                        
+                        Get Value item 0 to iNumero
+                        
+                        If (iNumero eq 0 and PRESUPUESTO.Recnum ne 0) Begin
+                            Move '' to sQ
+                            Move 0  to iProx
+                            Append sQ " SELECT MAX(NUMERO) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO 
+                            SQLFileConnect EGRESOS to hdbc69
+                            SQLOpen hdbc69 to hstmt69
+                            SQLExecDirect hstmt69 sQ
+                            Repeat
+                               SQLFileFetch hstmt69
+                               If (SQLResult) Begin
+                                  Get SQLColumnValue of hstmt69   1 to iProx
+                               End
+                            Until (not(SQLResult))
+                            SQLClose hstmt69
+                            SQLDisconnect hdbc69
+                            
+                            Set Value of oEGRESOS_NUMERO to (iProx+1)
+                        End 
+                End_Procedure
+
                 //Set pbEditable to False
             End_Object
 
@@ -287,18 +312,45 @@ Object Egresos is a dbView
                 Set psCaption to "Tipo"
                 Set pbCapslock to True 
                 Set Prompt_Button_Mode to PB_PromptOn
+
+                Procedure OnExit
+                    Forward Send OnExit
+                    Local String sTipoEgreso 
+                    Get Value item 1 to sTipoEgreso
+                    
+                    Clear TIPO_GASTO
+                    Move sTipoEgreso to TIPO_GASTO.CLAVE
+                    Find eq TIPO_GASTO by Index.2
+                End_Procedure
             End_Object
 
             Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
                 Entry_Item EGRESOS.DESCRIPCION
                 Set piWidth to 234
                 Set psCaption to "Descripcion"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                    Local String sDescripcion
+                    
+                    Get Value item 2 to sDescripcion
+                    If (sDescripcion eq '') Set Value of oEGRESOS_DESCRIPCION to  TIPO_GASTO.DESCRIPCION 
+                End_Procedure
             End_Object
 
             Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
                 Entry_Item EGRESOS.FECHA_REALIZADO
                 Set piWidth to 83
                 Set psCaption to "Fecha"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                    Local Date dSysdate dFecha
+                    Sysdate dSysdate
+                    
+                    Get value of oEGRESOS_FECHA_REALIZADO to dFecha
+                    If (dFecha eq '') Set Value of oEGRESOS_FECHA_REALIZADO to dSysdate
+                End_Procedure
             End_Object
 
             Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
@@ -337,10 +389,13 @@ Object Egresos is a dbView
 
                 Procedure OnExit
                     Forward Send OnExit
+                    Local String sFma_pago sLiquidado
+                    Get Value item 8 to sFma_pago
+                    Get Value item 10 to sLiquidado
                     
-                    If (EGRESOS.FORMA_PAGO eq 'TC') Begin
-                        Send Popup to oPanel_TC
-                    End
+//                    If (sFma_pago eq 'TC' and sLiquidado ne 'S') Begin
+//                        Send Popup to oPanel_TC
+//                    End
                 End_Procedure
             End_Object
 
@@ -395,6 +450,15 @@ Object Egresos is a dbView
                     Entry_Item SUB_EGRESOS.DESCRIPCION
                     Set piWidth to 345
                     Set psCaption to "Descripcion"
+
+                    Procedure OnEntry
+                        Forward Send OnEntry
+                        Local String sDescripcion
+                        Local Date dSysdate
+                        Sysdate dSysdate
+                        Get Value of oSUB_EGRESOS_DESCRIPCION to sDescripcion
+                        If (sDescripcion eq '') Set Value of  oSUB_EGRESOS_DESCRIPCION to (TIPO_GASTO.DESCRIPCION+ String(dSysdate))
+                    End_Procedure
                 End_Object
     
                 Object oSUB_EGRESOS_MONTO is a cDbCJGridColumn
@@ -448,10 +512,65 @@ Object Egresos is a dbView
             Set Label to "PRESUPUESTO"
 
             Object oPRESUPUESTO_NUMERO is a dbForm
+                Use PRESUPUESTO.sl
                 Entry_Item PRESUPUESTO.NUMERO
                 Set Location to 10 83
                 Set Size to 13 48
                 Set Label to "N£mero:"
+                Set Label_Col_Offset to 2
+                Set Label_Justification_Mode to JMode_Right
+                Set Prompt_Button_Mode to PB_PromptOn
+                Set Prompt_Object to PRESUPUESTO_SL
+
+                Procedure Exiting Handle hoDestination Returns Integer
+                    Integer iRetVal
+                    Forward Get msg_Exiting hoDestination to iRetVal
+                    Local Integer iNumero_presupuesto
+                    Get Value of oPRESUPUESTO_NUMERO to iNumero_presupuesto
+                    
+                    If (iNumero_presupuesto ne 0 or iNumero_presupuesto ne '') Begin
+                        Clear PRESUPUESTO
+                        Move iNumero_presupuesto to PRESUPUESTO.NUMERO
+                        Find eq PRESUPUESTO by Index.1
+                        If [not Found] Begin
+                            Send Stop_Box 'Numero presupuesto Inv lido...' "!"
+                            Move 1 to iRetVal
+                        End
+                        Else Begin
+                            Send Request_Find of oPRESUPUESTO_DD GE PRESUPUESTO.File_Number 1 
+                        End
+                    End
+                    
+                    
+                    Procedure_Return iRetVal
+                End_Procedure
+            End_Object
+
+            Object oPRESUPUESTO_CLAVE is a dbForm
+                Entry_Item PRESUPUESTO.CLAVE
+                Set Location to 10 173
+                Set Size to 13 48
+                Set Label to "Clave:"
+                Set Label_Justification_Mode to JMode_Right
+                Set Label_Col_Offset to 2
+            End_Object
+
+            Object oPRESUPUESTO_VLR_EFECTIVO is a dbForm
+                Entry_Item PRESUPUESTO.VLR_EFECTIVO
+                Set Location to 25 83
+                Set Size to 13 48
+                Set Label to "Efectivo"
+                Set Numeric_Mask 0 to 4 2
+                Set Label_Col_Offset to 2
+                Set Label_Justification_Mode to JMode_Right
+            End_Object
+
+            Object oPRESUPUESTO_VLR_QUINCENA is a dbForm
+                Entry_Item PRESUPUESTO.VLR_QUINCENA
+                Set Location to 25 173
+                Set Size to 13 48
+                Set Label to "Quincena"
+                Set Numeric_Mask 0 to 4 2
                 Set Label_Col_Offset to 2
                 Set Label_Justification_Mode to JMode_Right
             End_Object
@@ -470,32 +589,13 @@ Object Egresos is a dbView
                 Set Label to "Fecha Fin:"
                 Set Label_Col_Offset to 2
                 Set Label_Justification_Mode to JMode_Right
-            End_Object
-            Object oPRESUPUESTO_CLAVE is a dbForm
-                Entry_Item PRESUPUESTO.CLAVE
-                Set Location to 10 173
-                Set Size to 13 48
-                Set Label to "Clave:"
-                Set Label_Justification_Mode to JMode_Right
-                Set Label_Col_Offset to 2
-            End_Object
-            Object oPRESUPUESTO_VLR_QUINCENA is a dbForm
-                Entry_Item PRESUPUESTO.VLR_QUINCENA
-                Set Location to 25 173
-                Set Size to 13 48
-                Set Label to "Quincena"
-                Set Numeric_Mask 0 to 4 2
-                Set Label_Col_Offset to 2
-                Set Label_Justification_Mode to JMode_Right
-            End_Object
-            Object oPRESUPUESTO_VLR_EFECTIVO is a dbForm
-                Entry_Item PRESUPUESTO.VLR_EFECTIVO
-                Set Location to 25 83
-                Set Size to 13 48
-                Set Label to "Efectivo"
-                Set Numeric_Mask 0 to 4 2
-                Set Label_Col_Offset to 2
-                Set Label_Justification_Mode to JMode_Right
+
+                Procedure Exiting Handle hoDestination Returns Integer
+                    Integer iRetVal
+                    Forward Get msg_Exiting hoDestination to iRetVal
+                    Send Request_Save of oPRESUPUESTO_DD
+                    Procedure_Return iRetVal
+                End_Procedure
             End_Object
         End_Object
 
@@ -503,6 +603,7 @@ Object Egresos is a dbView
             Set Size to 37 360
             Set Location to 50 6
             Set Border_Style to Border_StaticEdge
+            Set Enabled_State to False
 
             Object oTOTAL_INGRESOS is a Form
                 Set Size to 13 47
