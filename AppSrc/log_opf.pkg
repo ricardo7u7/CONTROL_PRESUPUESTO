@@ -1,0 +1,59 @@
+
+//Function Graba_LOG_OP Global  String _@sUsuario String _@sModulo String _@sOperacion String _@sObservacion //Returns integer 
+Procedure Graba_LOG_OP3 Global  String _@sUsuario String _@sModulo String _@sOperacion String _@sObservacion Integer _Num_Recn Integer _Numero String _Tipo //Returns integer String _@sObservacion 
+ 
+    
+    Local Date      _@dhoy
+    Local Number   _@nHora _@nMin 
+                                
+    Sysdate4 _@dhoy _@nHora _@nMin 
+    Open LOG_OP
+         
+    Clear LOG_OP        
+    Move _@sUsuario                 to LOG_OP.USUARIO
+    Move _@dhoy                     to LOG_OP.FECHA
+    Move (_@nHora + (_@nMin/100))   to LOG_OP.HORA
+    Move _@sModulo                  to LOG_OP.ARCHIVO        
+    Move _@sOperacion               to LOG_OP.OPERACION 
+    Move _@sObservacion             to LOG_OP.DESCRIPCION 
+    Move _Numero                    to LOG_OP.NUMERO_TRANSAC
+    Move _Num_Recn                  to LOG_OP.NUMERO_RECNUM
+    Move _Tipo                      to LOG_OP.TIPO_TRANSAC 
+    SaveRecord LOG_OP 
+    //Function_Return 0 
+ 
+End_Procedure 
+//End_Function 
+ 
+ 
+ //DMAF 
+ 
+ Procedure  Graba_Log_Op2 String sOperacion String sOpcion  Integer iRecnum String sTipo String sNumero String sObservaciones
+    Open DEFAULTS
+    Local String  sXUsuario
+    Local String  sQ
+    Local Handle  hdbc2 hstmt2
+    Local Date      _@dhoy
+    Local Number   _@nHora _@nMin 
+                                
+    Sysdate4 _@dhoy _@nHora _@nMin 
+    
+    Move '' to sXUsuario
+    
+    Get PSEG_USUARIO to sXUsuario    
+
+    Move "" to sQ
+    Append sQ " INSERT INTO LOG_OP (FECHA, HORA,OPERACION, USUARIO, ARCHIVO, NUMERO_RECNUM, TIPO_TRANSAC, NUMERO_TRANSAC, DESCRIPCION) "
+    Append sQ " SELECT GETDATE(), " (_@nHora + (_@nMin/100)) "," 
+    Append sQ "'" (Trim(sOperacion)) "','" (Trim(sXUsuario)) "','" (Trim(sOpcion)) "' ," iRecNum 
+    Append sQ ",'" (Trim(sTipo)) "','" (Trim(sNumero)) "','" (Trim(sObservaciones)) "'"
+    SQLFileConnect DEFAULTS to hdbc2
+    SQLOpen hdbc2 to hstmt2
+    SQLExecDirect hstmt2 sQ    
+    SQLClose hstmt2
+    SQLDisconnect hdbc2 
+
+End_Procedure 
+ 
+ 
+ 

@@ -1,0 +1,90 @@
+Use DataDict.pkg
+
+Open EGRESOS
+Open PRESUPUESTO
+Open SUB_EGRESOS
+Open TIPO_GASTO
+Open TARJETA
+
+Register_Object TIPO_GASTO_SL
+Register_Object TARJETAS_SL
+
+Class cEGRESOSDataDictionary is a DataDictionary
+    
+        Procedure OnConstrain
+            Forward Send OnConstrain
+            Set pbUseDDSQLFilters to True
+            Local String @Filtro @Filtro2 @Tipo_Gasto
+            Local Integer @Vista 
+            
+            Move '' to @Filtro2
+            
+            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
+            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
+            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
+            
+            If (@Filtro ne '') Begin
+                Append @Filtro2 @Filtro 
+            End
+            
+            If (@Tipo_Gasto ne 'TODOS') Begin
+                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+            End
+            
+            Set psSQLFilter to @Filtro2
+        End_Procedure
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to EGRESOS.File_Number
+
+        Set Add_Server_File to TIPO_GASTO.File_Number
+        Set Add_Server_File to PRESUPUESTO.File_Number
+        Set Add_Server_File to TARJETA.File_Number
+
+        Set Add_Client_File to SUB_EGRESOS.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Prompt_Object Field EGRESOS.TIPO to TIPO_GASTO_SL
+
+        Set Field_Class_Name Field EGRESOS.ES_FIJO_SN to "Checkbox"
+        Set Field_Checkbox_Values Field EGRESOS.ES_FIJO_SN to "S" "N"
+
+        Set Field_Class_Name Field EGRESOS.PAGADO_SN to "Checkbox"
+        Set Field_Checkbox_Values Field EGRESOS.PAGADO_SN to "S" "N"
+
+        Set Field_Value_Check Field EGRESOS.FORMA_PAGO to "EF|TC|TD"
+
+        Set Field_Checkbox_Values Field EGRESOS.MARCAR to "S" "N"
+
+        Set Field_Class_Name Field EGRESOS.LIQUIDAR to "Checkbox"
+        Set Field_Checkbox_Values Field EGRESOS.LIQUIDAR to "S" "N"
+
+        Set Field_Checkbox_Values Field EGRESOS.LIQUIDADO to "S" "N"
+        Set Field_Class_Name Field EGRESOS.LIQUIDADO to "Checkbox"
+
+        Set Field_Prompt_Object Field EGRESOS.TC to TARJETAS_SL
+
+    End_Procedure
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+        Set Field_Changed_Value Field EGRESOS.ES_FIJO_SN to "N"
+        Set Field_Changed_Value Field EGRESOS.PAGADO_SN to "N"
+        Set Field_Changed_Value Field EGRESOS.MARCAR to "N"
+        Set Field_Changed_Value Field EGRESOS.LIQUIDAR to "N"
+        Set Field_Changed_Value Field EGRESOS.LIQUIDADO to "N"
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use TARJETAS.sl
+Use TIPO_GASTO.sl
+#ENDIF

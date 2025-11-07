@@ -1,0 +1,31 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  EXIST.PKG                                                       //
+//  Funci¢n creada para calcular existencia de recursos.            //
+//  CLIENTE: THYSSENKRUP                                            //
+//  CREADO : MRRR                                                   //
+//  FECHA  : 05/10/2004                                             //
+//  ULTIMA MODIFICACION: 05/10/2004                                 //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+Function Calcula_Existencia Global Number nExistencia_Recurso Returns Number 
+    Local Number nExistencia
+ // Inicializa Variable 
+    Move 0.00 to nExistencia
+    Clear RECURSO
+    Move nExistencia_Recurso to RECURSO.NUMERO
+    Find eq RECURSO by Index.1
+    If [ Found ] Begin
+        Clear AC_EXMES
+        Move DEFAULTS.BODEGA_DESPACHO to AC_EXMES.BODEGA
+        Move RECURSO.NUMERO           to AC_EXMES.RECURSO
+        Move '12/12/2090'             to AC_EXMES.FECHA_FIN_MES
+        Find lt AC_EXMES by Index.1
+        [Found] Indicate Found as ((AC_EXMES.BODEGA eq DEFAULTS.BODEGA_DESPACHO) and (AC_EXMES.RECURSO eq RECURSO.NUMERO))
+        [Found] Move (AC_EXMES.EX_INICIAL + AC_EXMES.ENTR_MES - AC_EXMES.SAL_MES) to nExistencia
+    End     
+    Function_Return nExistencia  
+End_Function 
+ 
+ 

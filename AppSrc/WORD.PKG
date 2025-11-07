@@ -1,0 +1,17 @@
+//****************** Para uso de documentos word **************************
+Use wwmerge.pkg
+Register_Object Delta
+    Object Delta is a WordMailMerge No_Image "WComm"
+End_Object
+
+Register_Object Especificaciones_en_Word
+    Object Especificaciones_en_Word  is a WordMailMerge No_Image "WComm"
+End_Object
+
+Register_Object Help_Word // Help en Word
+    Object Help_Word  is a WordMailMerge No_Image "WComm"
+End_Object // Help en Word 
+
+// ***********************************************************************
+ 
+ 

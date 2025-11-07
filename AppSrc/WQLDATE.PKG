@@ -1,0 +1,41 @@
+// WQldate.Inc
+// Funcion que regresa el formato de fecha que tenga el sistema de Windows y regresa en formato
+// de WinQl.
+ 
+  Function WQldate Global Date dFecha2 Returns String
+       Local String  sFecha
+       Local Integer iFormato
+ 
+       Get_date_format to iformato
+       
+       If iFormato eq 0 Begin  // Fecha formato usa mes/dia/a¤o 
+           Move 'Date('  to sFecha
+           Append sFecha (Mid(dFecha2,4,7))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,1))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,4)) ')'
+       End
+       If iformato eq 1 Begin  // Fecha formato europeo dia/mes/a¤o
+           Move 'Date('  to sFecha
+           Append sFecha (Mid(dFecha2,4,7))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,4))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,1)) ')'
+       End
+       If iformato eq 2 Begin  // Fecha formato militar a¤o/mes/dia
+           Move 'Date('  to sFecha
+           Append sFecha (Mid(dFecha2,4,1))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,6))
+           Append sFecha ', '
+           Append sFecha (Mid(dFecha2,2,9)) ')'
+       End
+ 
+       Function_Return sFecha
+   End_Function
+ 
+ 
+ 
+ 

@@ -1,0 +1,54 @@
+// *************************************************************************
+// * ORDENACO.PKG Funci¢n para ordenar c¢digos dentro de un String         * 
+// * JEBA 19/03/2001                                                       * 
+// * Ultima modificaci¢n 19/03/2001                                        * 
+// ************************************************************************* 
+
+Function OrdenaCo Global String sArreglo1 String sReng1 Returns String 
+
+    Local String sArreglo2
+    Local String sArreglo3 sReng2 sReng3 
+    Local String sCodigo_actual 
+    Local String sCodigo_menor 
+    Local String sReng_menor 
+    Local Integer pos_Codigo_menor 
+    Local String sTecla 
+    Local Integer iTamanio iTamanio3 
+    Local Integer i x @posicion // vgp 
+
+    Move (Length(sArreglo1)) to iTamanio
+ 
+    Move '' to sArreglo3
+    Move '' to sReng3 
+    While ((Length(sArreglo3)) lt iTamanio) 
+        Move 1 to x 
+        Move sArreglo1 to sArreglo2 
+        Move sReng1 to sReng2 
+
+        While (x le iTamanio)
+            Move (Mid(sArreglo1,7,x)) to sCodigo_actual
+            Move 'ZZZZZZZ' to sCodigo_menor
+            Move 1 to i
+            While (i le (length(sArreglo2)/7)) 
+                If (Mid(sArreglo2,7,((i*7)-6))) lt sCodigo_menor Begin
+                    Move (Mid(sArreglo2,7,((i*7)-6))) to sCodigo_menor 
+                    Move (Mid(sReng2,4,((i*4)-3))) to sReng_menor 
+                    Move i to @posicion // vgp 
+                End 
+                //Move (i+7) to i 
+                Increment i 
+            Loop    
+            Append sArreglo3 sCodigo_menor 
+            Append sReng3 sReng_menor 
+            Replace sCodigo_menor in sArreglo2 with '' 
+            //Replace sReng_menor in sReng2 with '' // vgp 
+            If @posicion gt 1 Move (Left(sReng2,(@posicion-1)*4) + Mid(sReng2,iTamanio,(@posicion*4)+1)) to sReng2 
+            Else Move (Mid(sReng2,iTamanio,(@posicion*4)+1)) to sReng2 
+            Move (x+7) to x 
+        Loop 
+    Loop 
+    Function_Return sReng3 
+End_Function 
+
+ 
+ 

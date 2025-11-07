@@ -1,0 +1,38 @@
+-----------------------------------------------------------------------------
+  DATE: 06/10/2025      TIME: 08:26                                  PAGE:  1
+  FILE DEFINITION FOR FILE: INGRESOS (# 11)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:INGRESOS
+  USER DISPLAY NAME         : INGRESOS
+  DATAFLEX FILE NAME        : INGRESOS
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 162       ( USED: 162 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 0 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 1 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  1   
+  2  CLAVE            ASC     10    12  2   
+  3  TIPO             ASC      3    22      
+  4  DESCRIPCION      ASC    100    25      
+  5  ES_FIJO_SN       ASC      1   125      
+  6  FECHA_INGRESO    DAT     10   126      
+  7  MONTO            NUM   10.2   149      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       1     ON-LINE
+
+  2    CLAVE           NO  NO       0      0       1     ON-LINE
+

@@ -1,0 +1,110 @@
+Use DFAllEnt.pkg
+Use cCJStandardCommandBarSystem.pkg
+
+Object oHtmlHelp is a cHtmlHelp
+End_Object
+
+Object oApplication is a cApplication
+    Set peHelpType to htHtmlHelp
+End_Object
+
+Object oToolTipController is a cToolTipController
+    Move Self to ghoToolTipController
+End_Object
+
+Use oEditContextMenu.pkg
+Use oDEOEditContextMenu17.pkg
+
+Object oMain is a Panel
+    Set Label to "CUBE Systems"
+    Set Location to 4 3
+    Set Size to 300 450
+       
+//FUNCIONES GLOBALES
+Function fSQL_date Global Date d_Fecha Returns String
+    Local String  s_Fecha
+    Local Integer i_Formato
+
+    Get_date_format to i_formato
+
+    Move "'" to s_Fecha
+    //Move "" to s_Fecha
+
+    If i_Formato eq 0 Begin  // Fecha formato USA mes/dia/año
+        Append s_Fecha (Mid(d_Fecha,4,7))
+        Append s_Fecha (Mid(d_Fecha,2,1))
+        Append s_Fecha (Mid(d_Fecha,2,4))
+    End
+    If i_formato eq 1 Begin  // Fecha formato europeo dia/mes/año
+        Append s_Fecha (Mid(d_Fecha,4,7))
+        Append s_Fecha (Mid(d_Fecha,2,4))
+        Append s_Fecha (Mid(d_Fecha,2,1))
+    End
+    If i_formato eq 2 Begin  // Fecha formato militar año/mes/dia
+        Append s_Fecha (Mid(d_Fecha,4,1))
+        Append s_Fecha (Mid(d_Fecha,2,6))
+        Append s_Fecha (Mid(d_Fecha,2,9))
+    End
+
+    Append s_Fecha "'"
+    Function_Return s_Fecha
+End_Function
+
+
+
+    DFCreate_Menu Main_Menu
+    //        #INCLUDE File_PM_Espanol.inc
+    
+        DFCreate_Menu "&Opciones" ViewPopupMenu is a ViewPopupMenu
+            On_Item "Catalogo Egresos"                   Send Activate_TIPO_GASTO
+            On_Item "Catalogo Tarjetas de Cr‚dito"       Send Activate_TARJETA
+            On_Item "TARJETA" Send Activate_TARJETA
+        End_Pull_Down
+            
+        DFCreate_Menu "&Opciones" ViewPopupMenu1 is a ViewPopupMenu
+            On_Item "Control Ahorros"                    Send Activate_AHORRO
+            On_Item "Control Egresos"                    Send Activate_Egresos
+            On_Item "Control Deudas"                     Send Activate_Deudas
+        End_Pull_Down
+        
+        DFCreate_Menu "&Reportes" ViewPopupMenu2 is a ViewPopupMenu
+            On_Item "Grafica de Gastos"                  Send Activate_GASTOS_01
+            On_Item "Listado de Gastos"                  Send Activate_GASTOS_02
+        End_Pull_Down
+        
+        Set Status_Help to "Available Views"
+    End_Menu
+    
+    Use DltToolbar.pkg
+
+    Object oClientArea is a AppClientArea
+        Use StdAbout.pkg
+        Use Egresos.vw
+        Use TIPO_GASTO.vw
+        Use GASTOS_01.rv
+        Use GASTOS_02.rv
+        Use AHORRO.vw
+        Use Deudas.vw
+        Set Bitmap of (oClientArea(oMain(Current_object))) to "logo_sid.bmp"
+        Set Bitmap_Style to Bitmap_Center
+        Use PRESUPUESTO.sl
+        Use TARJETA.vw
+
+        Procedure Activate_About
+            Send DoAbout "" "" "" "" ""
+        End_Procedure
+        
+        // VARIABLES GLOBALES / PROPERTIES
+        
+        Property String psFiltro ''
+        Property String psOpcionPago ''
+        Property Integer piOpcionVista 0
+
+    End_Object
+
+End_Object
+
+
+Send Activate_Egresos to (oClientArea(oMain(Current_object)))
+
+Start_UI

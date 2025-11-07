@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------
+  DATE: 03/10/2025      TIME: 10:26                                  PAGE:  1
+  FILE DEFINITION FOR FILE: AHORRO_H (# 1)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:AHORRO
+  USER DISPLAY NAME         : AHORRO
+  DATAFLEX FILE NAME        : AHORRO_H
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 117       ( USED: 117 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 0 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 1 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  1   
+  2  DESCRIPCION      ASC     50    12      
+  3  FECHA_INICIO     DAT     10    62      
+  4  FECHA_OBJETIVO   DAT     10    85      
+  5  PRIORIDAD        ASC     10   108      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       1     ON-LINE
+

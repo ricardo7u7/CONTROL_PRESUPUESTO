@@ -1,0 +1,199 @@
+Use cToolbar.pkg
+
+// A toolbar for the Contacts sample.
+// shows:
+//    Buttons with text underneath (toolbar's pbShowLabels property set to True, and each button's psLabel property to the text)
+//    Multiline tooltips (embed "\n" in the psTooltip property to force a newline)
+//    "Hot" images, using a second imagelist (set the phoImageListHot property)
+
+Object oToolBar is a cToolBar
+    Set pbShowLabels To True // display the psLabel property on th button
+    Object oImages is a cImageList
+        Set piMaxImages To 12
+        Procedure OnCreate
+            Integer iVoid
+            Get AddTransparentImage "bgn.bmp"      clLtGray  To iVoid // 0
+            Get AddTransparentImage "prev.bmp"     clLtGray  To iVoid // 1
+            Get AddTransparentImage "equal.bmp"    clLtGray  To iVoid // 2
+            Get AddTransparentImage "next.bmp"     clLtGray  To iVoid // 3
+            Get AddTransparentImage "end.bmp"      clLtGray  To iVoid // 4
+            Get AddTransparentImage "Prompt16.bmp" clFuchsia To iVoid // 5
+            Get AddTransparentImage "clr.bmp"      clLtGray  To iVoid // 6
+            Get AddTransparentImage "clra.bmp"     clLtGray  To iVoid // 7
+            Get AddTransparentImage "Save16.bmp"   clFuchsia To iVoid // 8
+            Get AddTransparentImage "Delete16.bmp" clFuchsia To iVoid // 9
+            Get AddTransparentImage "Cut16.bmp"    clFuchsia To iVoid // 10
+            Get AddTransparentImage "Copy16.bmp"   clFuchsia To iVoid // 11
+            Get AddTransparentImage "Paste16.bmp"  clFuchsia To iVoid // 12
+        End_Procedure
+    End_Object
+    
+    Object oImagesHot is a cImageList
+        // These images are shown when the mouse cursor hovers over the button
+        // There must be a matching number of images in all imagelists.
+        Set piMaxImages To 12
+        Procedure OnCreate
+            Integer iVoid
+            Get AddTransparentImage "BgnHot.bmp"   clLtGray  To iVoid // 0
+            Get AddTransparentImage "PrevHot.bmp"  clLtGray  To iVoid // 1
+            Get AddTransparentImage "EqualHot.bmp" clLtGray  To iVoid // 2
+            Get AddTransparentImage "NextHot.bmp"  clLtGray  To iVoid // 3
+            Get AddTransparentImage "EndHot.bmp"   clLtGray  To iVoid // 4
+            Get AddTransparentImage "Prompt16.bmp" clFuchsia To iVoid // 5
+            Get AddTransparentImage "clr.bmp"      clLtGray  To iVoid // 6
+            Get AddTransparentImage "clra.bmp"     clLtGray  To iVoid // 7
+            Get AddTransparentImage "Save16.bmp"   clFuchsia To iVoid // 8
+            Get AddTransparentImage "Delete16.bmp" clFuchsia To iVoid // 9
+            Get AddTransparentImage "Cut16.bmp"    clFuchsia To iVoid // 10
+            Get AddTransparentImage "Copy16.bmp"   clFuchsia To iVoid // 11
+            Get AddTransparentImage "Paste16.bmp"  clFuchsia To iVoid // 12
+        End_Procedure
+    End_Object
+
+    Set phoImageList    To (oImages(self))
+    Set phoImageListHot To (oImagesHot(self))
+    
+    Object oFirst is a cToolbarButton
+        Set psLabel to "Primero"
+        Set psTooltip to 'Encontrar Primero (Ctrl+Home)'
+        Set psStatusHelp To 'Find the First record (Ctrl+Home)'
+        Set piImage To 0
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_Find_First
+        End_Procedure
+    End_Object
+
+    Object oPrevious is a cToolbarButton
+        Set psLabel to "Anterior"
+        Set psTooltip to 'Encontrar Anterior (F7)'
+        Set psStatusHelp To 'Find the Previous record (F7)'
+        Set piImage To 1
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_find_previous
+        End_Procedure
+    End_Object
+
+    Object oGreaterEqual is a cToolbarButton
+        Set psLabel to "Igual"
+        Set psTooltip to 'Encontrar Mayor/Igual (F9)'
+        Set psStatusHelp To 'Find a record (F9)'
+        Set piImage To 2
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_find_ge
+        End_Procedure
+    End_Object
+
+    Object oNext is a cToolbarButton
+        Set psLabel to "Siguiente"
+        Set psTooltip to 'Encontrar Siguiente (F8)'
+        Set psStatusHelp To 'Find the Next record (F8)'
+        Set piImage To 3
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_find_next
+        End_Procedure
+    End_Object
+
+    Object oLast is a cToolbarButton
+        Set psLabel to "éltimo"
+        Set psTooltip to 'Encontrar éltimo (Ctrl+End)'
+        Set psStatusHelp To 'Find the Last record (Ctrl+End)'
+        Set piImage To 4
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_end_of_data
+        End_Procedure
+    End_Object
+
+    Object oSeparator is a cToolbarButton
+        Set peStyle To bsSeparator
+    End_Object
+
+    Object oPrompt is a cToolbarButton
+        Set psLabel to "Buscar"
+        Set psTooltip to 'Buscar (F4)'
+        Set psStatusHelp To 'Show available selections (F4)'
+        Set piImage To 5
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_prompt
+        End_Procedure
+    End_Object
+
+    Object oClear is a cToolbarButton
+        Set psLabel to "Limpiar"
+        Set psTooltip to 'Limpiar (F5)'
+        Set psStatusHelp To 'Clear current record / Add a new record (F5)'
+        Set piImage To 6
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_request_clear
+        End_Procedure
+    End_Object
+
+    Object oClearAll is a cToolbarButton
+        Set psLabel to "Limpiar Todo"
+        Set psTooltip to 'Limpiar Todo (Ctrl+F5)'
+        Set psStatusHelp To 'Clear all data from view (Ctrl+F5)'
+        Set piImage To 7
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_request_clear_all
+        End_Procedure
+    End_Object
+
+    Object oSeparator is a cToolbarButton
+        Set peStyle To bsSeparator
+    End_Object
+
+    Object oSave is a cToolbarButton
+        Set psLabel to "Grabar"
+        Set psTooltip to 'Grabar (F2)'
+        Set psStatusHelp To 'Save the current record (F2)'
+        Set piImage To 8
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_request_save
+        End_Procedure
+    End_Object
+
+    Object oDelete is a cToolbarButton
+        Set psLabel to "Eliminar"
+        Set psTooltip to 'Eliminar (Shift+F2)'
+        Set psStatusHelp To 'Delete the current record (Shift+F2)'
+        Set piImage To 9
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_request_delete
+        End_Procedure
+    End_Object
+
+    Object oSeparator is a cToolbarButton
+        Set peStyle To bsSeparator
+    End_Object
+
+    Object oCut is a cToolbarButton
+        Set psLabel to "Cortar"
+        Set psTooltip to 'Cortar (Ctrl+X)'
+        Set psStatusHelp To 'Cuts the selection and puts it on the Clipboard (Ctrl+X)'
+        Set piImage To 10
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_cut
+        End_Procedure
+    End_Object
+
+    Object oCopy is a cToolbarButton
+        Set psLabel to "Copiar"
+        Set psTooltip to 'Copiar (Ctrl+C)'
+        Set psStatusHelp To 'Copies the selection and puts it on the Clipboard (Ctrl+C)'
+        Set piImage To 11
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_copy
+        End_Procedure
+    End_Object
+
+    Object oPaste is a cToolbarButton
+        Set psLabel to "Pegar"
+        Set psTooltip to 'Pegar (Ctrl+V)'
+        Set psStatusHelp To 'Inserts Clipboard contents (Ctrl+V)'
+        Set piImage To 12
+        Procedure OnClick
+            Send DoSendToDeoFocus msg_paste
+        End_Procedure
+    End_Object
+
+End_Object // oMainToolbar
+

@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------
+  DATE: 23/10/2025      TIME: 10:41                                  PAGE:  1
+  FILE DEFINITION FOR FILE: TIPO_GASTO (# 13)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:TIPO_GASTO
+  USER DISPLAY NAME         : TIPO_GASTO
+  DATAFLEX FILE NAME        : TIPO_GASTO
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 64        ( USED: 64 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 14 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 1 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  1   
+  2  CLAVE            ASC      3    12  2   
+  3  DESCRIPCION      ASC     50    15      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       1     ON-LINE
+
+  2    CLAVE           NO  NO       0      0       1     ON-LINE
+

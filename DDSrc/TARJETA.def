@@ -1,0 +1,42 @@
+-----------------------------------------------------------------------------
+  DATE: 03/11/2025      TIME: 08:50                                  PAGE:  1
+  FILE DEFINITION FOR FILE: TARJETA (# 7)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:TARJETA
+  USER DISPLAY NAME         : TARJETA
+  DATAFLEX FILE NAME        : TARJETA
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 154       ( USED: 154 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 2 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  2   
+  2  CLAVE            ASC      3    12  3   
+  3  DESCRIPCION      ASC     25    15      
+  4  FECHA_PAGO       DAT     10    40      
+  5  FECHA_CORTE      DAT     10    63      
+  6  LIMITE           NUM   14.2    86      
+  7  LIMITE_MAX       NUM   14.2   104      
+  8  DIA_PAGO         NUM    8.0   122      
+  9  DIA_CORTE        NUM    8.0   133      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    Recnum          NO  NO       0      0       1     ON-LINE
+
+  2    NUMERO          NO  NO       0      0       1     ON-LINE
+
+  3    CLAVE           NO  NO       0      0       1     ON-LINE
+

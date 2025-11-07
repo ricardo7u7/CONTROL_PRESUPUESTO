@@ -1,0 +1,27 @@
+//**********************************************
+//** FUNCION PARA VALIDAR EMPRESAS X EMPLEADO **
+//*************** [ELEA 280408] ****************
+//**********************************************
+Use EMPRESA.dd
+Function Verifica_Usuario_en_la_Empresa2 Global Integer @@iEmpresa Returns Integer 
+    Local String sUsuario
+    Local Integer iDerechos_s_n
+    
+    Move 0 to iDerechos_s_n
+    
+    //Direct_Input "C:\WINDOWS\Siac.Ini"
+    //Readln sUsuario
+    //Close_Input
+    Get PSEG_USUARIO to sUsuario
+        
+    Clear USR_EMP
+    Move (Trim(sUsuario))   to USR_EMP.Usuario
+    Move EMPRESA.Numero     to USR_EMP.Empresa
+    Find eq USR_EMP by Index.1
+    If [NOT FOUND] Begin
+        Move 1 to iDerechos_s_n
+    End
+    
+    Function_Return iDerechos_s_n
+        
+End_Function

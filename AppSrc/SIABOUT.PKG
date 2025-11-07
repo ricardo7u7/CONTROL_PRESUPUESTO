@@ -1,0 +1,46 @@
+//  SIABOUT.PKG     Par metros del SIAC 
+
+Use DfAbout.pkg
+
+Procedure DoAbout string sTitle string sVersion string sCopyRight string sAuthor string sBitmap
+        Local integer hoObj hoMain
+
+        // create object
+        Object About is an AboutDialog
+            // if no title passed use the label of the main panel
+            // (if a main panel exists).
+            if sTitle     eq '' Begin
+                Get Main_Window to hoMain
+                if hoMain Get Label of hoMain to sTitle
+            end
+            set productname to sTitle
+            set version     to sVersion
+            set copyright   to sCopyRight
+            set author      to sAuthor
+            If sBitmap    ne '' ;
+               set logo to sBitMap // square bitmaps of 42x42 work best
+            Move Current_Object to hoObj // object Id
+        End_Object
+        Send Popup to hoObj    // popup the about object
+        Send Request_Destroy_Object to hoObj // when done, it will be destroyed
+End_procedure 
+
+//********************************************************* // 
+//  AQUI SE CAMBIAN LOS PARAMETROS PARA CADA SISTEMA        // 
+//********************************************************* // 
+
+Procedure Activate_About
+    Local String sTitle sCopyright sVersion sAuthor sBitmap 
+    Move "Sistema Integrado de Administraci¢n" to sTitle
+    Move "DELTA, Ingenier¡a de Sistemas, S.A." to sCopyright 
+    Move "Versi¢n 1.0" to sVersion
+    Move "13 calle 2-61 zona 2, Guatemala"  to sAuthor
+    Move "DLTLOG.BMP" to sBitmap 
+    Send DoAbout sTitle sVersion sCopyright sAuthor sBitmap 
+End_procedure
+ 
+ 
+ 
+ 
+ 
+ 

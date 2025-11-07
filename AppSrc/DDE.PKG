@@ -1,0 +1,187 @@
+//************************************************************************
+//
+// Copyright 1987-1993 Data Access Corporation, Miami FL, USA
+// All Rights reserved
+// DataFlex is a registered trademark of Data Access Corporation.
+//
+// MODULE NAME:
+//         DDE.PKG
+//
+//  Creator:
+//      Michael Gouker
+//      Mike Zingman
+//      March 19, 1992
+//
+//***********************************************************************
+
+use xport
+use comm.pkg
+
+// commands to register services
+
+
+#COMMAND REGISTER_DDE_SERVER R
+  !A [] $564 !1
+#ENDCOMMAND
+
+#COMMAND UNREGISTER_DDE_SERVER R
+  !A [] $565 !1
+#ENDCOMMAND
+
+
+//* link modes */
+
+#REPLACE DDELINK_COLD         |CI0
+#REPLACE DDELINK_HOT          |CI2
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      DDESESS
+//*
+//*  Purpose: Specialized SESSION class containing message rerouting
+//*          mechanism for external "C" proc and special properties.
+//*
+//*  SuperClass:
+//*      SESSION
+//*
+//*  Notes:
+//*      The DDESESS_ABSTRACT class is necessary so that the Construct_Object
+//*    function is forwarded correctly.
+//*
+//************************************************************************
+
+
+class DDECOMM is a COMM
+
+  Procedure construct_object integer NoImage string InitSignature
+    forward send construct_object NoImage InitSignature
+    property integer Private_Timeout_Value  public 0
+  End_Procedure
+
+  Procedure Set Sess_Timeout_Value integer val
+      set Private_Timeout_Value to val
+      if (SessionLink(current_object)) ne 0;
+          set DDE_Timeout_Value of (SessionLink(Current_Object)) to val
+  End_Procedure
+
+  Function Sess_Timeout_Value returns integer
+      local integer val
+      get Private_Timeout_Value to val
+
+      if (SessionLink(current_object)) ne 0;
+          get DDE_Timeout_Value of (SessionLink(Current_Object)) to val
+      Function_Return val
+  End_Function
+
+  Procedure DDE_REGISTER_SERVICE string servicename
+        REGISTER_DDE_SERVER servicename
+  End_Procedure
+
+  Procedure DDE_UNREGISTER_SERVICE string servicename
+        UNREGISTER_DDE_SERVER servicename
+  End_Procedure
+
+end_class
+
+Class DDESESS_ABSTRACT is a DFSession
+
+  IMPORT_CLASS_PROTOCOL ForeignSession DDESESS_ABSTRACT ALL INHERIT
+
+End_Class
+
+Class DDE_SESSION is a DDESESS_ABSTRACT
+
+  Procedure construct_object integer Image
+
+    forward send construct_object
+
+    property integer AckState  public 0
+    property integer LinkTemperature  public 0
+    property integer RetryCount  public 0
+
+  End_Procedure
+
+
+
+  //*************************************************************************
+  //*
+  //*  Message:   TP_INITIATE
+  //*
+  //*  Purpose:           Reroute to SESS_INITIATE
+  //*
+  //************************************************************************
+
+  Function TP_INITIATE integer Sender string Path returns integer
+  local integer Result
+  local integer VBarPos
+  local string App
+  local string Topic
+
+       move (pos("|",Path)) to VBarPos
+       left Path to App (VBarPos - 1)
+       right Path to Topic (length(Path) - VBarPos)
+
+       Get SESS_CONNECT App Topic to Result
+
+       Function_Return Result
+
+  End_Function
+
+End_Class
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      DDETRANSPORT
+//*
+//*  Purpose:
+//*      A Transport object used to specialize DDE Transport.
+//*
+//*  SuperClass:
+//*      Transport
+//*
+//************************************************************************
+
+Class DDE_TRANSPORT is a TRANSPORT
+
+  Procedure construct_object
+    forward send construct_object no_image "DDE"
+  End_Procedure
+
+  Function TP_DoConnect integer SessionObj string Path returns integer
+    Local Integer Receiver
+    get TP_Initiate of SessionObj SessionObj Path to Receiver
+    Function_Return Receiver
+  End_Function
+
+  Function TP_CreateSession returns integer
+  local integer NewSession
+    Object PrivateNewSession is a DDE_SESSION no_image
+        Move Current_Object to NewSession
+    End_Object
+    Function_Return NewSession
+  End_Function
+
+  //*************************************************************************
+  //*
+  //*  Message:   DDE_INITIATE
+  //*
+  //*  Purpose:   Directed TP_INITIATE (DDE Transports only)
+  //*
+  //*************************************************************************
+
+  Function DDE_INITIATE integer LinkObject string Path returns integer
+  local integer Result
+
+      Get TP_INITIATE LinkObject Path to Result
+      if (Result ne Failure);
+          set dde_server_link of Result to LinkObject
+      Function_Return Result
+
+  End_Function
+
+End_Class
+
+Object DDEInstance is a DDE_TRANSPORT no_image
+End_object

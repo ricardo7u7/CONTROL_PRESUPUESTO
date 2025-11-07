@@ -1,0 +1,24 @@
+Use Windows.Pkg
+
+{ OverrideProperty = Form_FontWeight InitialValue = 800 DesignTime = False }
+Class cCalculatorButton Is A Button
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set Form_FontWeight to 800
+    End_Procedure
+    
+    Procedure OnClick
+        String sAddValue
+        Integer iDecimalSeparator
+        
+        Get Label to sAddValue
+        
+        If (sAddValue = ".") Begin
+            Get_Attribute DF_DECIMAL_SEPARATOR to iDecimalSeparator
+            Move (Character (iDecimalSeparator)) To sAddValue
+        End
+        
+        Delegate Send AddValue sAddValue
+    End_Procedure
+End_Class

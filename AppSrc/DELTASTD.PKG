@@ -1,0 +1,76 @@
+// 07/23/96 JJT - New Class names
+// 10/03/97 KCR - removed leading separator
+// 06/03/00 VGP - BARRA ESTANDAR DE DELTA:  pasa al final el bot¢n de DELETE 
+ 
+Use DFMainBt  // dfMain_ButtonBar
+
+//  Button bar object.
+//
+Object Tool_Bar is a ToolBar
+
+    Send ImageList_Add 'bgn.bmp'   // 0
+    Send ImageList_Add 'end.bmp'   // 1
+    Send ImageList_Add 'next.bmp'  // 2
+    Send ImageList_Add 'prev.bmp'  // 3
+    Send ImageList_Add 'clr.bmp'   // 4
+    Send ImageList_Add 'clra.bmp'  // 5
+
+    send Add_button (ico_user+0) msg_beginning_of_data
+    Send Add_ToolTip "Beginning of file"
+    Set  Status_Help To 'Find the First record (Ctrl+Home)'
+
+    send Add_button (ico_user+3) msg_find_previous
+    Send Add_ToolTip "Find Previous"
+    Set  Status_Help To 'Find the Previous record (F7)'
+
+    send Add_button (ico_user+2) msg_find_next
+    Send Add_ToolTip "Find Next"
+    Set  Status_Help To 'Find the Next record (F8)'
+
+    send Add_button (ico_user+1) msg_end_of_data
+    Send Add_ToolTip "End of File"
+    Set  Status_Help To 'Find the Last record (Ctrl+End)'
+
+    send Add_space
+
+    send Add_button ico_std_find msg_prompt
+    Send Add_ToolTip "Prompt"
+    Set  Status_Help To 'Show available selections (F4)'
+
+    send Add_button (ico_user+4) msg_request_clear
+    Send Add_ToolTip "Clear"
+    Set  Status_Help To 'Clear current record / Add a new record (F5)'
+
+    send Add_button (ico_user+5) msg_request_clear_all
+    Send Add_ToolTip "Clear All"
+    Set  Status_Help To 'Clear all data from view (Ctrl+F5)'
+
+    send Add_space
+
+    send Add_button ico_std_filesave msg_request_save
+    Send Add_ToolTip "Save"
+    Set  Status_Help To 'Save the current record (F2)'
+    send Add_space
+
+    send Add_button ico_std_cut msg_cut
+    Send Add_ToolTip "Cut"
+    Set  Status_Help "Cuts the selection and puts it on the Clipboard"
+
+    send Add_button ico_std_copy msg_copy
+    Send Add_ToolTip "Copy"
+    Set  Status_Help "Copies the selection and puts it on the Clipboard"
+
+    send Add_button ico_std_paste msg_paste
+    Send Add_ToolTip "Paste"
+    Set  Status_Help "Inserts Clipboard contents"
+
+    send Add_space
+
+    send Add_button ico_std_delete msg_request_delete
+    Send Add_ToolTip "Delete"
+    Set  Status_Help To 'Delete the current record (Shift+F2)'
+  
+End_Object
+
+
+ 

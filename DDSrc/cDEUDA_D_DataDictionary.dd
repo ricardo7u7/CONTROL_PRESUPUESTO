@@ -1,0 +1,29 @@
+Use DataDict.pkg
+
+Open DEUDA_D
+Open DEUDA_H
+
+Class cDEUDA_D_DataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to DEUDA_D.File_Number
+
+        Set Add_Server_File to DEUDA_H.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Class_Name Field DEUDA_D.PAGADO_SN to "Checkbox"
+        Set Field_Checkbox_Values Field DEUDA_D.PAGADO_SN to "S" "N"
+
+    End_Procedure
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+        Set Field_Changed_Value Field DEUDA_D.PAGADO_SN to "N"
+    End_Procedure
+
+End_Class

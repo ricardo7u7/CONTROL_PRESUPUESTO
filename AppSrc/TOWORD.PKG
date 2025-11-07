@@ -1,0 +1,203 @@
+Function TOWORD Global Number _@Num_Orig Returns String
+    Integer _@Num_Temp 
+    String  _@Val_Caracter
+    String        _@Val_Retorno
+     
+    Move _@Num_Orig to _@Num_Temp 
+    Move ''         to _@Val_Retorno 
+ 
+    Local String  _@Num_PosFijo
+    Local Integer _@Num_Actual _@Num_Actual_Original 
+    While  _@Num_Temp gt 0  
+        Move '' to _@Num_PosFijo 
+        If (Integer(_@Num_Temp/1000000)) ge 1 Begin
+            Move (Integer(_@Num_Temp/1000000)) to _@Num_Actual_Original
+            Move ' MILLION' to _@Num_PosFijo
+        End 
+        Else Begin
+            If (Integer(_@Num_Temp/1000)) ge 1 Begin
+                Move (Integer(_@Num_Temp/1000)) to _@Num_Actual_Original
+                Move ' THOUSAND' to _@Num_PosFijo
+            End
+            Else Move _@Num_Temp to _@Num_Actual_Original
+        End 
+         
+        If _@Num_Actual_Original gt 0 Begin
+            Move ''                    to _@Val_Caracter
+            Move _@Num_Actual_Original to _@Num_Actual
+ 
+            If ((_@Num_Actual ge 900) and (_@Num_Actual le 999)) Begin 
+                Append _@Val_Caracter " NINE HUNDRED"
+                Calc (_@Num_Actual - 900) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 800) and (_@Num_Actual le 899)) Begin 
+                Append _@Val_Caracter " EIGHT HUNDRED"
+                Calc (_@Num_Actual - 800) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 700) and (_@Num_Actual le 799)) Begin 
+                Append _@Val_Caracter " SEVEN HUNDRED"
+                Calc (_@Num_Actual - 700) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 600) and (_@Num_Actual le 699)) Begin 
+                Append _@Val_Caracter " SIX HUNDRED" 
+                Calc (_@Num_Actual - 600) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 500) and (_@Num_Actual le 599)) Begin 
+                Append _@Val_Caracter " FIVE HUNDRED"
+                Calc (_@Num_Actual - 500) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 400) and (_@Num_Actual le 499)) Begin 
+                Append _@Val_Caracter " FOUR HUNDRED"
+                Calc (_@Num_Actual - 400) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 300) and (_@Num_Actual le 399)) Begin 
+                Append _@Val_Caracter " THREE HUNDRED"
+                Calc (_@Num_Actual - 300) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 200) and (_@Num_Actual le 299)) Begin 
+                Append _@Val_Caracter " TWO HUNDRED" 
+                Calc (_@Num_Actual - 200) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 100) and (_@Num_Actual le 199)) Begin 
+                Append _@Val_Caracter " ONE HUNDRED" 
+                Calc (_@Num_Actual - 100) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 90) and (_@Num_Actual le 99)) Begin 
+                Append _@Val_Caracter " NINETY*" 
+                Calc (_@Num_Actual - 90) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 80) and (_@Num_Actual le 89)) Begin 
+                Append _@Val_Caracter " EIGHTY*"
+                Calc (_@Num_Actual - 80) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 70) and (_@Num_Actual le 79)) Begin 
+                Append _@Val_Caracter " SEVENTY*"
+                Calc (_@Num_Actual - 70) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 60) and (_@Num_Actual le 69)) Begin 
+                Append _@Val_Caracter " SIXTY*" 
+                Calc (_@Num_Actual - 60) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 50) and (_@Num_Actual le 59)) Begin 
+                Append _@Val_Caracter " FIFTY*"
+                Calc (_@Num_Actual - 50) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 40) and (_@Num_Actual le 49)) Begin 
+                Append _@Val_Caracter " FORTY*"
+                Calc (_@Num_Actual - 40) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 30) and (_@Num_Actual le 39)) Begin 
+                Append _@Val_Caracter " THIRTY*"
+                Calc (_@Num_Actual - 30) to _@Num_Actual
+            End
+            If ((_@Num_Actual ge 20) and (_@Num_Actual le 29)) Begin 
+                Append _@Val_Caracter " TWENTY*" 
+                Calc (_@Num_Actual - 20) to _@Num_Actual
+            End
+            If _@Num_Actual eq 19 Begin
+                Append _@Val_Caracter " NINETEEN"
+                Calc (_@Num_Actual - 19) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 18 Begin
+                Append _@Val_Caracter " EIGHTEEN" 
+                Calc (_@Num_Actual - 18) to _@Num_Actual
+            End
+            If _@Num_Actual eq 17 Begin
+                Append _@Val_Caracter " SEVENTEEN"
+                Calc (_@Num_Actual - 17) to _@Num_Actual
+            End
+            If _@Num_Actual eq 16 Begin
+                Append _@Val_Caracter " SIXTEEN" 
+                Calc (_@Num_Actual - 16) to _@Num_Actual
+            End
+            If _@Num_Actual eq 15 Begin
+                Append _@Val_Caracter " FIFTEEN" 
+                Calc (_@Num_Actual - 15) to _@Num_Actual
+            End
+            If _@Num_Actual eq 14 Begin
+                Append _@Val_Caracter " FOURTEEN"
+                Calc (_@Num_Actual - 14) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 13 Begin
+                Append _@Val_Caracter " THIRTEEN"
+                Calc (_@Num_Actual - 13) to _@Num_Actual
+            End
+            If _@Num_Actual eq 12 Begin
+                Append _@Val_Caracter " TWELVE"
+                Calc (_@Num_Actual - 12) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 11 Begin
+                Append _@Val_Caracter " ELEVEN"
+                Calc (_@Num_Actual - 11) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 10 Begin
+                Append _@Val_Caracter " TEN"
+                Calc (_@Num_Actual - 10) to _@Num_Actual
+            End
+            If _@Num_Actual eq 9  Begin
+                Append _@Val_Caracter " NINE" 
+                Calc (_@Num_Actual - 9) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 8  Begin
+                Append _@Val_Caracter " EIGHT"
+                Calc (_@Num_Actual - 8) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 7  Begin
+                Append _@Val_Caracter " SEVEN"
+                Calc (_@Num_Actual - 7) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 6  Begin
+                Append _@Val_Caracter " SIX"  
+                Calc (_@Num_Actual - 6) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 5  Begin
+                Append _@Val_Caracter " FIVE" 
+                Calc (_@Num_Actual - 5) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 4  Begin
+                Append _@Val_Caracter " FOUR" 
+                Calc (_@Num_Actual - 4) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 3  Begin
+                Append _@Val_Caracter " THREE"
+                Calc (_@Num_Actual - 3) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 2  Begin
+                Append _@Val_Caracter " TWO"  
+                Calc (_@Num_Actual - 2) to _@Num_Actual
+            End 
+            If _@Num_Actual eq 1  Begin
+                Append _@Val_Caracter " ONE"  
+                Calc (_@Num_Actual - 1) to _@Num_Actual
+            End 
+
+            While '* ' in _@Val_Caracter
+                Replace '* ' in _@Val_Caracter with '-'
+            Loop
+            While '*' in _@Val_Caracter
+                Replace '*' in _@Val_Caracter with ''
+            Loop
+            Append _@Val_Caracter _@Num_PosFijo
+            Move (Trim(_@Val_Caracter)) to _@Val_Caracter 
+            Append _@Val_Retorno _@Val_Caracter ' ' 
+        End
+
+        If 'MILLION'  in _@Num_PosFijo ; 
+            Calc (_@Num_Temp - (_@Num_Actual_Original * 1000000)) to _@Num_Temp
+        Else If 'THOUSAND' in _@Num_PosFijo ; 
+                Calc (_@Num_Temp - (_@Num_Actual_Original * 1000)) to _@Num_Temp
+             Else Move 0 to _@Num_Temp
+    Loop
+           
+    Move (Trim(_@Val_Retorno)) to _@Val_Retorno 
+    If (Integer(_@Num_Orig)) ne _@Num_Orig Append _@Val_Retorno ' AND ' (Trim(String((_@Num_Orig - (Integer(_@Num_Orig))) * 100.0 ))) '/100'
+    Else Append _@Val_Retorno ' EXACTLY ' 
+ 
+    Append _@Val_Retorno '.' 
+   
+    Function_Return (Trim(_@Val_Retorno)) 
+End_Function 
+ 
+ 
+ 
+ 

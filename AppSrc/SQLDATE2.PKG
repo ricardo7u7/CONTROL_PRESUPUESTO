@@ -1,0 +1,48 @@
+//variables de SQL
+//Variant sQuery
+//Integer hdbc
+//Integer hstmt
+
+Function fSQL_date2 Global Date d_Fecha Returns String
+    String  @s_Fecha
+    Integer @i_Formato
+
+    Get_date_format to @i_formato
+
+    Move "" To @s_Fecha
+    If (@i_Formato eq 0) Begin  // Fecha formato USA mes/dia/a¤o
+        //Append @s_Fecha "'" (Mid(d_Fecha,2,4)) (Mid(d_Fecha,2,1)) (Mid(d_Fecha,4,7)) "'"
+        Append @s_Fecha (Mid(d_Fecha,4,7)) (Mid(d_Fecha,2,1)) (Mid(d_Fecha,2,4)) 
+    End
+    If (@i_formato eq 1) Begin  // Fecha formato europeo dia/mes/a¤o
+        //Append @s_Fecha "'" (Mid(d_Fecha,2,1)) (Mid(d_Fecha,2,4)) (Mid(d_Fecha,4,7)) "'"
+        Append @s_Fecha (Mid(d_Fecha,4,7)) (Mid(d_Fecha,2,4)) (Mid(d_Fecha,2,1)) 
+    End
+    If (@i_formato eq 2) Begin  // Fecha formato militar a¤o/mes/dia
+        //Append @s_Fecha "'" (Mid(d_Fecha,2,9)) (Mid(d_Fecha,2,6)) (Mid(d_Fecha,4,1)) "'"
+        Append @s_Fecha (Mid(d_Fecha,4,1)) (Mid(d_Fecha,2,6)) (Mid(d_Fecha,2,9)) 
+    End
+
+    Function_Return @s_Fecha
+End_Function
+
+#IFDEF GET_SHELLEXECUTE
+#ELSE   
+// external function call used in Procedure DoStartDocument
+External_Function ShellExecute "ShellExecuteA" shell32.dll;
+    Handle hWnd ;
+    String lpOperation ;
+    String lpFile ;
+    String lpParameters ;
+    String lpDirectory ;
+    DWord iShowCmd Returns Handle
+#ENDIF
+
+Procedure DoStartDocument Global String sOperation String sDocument
+    Handle hInstance hWnd
+    Get Window_Handle to hWnd
+    Move (ShellExecute (hWnd, sOperation, (Trim (sDocument)), '', '', 1)) to hInstance
+    // check for errors  -- see the MSDN documentation about ShellExecute for details
+    If (hInstance <= 32) Begin
+    End
+End_Procedure

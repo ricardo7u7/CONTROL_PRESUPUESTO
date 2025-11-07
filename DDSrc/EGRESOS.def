@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------------
+  DATE: 07/11/2025      TIME: 12:22                                  PAGE:  1
+  FILE DEFINITION FOR FILE: EGRESOS (# 12)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:EGRESOS
+  USER DISPLAY NAME         : EGRESOS
+  DATAFLEX FILE NAME        : EGRESOS
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 194       ( USED: 194 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 78 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 1 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  1   
+  2  TIPO             ASC      3    12      TIPO_GASTO.FIELD_2 (13,2)
+  3  DESCRIPCION      ASC    100    15      
+  4  FECHA_REALIZADO  DAT     10   115      
+  5  ES_FIJO_SN       ASC      1   138      
+  6  MONTO            NUM   10.2   139      
+  7  MONTO_PROYECTADO  NUM   10.2   153      
+  8  PRESUPUESTO      NUM   10.0   167  1   PRESUPUESTO.FIELD_1 (10,1)
+  9  PAGADO_SN        ASC      1   178      
+ 10  FORMA_PAGO       ASC      2   179      
+ 11  MARCAR           ASC      1   181      
+ 12  LIQUIDAR         ASC      1   182      
+ 13  LIQUIDADO        ASC      1   183      
+ 14  TC               NUM   10.0   184  2   TARJETA.FIELD_1 (7,1)
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       2     ON-LINE
+       PRESUPUESTO     NO  NO 
+
+  2    NUMERO          NO  NO       0      0       3     ON-LINE
+       PRESUPUESTO     NO  NO 
+       TC              NO  NO 
+

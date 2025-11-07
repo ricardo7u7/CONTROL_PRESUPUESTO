@@ -1,0 +1,299 @@
+//*****************************************************************************
+//*** MSSQLDRV.PKG                                                          ***
+//***                                                                       ***
+//*** Author: Ben Weijers                                                   ***
+//***         Data Access Nederland                                         ***
+//***         29 June 1998                                                  ***
+//***                                                                       ***
+//***                                                                       ***
+//*** Purpose:                                                              ***
+//***   Package that declares MS SQL driver constants and functions.        ***
+//****                                                                      ***
+//***   This package can be used by developers who want to add Data Access  ***
+//***   MS SQL Client specific code to a DataFlex application.              ***
+//***   Updated:  June 4th 2012 (Current CK build: 5.1.0.96)                ***
+//***             Changed EnumerateServers function to use the highest      ***
+//***             available SQL Server client driver.                       ***
+//***             Moved SQL Server client constants from cli.pkg to         ***
+//***             mssqldrv.pkg                                              ***
+//***   Updated:  November 6th 2013 (Current CK build: 6.0.0.19)            ***
+//***             Added constants for SQL Server specific native types      ***
+//***             ( var...(max) types, money types, datetime types)         ***
+//*****************************************************************************
+
+Use Cli.pkg
+Use SQL.pkg
+
+//*** Driver Indentification
+#REPLACE MSSQLDRV_ID  "MSSQLDRV"
+
+//*** Error number constants
+#REPLACE DFMSSQL_GENERAL_ERROR                            CLIERR_GENERAL_ERROR
+#REPLACE DFMSSQLERR_CANT_INITIALIZE                       CLIERR_CANT_INITIALIZE
+#REPLACE DFMSSQLERR_CANT_DEINITIALIZE                     CLIERR_CANT_DEINITIALIZE
+#REPLACE DFMSSQLERR_BAD_OR_NO_PRIMARY_INDEX_SPECIFIED     CLIERR_BAD_OR_NO_PRIMARY_INDEX_SPECIFIED
+#REPLACE DFMSSQLERR_LOGIN_UNSUCCESSFUL                    CLIERR_LOGIN_UNSUCCESSFUL
+#REPLACE DFMSSQLERR_LOGOUT_UNSUCCESSFUL                   CLIERR_LOGOUT_UNSUCCESSFUL
+#REPLACE DFMSSQLERR_TABLE_NOT_IN_CONNECTION               CLIERR_TABLE_NOT_IN_CONNECTION
+#REPLACE DFMSSQLERR_NULL_VALUE_NOT_ALLOWED                CLIERR_NULL_VALUE_NOT_ALLOWED
+#REPLACE DFMSSQLERR_SEGMENT_NUMBER_RANGE                  CLIERR_SEGMENT_NUMBER_RANGE
+#REPLACE DFMSSQLERR_INDEX_NUMBER_RANGE                    CLIERR_INDEX_NUMBER_RANGE
+#REPLACE DFMSSQLERR_LOGIN_ATTRIBUTE_MUST_BE_SET           CLIERR_LOGIN_ATTRIBUTE_MUST_BE_SET
+#REPLACE DFMSSQLERR_PHYSICAL_NAME_MUST_BE_SET             CLIERR_PHYSICAL_NAME_MUST_BE_SET
+#REPLACE DFMSSQLERR_INVALID_REGISTRATION_FILE             CLIERR_INVALID_REGISTRATION_FILE
+#REPLACE DFMSSQLERR_LICENSE_EXPIRED                       CLIERR_LICENSE_EXPIRED
+#REPLACE DFMSSQLERR_DEADLOCK_OR_TIMEOUT                   CLIERR_DEADLOCK_OR_TIMEOUT
+#REPLACE DFMSSQLERR_SQL_ERROR                             CLIERR_SQL_ERROR
+#REPLACE DFMSSQLERR_SQLINVALID_CLI_STMT_HANDLE            CLIERR_SQLINVALID_CLI_STMT_HANDLE
+#REPLACE DFMSSQLERR_SQLINVALID_CLI_CONN_HANDLE            CLIERR_SQLINVALID_CLI_CONN_HANDLE
+#REPLACE DFMSSQLERR_SQLINVALID_DRIVER_ID                  CLIERR_SQLINVALID_DRIVER_ID
+#REPLACE DFMSSQLERR_SQLINVALID_BIND_FILE                  CLIERR_SQLINVALID_BIND_FILE
+#REPLACE DFMSSQLERR_SQLINVALID_COLUMN                     CLIERR_SQLINVALID_COLUMN
+#REPLACE DFMSSQLERR_SQLINVALID_ATTRIBUTE                  CLIERR_SQLINVALID_ATTRIBUTE
+#REPLACE DFMSSQLERR_SQLINVALID_BUFFER                     CLIERR_SQLINVALID_BUFFER
+#REPLACE DFMSSQLERR_INVALID_CONFIGURATION_KEYWORD         CLIERR_INVALID_CONFIGURATION_KEYWORD
+#REPLACE DFMSSQLERR_NOUNIQUEINDEX                         CLIERR_NOUNIQUEINDEX
+#REPLACE DFMSSQLERR_UCSEGMENT_NOT_SUPPORTED               CLIERR_UCSEGMENT_NOT_SUPPORTED
+#REPLACE DFMSSQLERR_FIELDREADONLY                         CLIERR_FIELDREADONLY
+#REPLACE DFMSSQLERR_DBPROPERROR                           CLIERR_DBPROPERROR
+#REPLACE DFMSSQLERR_CANTSETRECNUMINACTIVE                 CLIERR_CANTSETRECNUMINACTIVE
+#REPLACE DFMSSQLERR_CANTCHANGEINACTIVECOLUMN              CLIERR_CANTCHANGEINACTIVECOLUMN
+#REPLACE DFMSSQLERR_FIELDISINACTIVE                       CLIERR_FIELDISINACTIVE
+#REPLACE DFMSSQLERR_NOT_INSTALLED                         CLIERR_NOT_INSTALLED
+#REPLACE DFMSSQLERR_CANT_FIND_TERMLIST                    CLIERR_CANT_FIND_TERMLIST
+#REPLACE DFMSSQLERR_CANT_READ_TERMLIST                    CLIERR_CANT_READ_TERMLIST
+#REPLACE DFMSSQLERR_MAX_USERS_EXCEEDED                    CLIERR_MAX_USERS_EXCEEDED
+#REPLACE DFMSSQLERR_USER_COUNT_FILE_ERROR                 CLIERR_USER_COUNT_FILE_ERROR
+#REPLACE DFMSSQLERR_CANT_INIT_USER_COUNT                  CLIERR_CANT_INIT_USER_COUNT
+#REPLACE DFMSSQLERR_USER_COUNT_FILE_NOT_FOUND             CLIERR_USER_COUNT_FILE_NOT_FOUND
+#REPLACE DFMSSQLERR_USER_COUNT_FILE_CANT_READ             CLIERR_USER_COUNT_FILE_CANT_READ
+#REPLACE DFMSSQLERR_USER_COUNT_FILE_CANT_DECRYPT          CLIERR_USER_COUNT_FILE_CANT_DECRYPT
+#REPLACE DFMSSQLERR_USER_COUNT_FILE_BAD_VERSION           CLIERR_USER_COUNT_FILE_BAD_VERSION
+#REPLACE DFMSSQLERR_CANTCREATE_RECNUMISZERO               CLIERR_CANTCREATE_RECNUMISZERO
+
+
+//*** Possible DF_DRIVER_SQLSERVER_CLIENT_VERSION values
+#Replace SQLSERVERUNKNOWNCLIENT  0
+#Replace SQLSERVER2000CLIENT     8          //   "SQL Server"
+#Replace SQLSERVER2005CLIENT     9          //   "SQL Native Client"
+#Replace SQLSERVER2008CLIENT    10          //   "SQL Server Native Client 10.0"
+#Replace SQLSERVER2012CLIENT    11          //   "SQL Server Native Client 11.0"
+
+
+#Replace SQLSERVER2000DRVRSTR "SQL Server"
+#Replace SQLSERVER2005DRVRSTR "SQL Native Client"
+#Replace SQLSERVER2008DRVRSTR "SQL Server Native Client 10.0"
+#Replace SQLSERVER2012DRVRSTR "SQL Server Native Client 11.0"
+
+
+// SQL Server spcific types. 
+Define SQL_SS_TIMESTAMPOFFSET   for   (-155) //SQL server datetimeoffset type */
+Define SQL_SS_TIME2             for   (-154) //SQL server time type */
+Define SQL_SS_XML               for   (-152) //SQL server xml type */
+Define SQL_SS_VARIANT           for   (-150) //SQL server variant type */
+
+// SQL Server spcific types. 
+Define SQL_TYPE_TIMESTAMP2      for   (-200) //SQL server datetime2 type */
+Define SQL_VARCHARMAX           for   (-201) //SQL server varchar(max) type */
+Define SQL_WVARCHARMAX          for   (-202) //SQL server wvarchar(max) type */
+Define SQL_VARBINARYMAX         for   (-203) //SQL server varbinary(max) type */
+Define SQL_TYPE_MONEY           for   (-204) //SQL server money type */
+Define SQL_TYPE_SMALLMONEY      for   (-205) //SQL server smallmoney type */
+Define SQL_TYPE_SMALLDATETIME   for   (-206) //SQL server smalldatetype type */
+
+
+//*****************************************************************************
+//*** MSSQL_SetConstraint <FileNum> <ConstraintText>                        ***
+//***                                                                       ***
+//***   Setup a constraint for a file.                                      ***
+//*****************************************************************************
+
+#COMMAND MSSQL_SetConstraint R R .
+    CLI_SetConstraint !1 !2 MSSQLDRV_ID
+#ENDCOMMAND
+
+
+Class cMSSQLHandler Is A cCLIHandler
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psDriverID To MSSQLDRV_ID
+    End_Procedure // Construct_Object
+
+
+
+    //***
+    //*** Function: ExtractList
+    //*** Purpose : Extract the list from the out connect string.
+    //***
+
+    Function ExtractList String sOutConnStr Integer hoStore Returns Integer
+        Local String  sItem
+        Local Integer iStart
+        Local Integer iEnd
+
+        If (hoStore = 0) ;
+            Move Current_object To hoStore
+
+        Send Delete_Data To hoStore
+        Move (Pos("{", sOutConnStr)) To iStart
+        While (iStart > 0)
+            Move (Right(sOutConnStr, Length(sOutConnStr) - iStart)) To sOutConnStr
+            If (Left(sOutConnStr, 1) = "}") ;
+                Move 0 To iStart
+            Else Begin
+                Move (Pos(",", sOutConnStr)) To iStart
+                Move (Pos("}", sOutConnStr)) To iEnd
+                If ((iStart = 0) Or (iEnd < iStart)) ;
+                    Move iEnd To iStart
+
+                If (iStart > 0) ;
+                    Set Value Of hoStore Item (Item_Count(Current_Object)) To (Left(sOutConnStr, iStart - 1))
+
+                If (iStart = iEnd) ;
+                    Move 0 To iStart
+            End
+        Loop
+
+        Function_Return (Item_Count(hoStore))
+    End_Procedure // ExtractList
+
+
+
+    //***
+    //*** Function: BrowseConnect
+    //*** Purpose : Call the driver's browse connect function
+    //***
+
+    Function BrowseConnect String sInConnStr Returns String
+        Local String  sDriver
+        Local String  sOutConnStr
+        Local Integer iArg
+        Local Integer iRetval
+
+        Get psDriverID To sDriver
+        If (sDriver <> "") Begin
+            Move (Repeat(" ", 8192)) To sOutConnStr
+            Call_Driver 0 sDRiver Function CLI_BROWSECONNECT Callback 0 Passing sInConnStr sOutConnStr iArg Result iRetval
+        End
+
+        Function_Return sOutConnStr
+    End_Function// BrowseConnect
+
+    Function DriverIndex String sDriver Returns Integer
+    
+        Local String  sCurrentDriver
+        Local Integer iNumberOfDrivers iDriver iCount
+    
+        Move 0 to iDriver
+    
+        Get_Attribute DF_NUMBER_DRIVERS to iNumberOfDrivers
+        For iCount from 1 to iNumberOfDrivers
+    
+            Get_Attribute DF_DRIVER_NAME of iCount to sCurrentDriver
+            If ( Uppercase(sCurrentDriver) = Uppercase(sDriver) ) Begin
+                Move iCount to iDriver
+            End
+        Loop
+    
+        Function_Return iDriver
+    
+    End_Function 
+
+    //***
+    //*** Procedure: EnumerateServers
+    //*** Purpose  : Enumerate the available SQL Server database servers
+    //***
+    Function EnumerateServers Returns Integer
+        Local String  sServerList
+        Local Integer iNumServers
+        Local Integer iDriver
+        Local Integer iClientVersion
+        Local String  sDriver
+        
+        Get DriverIndex MSSQLDRV_ID to iDriver
+        
+        Get_Attribute DF_DRIVER_SQLSERVER_CLIENT_VERSION of iDriver to iClientVersion
+        
+        If (iClientVersion = SQLSERVER2012CLIENT) Begin
+            Move SQLSERVER2012DRVRSTR to sDriver
+        End
+        Else Begin
+            If (iClientVersion = SQLSERVER2008CLIENT) Begin
+                Move SQLSERVER2008DRVRSTR to sDriver
+            End  
+            Else Begin
+                If (iClientVersion = SQLSERVER2005CLIENT) Begin
+                    Move SQLSERVER2005DRVRSTR to sDriver
+                End  
+                Else Begin
+                    Move SQLSERVER2000DRVRSTR to sDriver 
+                End
+            End
+        End
+
+        Move ("DRIVER={" + sDriver + "};") to sDriver
+        Get BrowseConnect sDriver to sServerList
+        Get ExtractList sServerList Current_object To iNumServers
+        Function_Return iNumServers
+    End_Function // EnumerateServers
+
+    //***
+    //*** Function: EnumerateDatabases
+    //*** Purpose : Enumerate database in a given server.
+    //***
+
+    Function EnumerateDatabases String sServer String sUser String sPassWord Returns Integer
+        Local Integer hoSQL
+        Local String  sConnect
+        Local String  sDatabase
+        Local Integer hdbc
+        Local Integer hstmt
+        Local Integer iFetchResult
+
+        If (Num_Arguments < 3) ;
+            Move "" To sPassWord
+        If (Num_Arguments < 2) ;
+            Move "" To sUser
+
+        If (sUser <> "") ;
+            Move ("SERVER=" + Trim(sServer) + ";UID=" + Trim(sUser) + ";PWD=" + Trim(sPassword) + ";") To sConnect
+        Else ;
+            Move ("SERVER=" + Trim(sServer) + ";Trusted_Connection=yes") To sConnect
+
+        Object oEnumDBSQLmanager Is A cSQLHandleManager
+            Move Current_Object To hoSQL
+        End_Object // oEnumDBSQLManager
+
+        If (hoSQL <> 0) Begin
+            Get SQLConnect Of hoSQL "MSSQLDRV" sConnect To hdbc
+            If (hdbc <> 0) Begin
+                Get SQLOpen Of hdbc To hstmt
+                If (hstmt <> 0) Begin
+                    //*** We could do a direct select on the sysdatabases table but we use
+                    //*** the stored procedure sp_database instead. SQL Server recommends this
+                    //*** approach in case meta data might change, the stored procedure will
+                    //*** stay the same.
+                    Send SQLSetProcedureName To hstmt "sp_databases"
+                    Send SQLCall To hstmt
+                    Repeat
+                        Get SQLFetch Of hstmt To iFetchResult
+                        If (iFetchResult <> 0) Begin
+                            Get SQLColumnValue Of hstmt 1 To sDatabase
+                            Set Value Item (Item_Count(Current_Object)) To sDatabase
+                        End
+                    Until (iFetchResult = 0)
+
+                    Send SQLClose To hstmt
+                End
+                Send SQLDisconnect To hdbc
+            End
+        End
+        Send Destroy_Object To hoSQL
+
+        Function_return (Item_Count(Current_Object))
+    End_Function // EnumerateDatabases
+
+End_Class // cMSSQLHandler
+

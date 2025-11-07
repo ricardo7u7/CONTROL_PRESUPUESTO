@@ -1,0 +1,10 @@
+[Properties]
+Version=18.2
+[WorkspacePaths]
+ConfigFile=.\Programs\Config.ws
+[Libraries]
+Lib1=Libraries\Graphics Library 2.6\Graphics.sws
+Lib2=Libraries\DataFlex Reports\DataFlex Reports 18.2.sws
+[Projects]
+Project0=Registros.src
+Project1=grfcs.src

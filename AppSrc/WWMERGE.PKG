@@ -1,0 +1,171 @@
+//*************************************************************************
+//*
+//*  Copyright (c) 1997 Data Access Corporation, Miami Florida,
+//*  All rights reserved.
+//*  DataFlex is a registered trademark of Data Access Corporation.
+//*
+//*************************************************************************
+//*
+//*  Module Name:
+//*      wwmerge.Pkg
+//*
+//*  Creator:
+//*      Mike Zingman
+//*      Michael Gouker
+//*      Gregory Gonzalez
+//*      Ken Ross
+//*
+//*  Date:
+//*     July 18, 1994
+//*  Purpose:
+//*     Mail Merge Interface to Microsoft Word
+//*
+//*  Preconditions:
+//*
+//*
+//*************************************************************************
+
+Use Windows
+Use DDE
+use msword.pkg
+
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      WordMailMergeComm
+//*
+//*  Purpose:
+//*      Mail Merge Interface to Microsoft Word
+//*
+//*
+//*  SuperClass:
+//*      WordComm
+//*
+//************************************************************************
+
+
+Class WordMailMerge is a WordComm
+
+
+
+//*************************************************************************
+//*
+//*  Procedure Name:
+//*        OPEN_DOC
+//*
+//*
+//*  Purpose:
+//*      Establish connection to Microsoft Word.
+//*      Open the specified Word document and establish a connection
+//*      with the open Word document
+//*
+//************************************************************************
+
+  procedure open_doc  string winword_doc
+
+    local integer stat
+
+    get wconnect to stat
+
+    if (stat = SUCCESS) ;
+        set document to winword_doc
+    else;
+        set document to "ERROR"
+
+  end_procedure
+
+
+
+//*************************************************************************
+//*
+//*  Procedure Name:
+//*        INSERT_DOC
+//*
+//*  Precondition:
+//*        The Word document be open and connection
+//*        to said document must be established
+//*
+//*  Purpose:
+//*        Inserts data into the open Word Document where:
+//*        BOOKMARKNAME is the address of the bookmark in the document and
+//*        BOOKMARKDATA is the data to be placed in the bookmark
+//*
+//*
+//************************************************************************
+
+  procedure insert_doc string bookmarkname string bookmarkdata
+
+        Local Integer LineStatus
+
+        get COMM_WRITEDATA bookmarkname bookmarkdata to LineStatus
+
+
+  end_procedure
+
+
+
+//*************************************************************************
+//*
+//*  Procedure Name:
+//*        PRINT_DOC
+//*
+//*  Precondition:
+//*        The Word document must be open and connection
+//*        to said document must be established
+//*
+//*  Purpose:
+//*
+//*        To print the open Word Document.
+//*
+//*
+//*
+//************************************************************************
+
+  procedure print_doc
+
+     local integer Status
+
+     // For Word 6.0 use this command to print out the documents
+     get comm_perform ('[FilePrint .AppendPrFile = 0, .Range = "0", .PrToFileName = "", .From = "", .To = "", .Type = 0, .NumCopies = "1", .Pages = "", .Order = 0, .PrintToFile = 0, .Collate = 1, .FileName = ""]') to status
+
+
+
+     //For Word 2.0 use this command to print out the documents
+     //get comm_perform ('[FilePrint .Type = 0, .NumCopies = "1", .Range = 0, .From = "", .To = "", .PrintToFile = 0,  .Collate = 1, .FileName = ""]')  to Status
+
+
+  End_Procedure
+
+End_Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

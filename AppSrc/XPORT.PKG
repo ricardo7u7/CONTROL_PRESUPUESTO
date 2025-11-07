@@ -1,0 +1,822 @@
+//*************************************************************************
+//*                                                                       *
+//*  Copyright (c) 1986-1997 Data Access Corporation, Miami Florida,      *
+//*  All rights reserved.                                                 *
+//*  DataFlex is a registered trademark of Data Access Corporation.       *
+//*                                                                       *
+//*************************************************************************
+//*                                                                       *
+//*  Module Name:                                                         *
+//*      Transpt.pkg                                                      *
+//*      1.0                                                              *
+//*                                                                       *
+//*  Creators:                                                            *
+//*      Alfred Giordano                                                  *
+//*      Michael Gouker                                                   *
+//*      Mike Zingman                                                     *
+//*      March 19, 1992                                                   *
+//*                                                                       *
+//*  Purpose: Defines the Transport and Session Layers of Inter-Object    *
+//*          communication.                                               *
+//*                                                                       *
+//*  NOTE: This package should only be "use"d at the desktop level, not   *
+//*        from within an object. The reason for this is that this        *
+//*        package creates an object that needs to be globally accessable *
+//*        and should, therefore, be located on the desktop.              *
+//*                                                                       *
+//*  Revision history:                                                    *
+//*      04/17/92 AJG Modify Return Values, nail down final rev.          *
+//*      05/12/92 MAG Removed COMMLIST searches.  Augmented sessions.     *
+// 07/23/96 JJT - New Class names
+//*                                                                       *
+//*************************************************************************
+
+#IFDEF UNABLE_TO_CONNECT
+#ELSE
+
+// Defines for XPORT and COMM
+
+#REPLACE ACK                    -1
+#REPLACE NACK                    0
+
+#REPLACE DUPLICATE_DRIVERNAME  996
+#REPLACE ZERO_CONNECTIONS      997
+#REPLACE ALREADY_CONNECTED     998
+#REPLACE UNABLE_TO_CONNECT     999
+
+#REPLACE SUCCESS                -1
+#REPLACE FAILURE                -2
+
+#REPLACE DEFAULT_DRIVER        "NULL:"
+#REPLACE NULLDRIVEROBJ         (NullDriver(DESKTOP))
+#REPLACE NULLDRIVERID          (Object_ID(NullDriver(DESKTOP)))
+
+#REPLACE NULL                    0
+
+#REPLACE NO_MATCHING_COMM        0
+#REPLACE NO_MATCHING_FOREIGN     0
+#REPLACE NO_MATCHING_SESSION     0
+
+// Linked list stuff.
+
+integer  TP_HEAD
+integer  COMMLIST_HEAD
+
+move 0 to TP_HEAD
+move 0 to COMMLIST_HEAD
+
+#ENDIF
+
+// Forward references
+
+Register_Function COMM_RECEIVE string DataItem string Data returns integer
+Register_Function COMM_EXECUTE string Commands returns integer
+Register_Function COMM_REQUEST string DataItem returns String
+Register_Function TP_REQUEST integer Sender string DataRef Returns String
+Register_Function TP_RECEIVE integer Sender string DataRef string Buffer Returns Integer
+Register_Function TP_DestroySession integer SessionID returns integer
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      GenericSession
+//*
+//*  Purpose:
+//*      A logical communication layer between physical DRIVER devices and
+//*      logical COMM connections.  Sessions hold data about the interface
+//*      of TRANSPORTS to the COMMs they are associated to.
+//*
+//*  SuperClass:
+//*      Message
+//*
+//************************************************************************
+
+Class GenericSession is a Message
+
+  Procedure construct_object integer Image
+
+    forward send construct_object
+
+    property integer CommLink     public 0
+    property integer PrivateForeignLink  public 0
+
+  End_Procedure
+
+  Function ForeignLink returns Integer
+      Function_Return (PrivateForeignLink(Current_Object))
+  End_Function
+
+  Procedure Set ForeignLink Integer LinkID
+      Set PrivateForeignLink of Current_Object to LinkID
+  End_Procedure
+
+End_Class
+
+Class ForeignSession is a GenericSession
+
+  Function ForeignLink returns Integer
+      Function_Return Current_Object
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_TERMINATE
+//*
+//*  Purpose:            Reroute to SESS_TERMINATE.
+//*
+//************************************************************************
+
+  Function TP_TERMINATE integer Receiver returns integer
+
+      Function_Return (SESS_DISCONNECT(Current_Object))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_REQUEST
+//*
+//*  Purpose:           Reroute to SESS_REQUEST
+//*
+//************************************************************************
+
+  Function TP_REQUEST integer Receiver string DataRef Returns String
+      Local String Result
+      Get SESS_READ DataRef to Result
+      Function_Return Result
+  End_Function
+
+
+//*************************************************************************
+//*
+//*  Message:   TP_RECEIVE
+//*
+//*  Purpose:           Reroute to SESS_RECEIVE
+//*
+//************************************************************************
+
+  Function TP_RECEIVE integer Receiver string DataRef string Buffer returns integer
+      Local Integer Result
+
+      Get SESS_WRITE DataRef Buffer to Result
+      Function_Return Result
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_EXECUTE
+//*
+//*  Purpose:           Reroute to SESS_EXECUTE
+//*
+//************************************************************************
+
+  Function TP_EXECUTE integer Receiver string Commands returns integer
+      local integer Result
+
+      Get SESS_PERFORM Commands to Result
+      Function_Return Result
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   SESS_TERMINATE
+//*
+//*  Purpose:            Delegate TP_TERMINATE.
+//*
+//************************************************************************
+
+  Function SESS_TERMINATE returns integer
+      local integer Result
+
+      DELEGATE Get TP_TERMINATE Current_Object to Result
+      Function_Return Result
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   SESS_REQUEST
+//*
+//*  Purpose:           Delegate TP_REQUEST
+//*
+//************************************************************************
+
+  Function SESS_REQUEST string DataRef Returns String
+      local string Result
+
+      Delegate Get TP_REQUEST Current_Object DataRef to Result
+      Function_Return Result
+
+  End_Function
+
+
+//*************************************************************************
+//*
+//*  Message:   SESS_RECEIVE
+//*
+//*  Purpose:           Delegate to TP_RECEIVE
+//*
+//************************************************************************
+
+  Function SESS_RECEIVE string DataRef string Buffer returns integer
+      local integer Result
+
+      Delegate Get TP_RECEIVE Current_Object DataRef Buffer to Result
+      Function_Return Result
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   SESS_EXECUTE
+//*
+//*  Purpose:           Reroute to SESS_EXECUTE
+//*
+//************************************************************************
+
+  Function SESS_EXECUTE string Commands returns integer
+      local integer Result
+
+      Delegate Get TP_EXECUTE Current_Object Commands to Result
+      Function_Return Result
+
+  End_Function
+
+End_Class
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      Transport
+//*
+//*  Purpose:
+//*      A physical communications layer between physical devices and
+//*      logical connections.
+//*
+//*  SuperClass:
+//*      Message
+//*
+//************************************************************************
+
+Class Transport is a message
+
+  Procedure construct_object integer Image string InitDriverName
+
+    forward send construct_object
+
+    property string  PrivateDriverName private (Name(current_object))
+    property integer NextID            public  0     // Transport Linked List
+
+    // set driver name to passed value if not null
+
+    if InitDriverName ne "";
+        Set DriverName to InitDriverName
+
+    // manage linked list
+
+    Set NextID to TP_HEAD
+    move current_object to TP_HEAD
+
+  End_Procedure
+
+//*************************************************************************
+//*
+//*  Procedure:   DriverID
+//*
+//*  Purpose:     Allows session to grab Driver Object Handle by Delegation
+//*
+//*  Postconditions:   Returns the object handle of the driver
+//*
+//************************************************************************
+
+  Function DriverID returns Integer
+    Function_Return Current_Object
+  End_Procedure
+
+//*************************************************************************
+//*
+//*  Procedure:   DriverName
+//*
+//*  Purpose:     Gets the hidden driver name
+//*
+//*  Postconditions:   Returns the hidden driver name
+//*
+//*  Notes:  Two drivers with the same name CANNOT be instantiated.
+//*
+//************************************************************************
+
+  Function DriverName returns String
+    Function_Return (TRANSPORT.PrivateDriverName(current_object))
+  End_Function
+
+//*************************************************************************
+//*
+//*  Procedure:   Set DriverName
+//*
+//*  Purpose:           Sets the hidden driver name
+//*
+//*  Preconditions:     "DevName" - The value to set the driver name to.
+//*
+//*  Postconditions:   Return SUCCESS or FAILURE
+//*
+//*  Notes:  Two drivers with the same name CANNOT be instantiated.
+//*
+//************************************************************************
+
+Procedure Set DriverName string DevName
+
+  local integer Thead
+
+    move TP_HEAD to Thead
+    while Thead gt 0
+        if (DriverName(Thead)) eq DevName begin
+            send TP_ERROR DUPLICATE_DRIVERNAME DevName
+            Procedure_Return
+        end
+        move (NextID(Thead)) to Thead
+    end
+
+    Set TRANSPORT.PrivateDriverName to (uppercase(DevName))
+
+End_Procedure
+
+//*************************************************************************
+//*
+//*  Message:   TP_INITIATE
+//*
+//*  Purpose:           An external object is attempting to connect.
+//*
+//*  Preconditions:     "Sender" - An external object id.
+//*
+//*                     "Path" - If a subclass has a specific
+//*                    translation protocol, the INITIATE handler for
+//*                    the subclass performs the translation to the
+//*                    DataFlex standard.
+//*
+//*  Postconditions:   Return SUCCESS or FAILURE
+//*
+//************************************************************************
+
+  Function TP_INITIATE integer Sender string Path returns integer
+  local integer Result
+  local integer CommObject
+  local integer SessionID
+
+      // Get a new session.
+
+      get TP_CreateSession to SessionID
+
+      if SessionID eq FAILURE;
+          Function_Return FAILURE
+
+      //  Find a COMM object that will attend this request.
+      //  Method of finding the particular CommObject is not rigid.
+
+      get TP_CommBroadcast SessionID Path to CommObject
+
+      //  If no COMM object found, reply FAILURE to caller.
+
+      if CommObject eq FAILURE begin
+          get TP_DestroySession SessionID to Result
+          Function_Return FAILURE
+      end
+
+      set CommLink of SessionID to CommObject
+      set ForeignLink of SessionID to Sender
+
+      Function_Return SessionID
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_TERMINATE
+//*
+//*  Purpose:           An external object is disconnecting.
+//*
+//*  Preconditions:     "Receiver" - Session ID of Receiver
+//*
+//*  Postconditions:    We return SUCCESS if the ID was found else FAILURE.
+//*
+//************************************************************************
+
+  Function TP_TERMINATE integer Receiver returns integer
+  local integer CommObject
+
+      get CommLink of Receiver to CommObject
+
+      if CommObject eq NO_MATCHING_COMM;
+          Function_Return FAILURE
+
+      send COMM_TERMINATE to CommObject
+
+      Function_Return (TP_DestroySession(Current_Object, Receiver))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_REQUEST
+//*
+//*  Purpose:           An external object wants data.
+//*
+//*  Preconditions:     "Receiver" - Session ID of Receiver
+//*                     "DataRef" - Specifies a data element.
+//*                     "Buffer" - A buffer to receive the data.
+//*
+//*  Postconditions:    We return SUCCESS or FAILURE depending on the outcome.
+//*
+//************************************************************************
+
+  Function TP_REQUEST integer Receiver string DataRef Returns String
+    local integer CommObject
+
+      get CommLink of Receiver to CommObject
+
+      if CommObject eq NO_MATCHING_COMM;
+          Function_Return ""
+
+      // "Delegate" the message to the intended receiver.
+
+      Function_Return (COMM_REQUEST(CommObject, DataRef))
+
+  End_Function
+
+
+//*************************************************************************
+//*
+//*  Message:   TP_RECEIVE
+//*
+//*  Purpose:           An external object sends data to be "poked".
+//*
+//*  Preconditions:     "Receiver" - Session ID of Receiver
+//*                     "DataRef" - Specifies a data element.
+//*                     "Buffer" - A buffer to receive the data.
+//*
+//*  Postconditions:    We return SUCCESS or FAILURE depending on the outcome.
+//*
+//************************************************************************
+
+  Function TP_RECEIVE integer Receiver string DataRef string Buffer returns integer
+    local integer CommObject
+
+      Get CommLink of Receiver to CommObject
+
+      if CommObject eq NO_MATCHING_COMM;
+          Function_Return FAILURE
+
+      // "Delegate" the message to the intended receiver.
+
+      Function_Return (COMM_RECEIVE (CommObject, DataRef, Buffer) )
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_EXECUTE
+//*
+//*  Purpose:           An external object sends commands to be executed.
+//*
+//*  Preconditions:     "Receiver" - Session ID of Receiver
+//*                     "Commands" - what to do
+//*
+//*  Postconditions:    We return SUCCESS or FAILURE depending on the outcome.
+//*
+//************************************************************************
+
+  Function TP_EXECUTE integer Receiver string Commands returns integer
+    local integer CommObject
+
+      Get CommLink of Receiver to CommObject
+
+      if CommObject eq NO_MATCHING_COMM;
+          Function_Return FAILURE
+
+      // "Delegate" the message to the intended receiver.
+
+      Function_Return (COMM_EXECUTE (CommObject, Commands) )
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Service:  TP_CONNECT
+//*
+//*  Purpose:  Connects a logical comm object to a physical transport.
+//*
+//*  Preconditions:
+//*      Sender is a COMM object (or subclass thereof) seeking connection.
+//*      Path has been stripped of the device name.
+//*
+//*  Postconditions:
+//*      Returns SUCCESS if successful else returns FAILURE if unsuccessful.
+//*
+//************************************************************************
+
+  Function TP_CONNECT integer CommSender string Path returns integer
+  local integer Receiver
+  local integer SessionID
+  local integer Result
+
+    get TP_CreateSession to SessionID
+
+    if (SessionID = FAILURE);
+        Function_Return FAILURE
+
+    get TP_DoConnect SessionID Path to Receiver
+
+    if (Receiver = FAILURE) begin
+      get TP_DestroySession SessionID to Result
+      Function_Return FAILURE
+    end
+
+    // Set session properties
+
+    set CommLink of SessionID to CommSender
+    set ForeignLink of SessionID to Receiver
+
+    Function_Return SessionID
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Service:   TP_DISCONNECT
+//*
+//*  Purpose:   Disconnects a logical comm object from a physical transport.
+//*
+//*  Preconditions:  SessionID - Session to be disconnected.
+//*
+//*  Postconditions:  Returns SUCCESS or FAILURE if unsuccessful.
+//*
+//************************************************************************
+
+  Function TP_DISCONNECT integer SessionID returns integer
+    local integer Result
+    local integer Receiver
+
+    get ForeignLink of SessionID to Receiver
+
+    if Receiver eq NO_MATCHING_FOREIGN;
+        Function_Return FAILURE
+
+    // Send the Terminate Connection Message to the other side
+
+    get TP_TERMINATE of Receiver Receiver to Result
+    if Result eq FAILURE;
+        Function_Return FAILURE       // to allow aborts et cetera
+
+    // remove session via subclass
+
+    Function_Return (TP_DestroySession (Current_Object, SessionID))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Service:   TP_READDATA
+//*
+//*  Purpose:   Request data from a foreign object via transport.
+//*
+//*  Preconditions:  SessionID - Session requesting data.
+//*                  DataItem - ID of data element
+//*
+//*  Postconditions: Data requested is returned as a string
+//*
+//************************************************************************
+
+  Function TP_READDATA integer SessionID string DataItem returns String
+    Local Integer Receiver
+
+    get ForeignLink of SessionID to Receiver
+    Function_Return (TP_REQUEST (Receiver, Receiver, DataItem))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Service:    TP_WRITEDATA
+//*
+//*  Purpose:    data from a foreign object via comm and transport.
+//*
+//*  Preconditions:  SessionID - Session sending data
+//*                  DataItem - Identifier of data element
+//*                  Buffer - What to write
+//*
+//*  Postconditions:
+//*                  Returns SUCCESS or FAILURE depending on outcome.
+//*
+//************************************************************************
+
+  Function TP_WRITEDATA integer SessionID string DataItem string Buffer returns integer
+    Local Integer Receiver
+
+    get ForeignLink of SessionID to Receiver
+    Function_Return (TP_RECEIVE( Receiver, Receiver, DataItem, Buffer ))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Service:    TP_PERFORM
+//*
+//*  Purpose:    Transmits a string of commands to external session
+//*
+//*  Preconditions:  SessionID - Session sending data
+//*                  Commands - What to do
+//*
+//*
+//*  Postconditions:
+//*                  Returns SUCCESS or FAILURE depending on outcome.
+//*
+//************************************************************************
+
+  Function TP_PERFORM integer SessionID string Commands returns integer
+    Local Integer Receiver
+
+    get ForeignLink of SessionID to Receiver
+    Function_Return (TP_EXECUTE( Receiver, Receiver, Commands ))
+
+  End_Function
+
+//*************************************************************************
+//*
+//*  Function/Procedure Name:
+//*      TP_Error
+//*
+//*  Purpose:
+//*      Outputs an error code and message to the console.
+//*
+//*  Preconditions:
+//*      Error_num - the error number to output.
+//*      Error_Msg - the textual message to output.
+//*
+//************************************************************************
+
+  Procedure TP_ERROR integer Error_Num string Error_Msg
+    error Error_num Error_Msg
+  End_Procedure
+
+//*************************************************************************
+//*
+//*  Message:   TP_CreateSession
+//*
+//*  Purpose:           Build a subclass dependent session.
+//*
+//*  Postconditions:    Session Id or current_object.
+//*
+//************************************************************************
+
+  Function TP_CreateSession returns integer
+  local integer NewSession
+    Object PrivateNewSession is a GenericSession no_image
+        Move Current_Object to NewSession
+    End_Object
+    Function_Return NewSession
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_DestroySession
+//*
+//*  Purpose:           Destroy subclass dependant object handle.
+//*
+//*  Precondition:      SessionID - The session to be destroyed
+//*
+//*  Postconditions:    Returns SUCCESS if successful else returns FAILURE
+//*
+//************************************************************************
+
+  Function TP_DestroySession integer SessionID returns integer
+    send Destroy_Object to SessionID
+    Function_Return SUCCESS
+  End_Function
+
+//*************************************************************************
+//*
+//*  Message:   TP_DoConnect
+//*
+//*  Purpose:   Specializes the connection logic.
+//*
+//*  Postconditions:    Returns SUCCESS if successful else returns FAILURE if unsuccessful.
+//*
+//************************************************************************
+
+  Function TP_DoConnect integer ObjectHandle string Path returns integer
+    Function_Return SUCCESS
+  End_Function
+
+//*************************************************************************
+//*
+//*  Function/Procedure Name:
+//*
+//*      TP_CommBroadcast
+//*
+//*  Purpose:           Finds a COMM that replies to conversation of session.
+//*
+//*  Precondition:      SessionID - The session that requested the COMM
+//*                     Path - String to be tested by COMMs
+//*
+//*  Postconditions:    Returns comm object that replies or FAILURE if none.
+//*
+//************************************************************************
+
+  Function TP_CommBroadcast integer SessionID string Path returns integer
+
+    Local Integer CommHead
+    Local Integer Result
+
+    move COMMLIST_HEAD to CommHead
+    while CommHead gt 0
+        get COMM_INITIATE of CommHead SessionID Path to Result
+        if Result eq SUCCESS;
+          Function_Return CommHead
+        else move (NextID(CommHead)) to CommHead
+    end
+
+    Function_Return FAILURE
+    End_Function
+
+ End_Class
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      NULL_TRANSPORT
+//*
+//*  Purpose:
+//*      A NULL object used to reroute transport messages to a safe device
+//*      in the event of connection errors.
+//*
+//*  SuperClass:
+//*      Transport
+//*
+//************************************************************************
+
+Class NullTransport is a Transport
+
+  Procedure construct_object
+    forward send construct_object no_image "NULL"
+  End_Procedure
+
+  // TP_TERMINATE of NULL Driver Does Not Destroy Session
+  // This is because the TP_DISCONNECT will destroy the session for its link
+  // In the NULL driver a COMM is linked to itself through the same session.
+
+  Function TP_TERMINATE integer Receiver returns integer
+  local integer CommObject
+
+      get CommLink of Receiver to CommObject
+
+      if CommObject eq NO_MATCHING_COMM;
+          Function_Return FAILURE
+
+      send COMM_TERMINATE to CommObject
+
+      Function_Return SUCCESS
+
+  End_Function
+
+  Function TP_DoConnect integer ObjectHandle string Path returns integer
+    Function_Return ObjectHandle  // NULL sessions point to themselves
+  End_Function
+
+End_Class
+
+Object NullDriver is a NUllTransport no_image
+End_Object
+
+//*************************************************************************
+//*
+//*  Class Name:
+//*      DFDriver
+//*
+//*  Purpose:
+//*      A Transport object used to define the DataFlex physical protocol.
+//*
+//*  SuperClass:
+//*      Transport
+//*
+//************************************************************************
+
+Class DF_Transport is a Transport
+
+  Procedure construct_object
+    forward send construct_object no_image "DATAFLEX"
+  End_Procedure
+
+  Function TP_DoConnect integer SessionID string Path returns integer
+    Local Integer Receiver
+    broadcast recursive get DFINIT of Desktop SessionID Path to Receiver
+    Function_Return Receiver
+  End_Function
+
+  Function DFINIT integer Sender string Path returns integer
+    Local Integer ForeignHandle
+    forward get TP_INITIATE Sender Path to ForeignHandle
+    Function_Return ForeignHandle
+  End_Function
+
+End_Class

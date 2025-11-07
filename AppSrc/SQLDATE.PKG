@@ -1,0 +1,28 @@
+Function fSQL_date Global Date d_Fecha Returns String
+    Local String  s_Fecha
+    Local Integer i_Formato
+
+    Get_date_format to i_formato
+
+    Move "'" to s_Fecha
+    //Move "" to s_Fecha
+
+    If i_Formato eq 0 Begin  // Fecha formato USA mes/dia/año
+        Append s_Fecha (Mid(d_Fecha,4,7))
+        Append s_Fecha (Mid(d_Fecha,2,1))
+        Append s_Fecha (Mid(d_Fecha,2,4))
+    End
+    If i_formato eq 1 Begin  // Fecha formato europeo dia/mes/año
+        Append s_Fecha (Mid(d_Fecha,4,7))
+        Append s_Fecha (Mid(d_Fecha,2,4))
+        Append s_Fecha (Mid(d_Fecha,2,1))
+    End
+    If i_formato eq 2 Begin  // Fecha formato militar año/mes/dia
+        Append s_Fecha (Mid(d_Fecha,4,1))
+        Append s_Fecha (Mid(d_Fecha,2,6))
+        Append s_Fecha (Mid(d_Fecha,2,9))
+    End
+
+    Append s_Fecha "'"
+    Function_Return s_Fecha
+End_Function

@@ -1,0 +1,154 @@
+/*                         ~ ~ ~ ~ SEPARACION DE FUNCIONES O PROCEDIMIENTOS ~ ~ ~ ~                              */
+//Paketes.Pkg
+//Libreria de Funciones y Procedimientos de uso general
+
+//Funcion que devuelve el nombre de un archivo ubicado en el path del usuario que se hizo login en el computador.
+//Recibe los parámetros:
+//      1) Random               = Bandera que indica si el nombre ser  Random. 0=No Random, 1=Si Random
+//      2) sArchivo_Extencion   = Nombre y/o Extensi¢n del Archivo
+
+Function Archivo_Temporal Global Integer iRandom String sArchivo_Extencion Returns String
+    Local String sArchivo
+    Move "" to sArchivo
+    Move (Trim(sArchivo_Extencion)) to sArchivo_Extencion
+    
+    //Get_Environment "USERPROFILE" To sArchivo
+    If (Trim(sArchivo)) eq "" Get_Environment "TMP" To sArchivo
+    If (Trim(sArchivo)) eq "" Get_Environment "TEMP" To sArchivo
+    If (Trim(sArchivo)) eq "" Move "C:" to sArchivo
+    Append sArchivo "\" 
+    
+    If iRandom eq 0 Append sArchivo sArchivo_Extencion
+    Else Begin
+        Append sArchivo (Random(99999999))
+        If NOT "." in sArchivo_Extencion  Append sArchivo "."
+        Append sArchivo sArchivo_Extencion
+    End
+    
+    Function_Return sArchivo
+End_Function
+
+/*                         ~ ~ ~ ~ SEPARACION DE FUNCIONES O PROCEDIMIENTOS ~ ~ ~ ~                              */
+
+// Autor: Mirtil Sevillanos 
+// Fecha: Nov/2005
+
+// Funcion que devuelve el Path donde se instal¢ EXCEL
+
+//SINTAXIS Para tomar el path de Excel:
+
+//Local String sPath_Excel
+//Get Path_Excel of oLee_Registry_Para_Aplicaciones to sPath_Excel
+//RunProgram wait (sPath_Excel+" "+sArchivo_de_Salida)
+
+Use cRegistry.pkg
+Object oLee_Registry_Para_Aplicaciones is a cRegistry
+    
+    Function Path_Excel Returns String             
+        Local Boolean bOpened
+        Local String sKey sValue sPath         
+
+        Move "" to sPath 
+
+        Set phRootKey To HKEY_CLASSES_ROOT
+        
+        //Move ("Applications\EXCEL.EXE\shell\open\command") To sKey
+        //Move ("Applications\EXCEL.EXE\shell\edit\command") To sKey
+        Move ("Excel.Addin\shell\Open\command\") To sKey
+        Move "" To sValue
+
+        Get OpenKey sKey To bOpened
+        If bOpened Begin
+            If (ValueExists(self, sValue)) Begin
+                Get ReadString sValue To sPath
+                Move (Trim(UpperCase(sPath))) to sPath
+            End
+            Send CloseKey
+        End
+
+        If sPath eq "" Move "EXPLORER" to sPath
+        Function_Return sPath
+ 
+    End_Function
+    
+    Function Path_Word Returns String             
+        Local Boolean bOpened
+        Local String sKey sValue sPath         
+
+        Move "" to sPath 
+
+        Set phRootKey To HKEY_CLASSES_ROOT
+        
+        //Move ("Applications\EXCEL.EXE\shell\open\command") To sKey
+        //Move ("Applications\EXCEL.EXE\shell\edit\command") To sKey
+        Move ("Word.Application\shell\Open\command\") To sKey
+        Move "" To sValue
+
+        Get OpenKey sKey To bOpened
+        If bOpened Begin
+            If (ValueExists(self, sValue)) Begin
+                Get ReadString sValue To sPath
+                Move (Trim(UpperCase(sPath))) to sPath
+            End
+            Send CloseKey
+        End
+
+        If sPath eq "" Move "EXPLORER" to sPath
+        Function_Return sPath
+ 
+    End_Function
+    
+End_Object
+
+/*                         ~ ~ ~ ~ SEPARACION DE FUNCIONES O PROCEDIMIENTOS ~ ~ ~ ~                              */
+// Autor: Luis Alfredo Monroy
+// Fecha: 02.03.2009
+
+// Funci¢n que devuelve una cadena de caracteres sin comas (,)
+
+Function Reemplaza_Comas Global String sCadena Returns String
+    While "," In sCadena
+        Replace "," In sCadena With " "
+    Loop
+    
+    While (Character(13)) In sCadena
+        Replace (Character(13)) In sCadena With " "
+    Loop
+    
+    While (Character(10)) In sCadena
+        Replace (Character(10)) In sCadena With " "
+    Loop
+
+    Function_Return (Trim(sCadena))
+End_Function
+
+
+/*                         ~ ~ ~ ~ SEPARACION DE FUNCIONES O PROCEDIMIENTOS ~ ~ ~ ~                              */
+
+// Autor: Luis Alfredo Monroy
+// Fecha: 06.08.2008
+
+// Procedimiento que abre un documento de Excel.
+
+//SINTAXIS:
+
+// Send Abre_Documento_de_Excel [Directorio + Archivo]
+
+//EJEMPLO: Send Abre_Documento_de_Excel "C:\Documents and Settings\Usuario\My Documents\Archivo.xls"
+
+Procedure Abre_Documento_de_Excel GLOBAL String sDirectorio_Y_Archivo
+    
+    #IFDEF GET_SHELLEXECUTE
+    #ELSE
+        // external function call used in Procedure Abre_Documento_de_Excel
+        External_Function ShellExecute "ShellExecuteA" shell32.dll Handle hWnd String lpOperation String lpFile String lpParameters String lpDirectory Dword iShowCmd Returns Handle
+    #ENDIF
+
+    handle hInstance hWnd
+    Get Window_Handle To hWnd
+    Move (ShellExecute (hWnd, "OPEN", (Trim (sDirectorio_Y_Archivo)), '', '', 1)) To hInstance
+
+End_Procedure // Abre_Documento_de_Excel
+
+/*                         ~ ~ ~ ~ SEPARACION DE FUNCIONES O PROCEDIMIENTOS ~ ~ ~ ~                              */
+

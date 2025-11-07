@@ -1,0 +1,122 @@
+//*************************************************************************
+//*
+//*  Copyright (c) 1997 Data Access Corporation, Miami Florida,
+//*  All rights reserved.
+//*  DataFlex is a registered trademark of Data Access Corporation.
+//*
+//*************************************************************************
+//*
+//*  Module Name:
+//*      MSWord.Pkg
+//*
+//*  Creator:
+//*      MAZ
+//*      David Lisle
+//*
+//*  Date:
+//*
+//*  Purpose:
+//*      Interface to Microsoft Word
+//*
+//*  Preconditions:
+//*
+//*
+//*************************************************************************
+Use Windows
+Use DDE
+
+Integer CommCheck
+
+Class WordComm is a Comm
+  Procedure Construct_Object integer imageno string nameofcomm
+    Property string DocumentFile Public
+    Forward Send Construct_Object imageno nameofcomm
+  End_Procedure
+
+  Function WConnect Returns Integer      //connect to other application
+    Local Integer LineStatus             //for error checking
+    Local String PathToWord
+
+    Get_Profile_String "APPLICATION_LINKS" "WordPath" to PathToWord
+
+    // see if WORD is running
+
+    Get Comm_Connect ("DDE:WINWORD|SYSTEM") to LineStatus
+
+    // run WORD if it is not loaded
+
+    if LineStatus eq FAILURE begin
+        if PathToWord eq "" begin
+            Error 501 "WordPath of DFWIN.INI is not set."
+            Function_Return FAILURE
+        end
+        Runprogram WAIT ("~" + PathToWord)
+        Get Comm_Connect ("DDE:WINWORD|SYSTEM") to LineStatus
+    end
+
+    Function_Return LineStatus
+
+  End_Function
+
+  Procedure Set Document string newdoc
+    Get Comm_Perform ('[FileOpen .Name = "' + newdoc + '", .ConfirmConversions = 0, .ReadOnly = 0, .AddToMru = 0, .PasswordDoc = "", .PasswordDot = "", .Revert = 0, .WritePasswordDoc = "", .WritePasswordDot = ""]') to COMMCHECK
+    Get Comm_Connect ("DDE:WINWORD|"+newdoc) to CommCheck
+    Set DocumentFile to NewDoc
+  End_Procedure
+
+
+  Function Document returns string
+    Function_Return (DocumentFile(current_object))
+  End_Function
+
+  Procedure ClearTabs   //Clears all tabs
+    Get Comm_Perform '[FormatTabs .ClearAll]' to CommCheck
+  End_Procedure
+
+  Procedure SetTabs String Inches String Align
+    Get Comm_Perform ('[FormatTabs .Position="'+Inches+' in", .Align='+Align+', .Set]') to CommCheck
+  End_Procedure
+
+  Procedure BoldOn      //turn bold on
+    Get Comm_Perform '[Bold]' to CommCheck
+  End_Procedure
+
+  Procedure BoldOff     //turn bold off
+    Get Comm_Perform '[Bold]' to CommCheck
+  End_Procedure
+
+  Procedure NextLine        //Send carriage return and linefeed
+    Get Comm_Perform '[Insert chr$(13)+chr$(10)]' to CommCheck
+    increment linecount
+  End_Procedure
+
+  Procedure Tab        //Send tab
+    Get Comm_Perform '[Insert chr$(9)]' to CommCheck
+  End_Procedure
+
+  Procedure WWrite String WriteString                //Builds string to be written
+    Get Comm_Perform ('[Insert "'+WriteString+'"]') to CommCheck
+  End_Procedure
+
+  Procedure SetFont String FontString                //Set a font (string)
+    Get Comm_Perform ('[Font "'+FontString+'"]') to CommCheck
+  End_Procedure
+
+  Procedure SetSize String SizeString                //Set a size (number)
+    Get Comm_Perform ('[FontSize '+SizeString+']') to CommCheck
+  End_Procedure
+
+  Function WPerform String command Returns Integer   //Perform other commands
+    Local Integer LineStatus
+    Get Comm_Perform command to LineStatus
+    Function_Return LineStatus
+  End_Function
+
+  Function WDisconnect Returns Integer               //disconnect (always required)
+    Local Integer LineStatus
+    Get Comm_Disconnect to LineStatus
+    Function_Return LineStatus
+  End_Function
+
+
+End_Class

@@ -1,0 +1,39 @@
+-----------------------------------------------------------------------------
+  DATE: 08/10/2025      TIME: 11:07                                  PAGE:  1
+  FILE DEFINITION FOR FILE: DEUDA_H (# 3)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : MSSQLDRV:DEUDA_H
+  USER DISPLAY NAME         : DEUDA_H
+  DATAFLEX FILE NAME        : DEUDA_H
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 104       ( USED: 104 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 2 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 1 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : SERVER=RICARDO;Database=Presupuesto;Trusted_Connection=Yes
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           NUM   10.0     1  1   
+  2  CLAVE            ASC     10    12  2   
+  3  DESCRIPCION      ASC     20    22      
+  4  MONTO            NUM   10.2    42      
+  5  FECHA_INICIO     DAT     10    56      
+  6  FECHA_FIN        DAT     10    79      
+  7  TIPO             ASC      2   102      
+  8  A_FAVOR          ASC      1   104      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       1     ON-LINE
+
+  2    CLAVE           NO  NO       0      0       1     ON-LINE
+

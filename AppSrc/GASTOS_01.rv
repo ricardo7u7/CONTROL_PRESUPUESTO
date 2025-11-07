@@ -1,0 +1,91 @@
+Use Windows.pkg
+Use DFRptVw.pkg
+Use DFRpt.pkg
+Use File_Dlg.Pkg
+Use PRESUPUESTO.sl
+
+Activate_View Activate_GASTOS_01 for GASTOS_01
+Object GASTOS_01 is a ReportView
+    Set Location to 6 6
+    Set Size to 56 181
+    Set Label to "Grafica de Gastos"
+
+    Object oOkButton is a Button
+        Set Label to "&OK"
+        Set Location to 35 38
+        Set Default_State to TRUE
+
+        Procedure OnClick
+            Send Comenzar_reporte
+        End_Procedure
+
+    End_Object
+
+    Object oCancelButton is a Button
+        Set Label to "&Cancel"
+        Set Location to 35 93
+
+        Procedure OnClick
+            Send Request_Cancel
+        End_Procedure
+
+    End_Object
+
+    Object oSaveAsDialog is a SaveAsDialog
+    End_Object
+
+     Procedure Comenzar_reporte
+        Set Report_name of (S4006(Current_Object)) to "Report2.rpt"
+        Send Run_Report to (S4006(Current_Object))
+    End_Procedure
+    
+    Object S4006 is a WinQLReport
+        Set Output_Destination to WQL_PRINT_TO_WINDOW
+    
+        Procedure OnInitializeReport
+            Forward Send OninitializeReport
+            Local Number nPresupuesto
+            Local String @Seleccion
+            
+            Get Value of oPRESUPUESTO to nPresupuesto
+            Move '' to @Seleccion
+            
+            Clear PRESUPUESTO
+            Move nPresupuesto to PRESUPUESTO.NUMERO
+            Find eq PRESUPUESTO by Index.1
+            If [not Found] Begin
+                Send Stop_Box 'Ingrese un presupuesto valido' '!'
+                Procedure_Return
+            End
+            
+            If (nPresupuesto ne 0)   Begin
+                Append @Seleccion '  {PRESUPUESTO.NUMERO} = ' PRESUPUESTO.NUMERO
+            End
+            
+            Set SelectionFormula      to @Seleccion
+        End_Procedure
+        
+    End_Object
+
+    Object oPRESUPUESTO is a Form
+        Set Size to 13 69
+        Set Location to 10 72
+        Set Label_Col_Offset to 2
+        Set Label to "Presupuesto:"
+        Set Label_Justification_Mode to JMode_Right
+        Set Prompt_Button_Mode to PB_PromptOn
+        Set Prompt_Object to PRESUPUESTO_SL
+    
+        // OnChange is called on every changed character
+    //    Procedure OnChange
+    //        String sValue
+    //    
+    //        Get Value to sValue
+    //    End_Procedure
+    
+    End_Object
+    
+    On_Key Key_Alt+Key_O Send KeyAction of oOkButton
+    On_Key Key_Alt+Key_C Send KeyAction of oCancelButton
+
+End_Object

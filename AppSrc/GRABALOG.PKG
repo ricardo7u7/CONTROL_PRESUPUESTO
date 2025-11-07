@@ -1,0 +1,36 @@
+Use SQL.PKG
+Use MSSQLDRV.PKG
+Open DEFAULTS
+//GAAG 20170219 SE MODIFICO EL ORDEN YA QUE EL NUMERO DE TRANSACCION COLOCABAN EL TIPO DE TRANSACCION
+Procedure Graba_Log_Op String sOperacion String sArchivo Integer iRecnum String sNumero_transac String sTipo_transac
+    Open EMPRESA
+    Local String  sXUsuario sFecha
+    Local String  dFecha
+    Local Integer iHH
+    Local Integer iMM
+    Local Number  nHora
+    Local String  sQ
+    Local Handle  hdbc2 hstmt2
+    
+    Move '' to sXUsuario
+    
+    Get PSEG_USUARIO to sXUsuario    
+    
+    Sysdate dFecha iHH iMM
+    
+    Move "" to sFecha
+    Append sFecha (Trim(DateGetYear(dFecha)))
+    Append sFecha  (Right("00"+(Trim(DateGetMonth(dFecha))),2))
+    Append sFecha  (Right("00"+(Trim(DateGetDay(dFecha))),2))
+    
+    Move (iHH + (iMM/100.0)) to nHora
+
+    Move "" to sQ
+    Append sQ " Insert Into LOG_OP (FECHA, HORA, OPERACION, USUARIO, ARCHIVO, NUMERO_RECNUM, TIPO_TRANSAC, NUMERO_TRANSAC)"
+    Append sQ " Values ('" sFecha "'," nHora ", '" sOperacion "','" sXUsuario "','" sArchivo "'," iRecNum ",'" sTipo_transac "','" sNumero_transac "')"    
+    SQLFileConnect DEFAULTS to hdbc2
+    SQLOpen hdbc2 to hstmt2
+    SQLExecDirect hstmt2 sQ
+    SQLClose hstmt2
+    SQLDisconnect hdbc2  
+End_Procedure

@@ -1,0 +1,29 @@
+//  Determina fecha de fin de mes que corresponde a la transacci¢n
+
+Function Fecha_Fin_Mes GLOBAL Date @_fecha_original Returns Date
+    Local Date @_fin_mes              
+    If @_fecha_original le 693975 Calc (@_fecha_original+693975) to @_fecha_original 
+    Move @_fecha_original to @_fin_mes
+    While (Mid(@_fecha_original,2,4) eq Mid(@_fin_mes,2,4)) 
+        Move (@_fin_mes+1) to @_fin_mes
+        Loop
+    Move (@_fin_mes-1) to @_fin_mes   
+    Function_Return @_fin_mes 
+End_Function 
+ 
+Function Fecha_Fin_Mes_Anterior GLOBAL Date @_fecha_original Returns Date
+    Local Date @_fin_mes              
+    If @_fecha_original le 693975 Calc (@_fecha_original+693975) to @_fecha_original 
+    Move @_fecha_original to @_fin_mes
+    While (Mid(@_fecha_original,2,4) eq Mid(@_fin_mes,2,4)) 
+        Move (@_fin_mes-1) to @_fin_mes
+        Loop
+    Function_Return @_fin_mes 
+End_Function 
+  
+ 
+ 
+ 
+ 
+ 
+ 

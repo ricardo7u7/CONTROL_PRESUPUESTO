@@ -1,0 +1,49 @@
+Procedure Salida
+    Local String  @usuario @empresas @Lectura
+    Local Integer nEmpresa  
+    Move "" to @empresas
+    
+    //Get value item 0 to @Lectura
+    Get value item 0 to nEmpresa
+
+    //valida la empresa
+    Clear EMPRESA
+    Move nEmpresa to EMPRESA.NUMERO
+    //Move @Lectura to EMPRESA.CLAVE 
+    Find eq EMPRESA by Index.1
+    //Find eq EMPRESA by Index.2 
+    If [Not Found] Begin
+        Send Info_box "Ingrese una Empresa v lida..." "Informaci¢n"
+        Procedure_return
+    End
+    Move EMPRESA.NUMERO to nEmpresa
+    If @Lectura ne '' begin
+        //Busca el usuario
+        Direct_Input 'C:\WINDOWS\SIAC.INI'
+        [Not SeqEOF] Readln @usuario
+        Close_Input
+        
+        Open USR_EMP
+        Clear USR_EMP
+        Move @usuario to USR_EMP.USUARIO
+        Find gt USR_EMP by Index.1
+        While (Found and (USR_EMP.USUARIO eq @usuario))
+            Append @empresas '|' USR_EMP.EMPRESA '|'
+            Find gt USR_EMP by Index.1
+        Loop
+    End
+    If @empresas ne "" Begin
+        If ('|'+string(nEmpresa)+'|') in @empresas 
+        Else Begin
+            Send Info_box "No tiene autorizaci¢n para consultar esa empresa..." "Informaci¢n"
+            //Set Value of (oEmpresa(Current_object)) to ""
+            Set Value item 0 to ""
+
+            Procedure_return
+        End    
+    End
+End_Procedure
+ 
+ 
+ 
+ 
