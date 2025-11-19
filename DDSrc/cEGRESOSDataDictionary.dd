@@ -11,29 +11,36 @@ Register_Object TARJETAS_SL
 
 Class cEGRESOSDataDictionary is a DataDictionary
     
-        Procedure OnConstrain
-            Forward Send OnConstrain
-            Set pbUseDDSQLFilters to True
-            Local String @Filtro @Filtro2 @Tipo_Gasto
-            Local Integer @Vista 
-            
-            Move '' to @Filtro2
-            
-            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
-            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
-            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
-            
-            If (@Filtro ne '') Begin
-                Append @Filtro2 @Filtro 
-            End
-            
-            If (@Tipo_Gasto ne 'TODOS') Begin
-                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-            End
-            
-            Set psSQLFilter to @Filtro2
-        End_Procedure
+//        Procedure OnConstrain
+//            Forward Send OnConstrain
+//            Set pbUseDDSQLFilters to True
+//            Local String @Filtro @Filtro2 @Tipo_Gasto
+//            Local Integer @Vista 
+//            
+//            Move '' to @Filtro2
+//            
+//            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
+//            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
+//            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
+//            
+//            If (@Filtro ne '') Begin
+//                Append @Filtro2 @Filtro 
+//            End
+//            
+//            If (@Tipo_Gasto ne 'TODOS') Begin
+//                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+//                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
+//            End
+//            
+//            If (@Vista ne 3) Begin
+//                If (@Filtro ne '') Append @Filtro2 " AND "
+//                If (@Vista EQ 0) Append @Filtro2   " PAGADO_SN = 'N'"
+//                If (@Vista EQ 1) Append @Filtro2   " PAGADO_SN = 'S'"
+//                If (@Vista EQ 2) Append @Filtro2   " MONTO > MONTO_PROYECTADO"
+//            End
+//            
+//            Set psSQLFilter to @Filtro2
+//        End_Procedure
     
     Procedure Construct_Object
         Forward Send Construct_Object

@@ -11,16 +11,9 @@ Use cPRESUPUESTO_DataDictionary.dd
 Use cEGRESOSDataDictionary.dd
 Use SUB_EGRESOS.dd
 Use cTIPO_GASTO_DataDictionary.dd
-Use dfTable.pkg
 
 Deferred_View Activate_Egresos for ;
 Object Egresos is a dbView
-    
-    Property String psFiltro ''
-    Property String psOpcionPago 'TODOS'
-    Property Integer piOpcionVista 3
-    
-    
     Object oTIPO_GASTO_DD is a cTIPO_GASTO_DataDictionary
     End_Object
 
@@ -28,21 +21,16 @@ Object Egresos is a dbView
         Procedure Relate_Main_File
             Forward Send Relate_Main_File 
             Send Totales
+            Forward Send Refresh of oEgresos 2
         End_Procedure
     End_Object
-    
-    Function GetClientArea Returns Handle
-        Handle hoClient
-        Move (oClientArea(oMain(ghoApplication))) to hoClient
-        Function_Return hoClient
-    End_Function
 
     Object oEGRESOS_DD is a cEGRESOSDataDictionary
         Set Constrain_file to PRESUPUESTO.File_number
         Set DDO_Server to oPRESUPUESTO_DD
         Set DDO_Server to oTIPO_GASTO_DD
         
-       Procedure OnConstrain
+        Procedure OnConstrain
             Forward Send OnConstrain
             Set pbUseDDSQLFilters to True
             Local String @Filtro @Filtro2 @Tipo_Gasto
@@ -50,10 +38,9 @@ Object Egresos is a dbView
             
             Move '' to @Filtro2
             
-            // Usa una referencia directa al oClientArea
-            Get psFiltro       to @Filtro
-            Get piOpcionVista  to @Vista
-            Get psOpcionPago   to @Tipo_Gasto
+            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
+            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
+            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
             
             If (@Filtro ne '') Begin
                 Append @Filtro2 @Filtro 
@@ -78,12 +65,6 @@ Object Egresos is a dbView
     Object oSUB_EGRESOS_DD is a SUB_EGRESOS_DataDictionary
         Set Constrain_file to EGRESOS.File_number
         Set DDO_Server to oEGRESOS_DD
-        
-        Procedure Request_Save
-            Forward Send Request_Save
-            Move PRESUPUESTO.NUMERO to SUB_EGRESOS.PRESUPUESTO
-            Move EGRESOS.NUMERO to SUB_EGRESOS.EGRESO
-        End_Procedure
     End_Object
 
     Set Main_DD to oEGRESOS_DD
@@ -177,7 +158,7 @@ Object Egresos is a dbView
         SQLDisconnect hdbc69
         
         Send Request_Find of oEGRESOS_DD ge Egresos.File_Number 1
-        Send Beginning_of_Data to oEgresos
+        Send Refresh of oEgresos 2
     End_Procedure
     
     Procedure Totales 
@@ -187,8 +168,8 @@ Object Egresos is a dbView
         Local Number nVal_TD nValPgdo nValPgdo_EF nValDispo nValDispo_EF nEgresos_EF nTotalTD_EF
         Local Number nTOTAL_EGRESOS nTOTAL_INGRESOS nDIFERENCIA nPENDIENTE_PAGO nTOTAL_PGO nDISPONIBLE
         
-        Get piOpcionVista  to iOpcionVista
-        Get psOpcionPago   to sOptionTipoPago
+        Get piOpcionVista of (oClientArea(oMain(Current_object))) to iOpcionVista
+        Get psOpcionPago  of (oClientArea(oMain(Current_object))) to sOptionTipoPago
     
         Move '' to sQ
         Move 0  to nVal_TD
@@ -225,6 +206,37 @@ Object Egresos is a dbView
         If (nDISPONIBLE > 0) Begin
             Set Color of oDISPONIBLE to 16777088
         End
+        
+       
+        
+        
+//        //COLOREA TOTAL SEGUN RANGO
+//        If (oTOTAL_E < oTOTAL_INGRESOS) Begin
+//            Set Color of oTOTAL_E  to 16777088 
+//            Set Color of Egresos   to 16641499
+//        End
+//        Else Begin
+//            Set Color of oTOTAL_E to 4227327
+//            Set Color of Egresos  to 12111868
+//        End
+//        //COLOREA TOTAL SEGUN RANGO
+//        If (nValDispo > 0) Set Color of oDISPONIBLE to 16777088 
+//        Else Set Color of oDISPONIBLE_EF to 16777088 
+//        
+//        If (nValorDiferencia gt 0) Set Color of oDiferencia to 16777088
+//        Else Set color of oDiferencia to 4227327
+//
+//        
+//        //DIFERENCUAL VISUAL
+//        Local Number nValorDiferencia
+//        Move ((nIngreso+nIngreso_EF)-nTotalTD_EF) to nValorDiferencia
+//        Set Value of oText_TOT_INGRESOS to  ("+ Q."+(String(nIngreso+nIngreso_EF)))
+//        Set value of oText_TOT_EGRESOS  to  ("- Q."+(String(nTotalTD_EF)))
+//        Set Value of oDiferencia to ("= Q."+(String(nValorDiferencia)))
+//        
+        Forward Send Refresh of oEGRESOS_DD 3
+        
+        
         
     End_Procedure
     
@@ -269,17 +281,173 @@ Object Egresos is a dbView
         SQLClose hstmt69
         SQLDisconnect hdbc69
     End_Procedure
-    Set Size to 348 501
+    Set Size to 380 501
     Set Location to 2 2
     Set Label to "„gados"
     
     Object oDbContainer3d2 is a dbContainer3d
-        Set Size to 209 460
+        Set Size to 226 460
         Set Location to 117 16
+
+        Object oEgresos is a cDbCJGrid
+            Set Size to 117 444
+            Set Location to 6 4
+            Set peHorizontalGridStyle to xtpGridSmallDots
+            Set peVerticalGridStyle to xtpGridSmallDots
+            Set piFocusCellBackColor to 16776960
+            Set piSelectedRowBackColor to clRed
+            Set peBorderStyle to xtpBorderNone
+            Set piHighlightBackColor to clBlue
+            Set pbUseAlternateRowBackgroundColor to  True
+
+            Object oEGRESOS_NUMERO is a cDbCJGridColumn
+                Entry_Item EGRESOS.NUMERO
+                Set piWidth to 34
+                Set psCaption to "#"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                        Local String sQ 
+                        Local Handle hdbc69 hstmt69
+                        Local Integer iProx iNumero
+                        
+                        Get Value item 0 to iNumero
+                        
+                        If (iNumero eq 0 and PRESUPUESTO.Recnum ne 0) Begin
+                            Move '' to sQ
+                            Move 0  to iProx
+                            Append sQ " SELECT MAX(NUMERO) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO 
+                            SQLFileConnect EGRESOS to hdbc69
+                            SQLOpen hdbc69 to hstmt69
+                            SQLExecDirect hstmt69 sQ
+                            Repeat
+                               SQLFileFetch hstmt69
+                               If (SQLResult) Begin
+                                  Get SQLColumnValue of hstmt69   1 to iProx
+                               End
+                            Until (not(SQLResult))
+                            SQLClose hstmt69
+                            SQLDisconnect hdbc69
+                            
+                            Set Value of oEGRESOS_NUMERO to (iProx+1)
+                        End 
+                End_Procedure
+
+                //Set pbEditable to False
+            End_Object
+
+            Object oEGRESOS_TIPO is a cDbCJGridColumn
+                Entry_Item EGRESOS.TIPO
+                Set piWidth to 56
+                Set psCaption to "Tipo"
+                Set pbCapslock to True 
+                Set Prompt_Button_Mode to PB_PromptOn
+
+//                Procedure OnExit
+//                    Forward Send OnExit
+//                    Local String sTipoEgreso 
+//                    Get Value item 1 to sTipoEgreso
+//                    
+//                    Clear TIPO_GASTO
+//                    Move sTipoEgreso to TIPO_GASTO.CLAVE
+//                    Find eq TIPO_GASTO by Index.2
+//                End_Procedure
+            End_Object
+
+            Object oEGRESOS_DESCRIPCION is a cDbCJGridColumn
+                Entry_Item EGRESOS.DESCRIPCION
+                Set piWidth to 234
+                Set psCaption to "Descripcion"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                    Local String sDescripcion
+                    
+                    Get Value item 2 to sDescripcion
+                    If (sDescripcion eq '') Set Value of oEGRESOS_DESCRIPCION to  TIPO_GASTO.DESCRIPCION 
+                End_Procedure
+            End_Object
+
+            Object oEGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
+                Entry_Item EGRESOS.FECHA_REALIZADO
+                Set piWidth to 83
+                Set psCaption to "Fecha"
+
+                Procedure OnEntry
+                    Forward Send OnEntry
+                    Local Date dSysdate dFecha
+                    Sysdate dSysdate
+                    
+                    Get value of oEGRESOS_FECHA_REALIZADO to dFecha
+                    If (dFecha eq '') Set Value of oEGRESOS_FECHA_REALIZADO to dSysdate
+                End_Procedure
+            End_Object
+
+            Object oEGRESOS_ES_FIJO_SN is a cDbCJGridColumn
+                Entry_Item EGRESOS.ES_FIJO_SN
+                Set piWidth to 55
+                Set psCaption to "Es fijo?"
+                Set pbCapslock to True 
+                Set pbCheckbox to True
+            End_Object
+
+            Object oEGRESOS_MONTO_PROYECTADO is a cDbCJGridColumn
+                Entry_Item EGRESOS.MONTO_PROYECTADO
+                Set piWidth to 81
+                Set psCaption to "Proyectado"
+            End_Object
+
+            Object oEGRESOS_MONTO is a cDbCJGridColumn
+                Entry_Item EGRESOS.MONTO
+                Set piWidth to 84
+                Set psCaption to "Monto"
+            End_Object
+
+            Object oEGRESOS_PAGADO_SN is a cDbCJGridColumn
+                Entry_Item EGRESOS.PAGADO_SN
+                Set piWidth to 51
+                Set psCaption to "Pgdo?"
+                Set pbCapslock to True 
+                Set pbCheckbox to True
+            End_Object
+
+            Object oEGRESOS_FORMA_PAGO is a cDbCJGridColumn
+                Entry_Item EGRESOS.FORMA_PAGO
+                Set piWidth to 65
+                Set psCaption to "F.Pago"
+                Set pbCapslock to True
+
+                Procedure OnExit
+                    Forward Send OnExit
+                    Local String sFma_pago sLiquidado
+                    Get Value item 8 to sFma_pago
+                    Get Value item 10 to sLiquidado
+                    
+//                    If (sFma_pago eq 'TC' and sLiquidado ne 'S') Begin
+//                        Send Popup to oPanel_TC
+//                    End
+                End_Procedure
+            End_Object
+
+            Object oEGRESOS_LIQUIDAR is a cDbCJGridColumn
+                Entry_Item EGRESOS.LIQUIDAR
+                Set piWidth to 69
+                Set psCaption to "Liquidar?"
+                Set pbCheckbox to True
+            End_Object
+
+            Object oEGRESOS_LIQUIDADO is a cDbCJGridColumn
+                Entry_Item EGRESOS.LIQUIDADO
+                Set piWidth to 76
+                Set psCaption to "Liquidado"
+                Set pbCheckbox to True
+                Set pbEditable to False
+            End_Object
+        End_Object
 
         Object oDbGroup2 is a dbGroup
             Set Size to 90 440
-            Set Location to 111 5
+            Set Location to 130 5
             Set Label to 'Integraci¢n de Gastos'
             Set Color to clScrollBar
 
@@ -290,38 +458,50 @@ Object Egresos is a dbView
                 Set Label to "-"
                 Set Color to 16777088
             End_Object
-
-            Object oSubEgresos is a dbGrid
-                Set Size to 66 275
-                Set Location to 19 86
-
-                Begin_Row
-                    Entry_Item SUB_EGRESOS.NUMERO
-                    Entry_Item SUB_EGRESOS.FECHA_REALIZADO
-                    Entry_Item SUB_EGRESOS.DESCRIPCION
-                    Entry_Item SUB_EGRESOS.MONTO
-                End_Row
-
-                Set Main_File to SUB_EGRESOS.File_Number
-
+            Object oDbCJGrid1 is a cDbCJGrid
                 Set Server to oSUB_EGRESOS_DD
+                Set Size to 61 290
+                Set Location to 20 75
+                Set pbUseAlternateRowBackgroundColor to True
+    
+                Object oSUB_EGRESOS_NUMERO is a cDbCJGridColumn
+                    Entry_Item SUB_EGRESOS.NUMERO
+                    Set piWidth to 34
+                    Set psCaption to "#"
+                End_Object
+    
+                Object oSUB_EGRESOS_FECHA_REALIZADO is a cDbCJGridColumn
+                    Entry_Item SUB_EGRESOS.FECHA_REALIZADO
+                    Set piWidth to 116
+                    Set psCaption to "Fecha"
+                End_Object
+    
+                Object oSUB_EGRESOS_DESCRIPCION is a cDbCJGridColumn
+                    Entry_Item SUB_EGRESOS.DESCRIPCION
+                    Set piWidth to 345
+                    Set psCaption to "Descripcion"
 
-                Set Form_Width      item 0 to 19
-                Set Header_Label    item 0 to "#"
-                Set Form_Width      item 1 to 60
-                Set Header_Label    item 1 to "Fecha"
-                Set Form_Width 2 to 142
-                Set Header_Label    item 2 to "Descripcion"
-                Set Form_Width      item 3 to 50
-                Set Header_Label    item 3 to "Monto"
-                Set CurrentCellColor to 16777088
-                Set CurrentRowColor to 8454143
+                    Procedure OnEntry
+                        Forward Send OnEntry
+                        Local String sDescripcion
+                        Local Date dSysdate
+                        Sysdate dSysdate
+                        Get Value of oSUB_EGRESOS_DESCRIPCION to sDescripcion
+                        If (sDescripcion eq '') Set Value of  oSUB_EGRESOS_DESCRIPCION to (TIPO_GASTO.DESCRIPCION+ String(dSysdate))
+                    End_Procedure
+                End_Object
+    
+                Object oSUB_EGRESOS_MONTO is a cDbCJGridColumn
+                    Entry_Item SUB_EGRESOS.MONTO
+                    Set piWidth to 85
+                    Set psCaption to "Monto"
+                End_Object
             End_Object
         End_Object
 
         Object oPanel_TC is a dbContainer3d
             Set Size to 40 124
-            Set Location to 43 159
+            Set Location to 28 268
             Set Color to 16776960
             Set Popup_State to true
     
@@ -349,57 +529,6 @@ Object Egresos is a dbView
                 End_Procedure
             
             End_Object
-        End_Object
-
-        Object oEgresos is a dbGrid
-            Set Size to 100 448
-            Set Location to 6 5
-
-            Begin_Row
-                Entry_Item EGRESOS.NUMERO
-                Entry_Item TIPO_GASTO.CLAVE
-                Entry_Item EGRESOS.DESCRIPCION
-                Entry_Item EGRESOS.FECHA_REALIZADO
-                Entry_Item EGRESOS.ES_FIJO_SN
-                Entry_Item EGRESOS.MONTO_PROYECTADO
-                Entry_Item EGRESOS.MONTO
-                Entry_Item EGRESOS.PAGADO_SN
-                Entry_Item EGRESOS.FORMA_PAGO
-                Entry_Item EGRESOS.LIQUIDAR
-                Entry_Item EGRESOS.LIQUIDADO
-            End_Row
-
-            Set Main_File to EGRESOS.File_Number
-
-            Set Form_Width 0 to 18
-            Set Header_Label 0 to "#"
-            Set Form_Width 1 to 28
-            Set Header_Label 1 to "Tipo"
-            Set Form_Width 2 to 105
-            Set Header_Label 2 to "Descripcion"
-            Set Form_Width 3 to 47
-            Set Header_Label 3 to "Fecha"
-            Set Form_Width 4 to 25
-            Set Header_Label 4 to "Fijo?"
-            Set Column_CheckBox_State 4 to True
-            Set Form_Width 5 to 47
-            Set Header_Label 5 to "Proyectado"
-            Set Form_Width 6 to 41
-            Set Header_Label 6 to "Monto"
-            Set Form_Width 7 to 27
-            Set Header_Label 7 to "Pgdo?"
-            Set Column_CheckBox_State 7 to True
-            Set Form_Width 8 to 33
-            Set Header_Label 8 to "F.Pago"
-            Set Form_Width 9 to 34
-            Set Header_Label 9 to "Liquidar?"
-            Set Column_CheckBox_State 9 to True
-            Set Form_Width 10 to 38
-            Set Header_Label 10 to "Liquidado"
-            Set Column_CheckBox_State 10 to True
-            Set CurrentRowColor to 65535
-            Set CurrentCellColor to 16777088
-            Set peGridLineColor to 12369084
         End_Object
     End_Object
 
@@ -504,6 +633,7 @@ Object Egresos is a dbView
             Set Size to 37 360
             Set Location to 50 6
             Set Border_Style to Border_StaticEdge
+            Set Enabled_State to False
 
             Object oTOTAL_INGRESOS is a Form
                 Set Size to 13 47
@@ -511,8 +641,8 @@ Object Egresos is a dbView
                 Set Label_Col_Offset to 2
                 Set Label to "Total Ingresos:"
                 Set Label_Justification_Mode to JMode_Right
-                Set Numeric_Mask item 0 to 8 2 ",*"
                 Set Entry_State to False
+                Set Numeric_Mask item 0 to 8 2 ",*"
             
                 // OnChange is called on every changed character
             //    Procedure OnChange
@@ -526,23 +656,23 @@ Object Egresos is a dbView
                 Set Size to 13 47
                 Set Location to 19 73
                 Set Numeric_Mask 0 to 4 2
+                Set Entry_State to False
                 Set Label to "Total Egresos:"
                 Set Label_Col_Offset to 2
                 Set Label_Justification_Mode to JMode_Right
                 Set Numeric_Mask item 0 to 8 2 ",*"
-                Set Entry_State to False
             End_Object
 
             Object oDIFERENCIA2 is a Form
                 Set Size to 13 47
                 Set Location to 19 124
                 Set Numeric_Mask 0 to 4 2
+                Set Entry_State to False
                 Set Label_Col_Offset to -1
                 Set Label to "Diferencia:"
                 Set Label_Justification_Mode to JMode_Top
                 Set Numeric_Mask item 0 to 8 2 ",*"
                 Set Enabled_State to False
-                Set Entry_State to False
             End_Object
 
             Object oTOTAL_PGDO is a Form
@@ -582,13 +712,11 @@ Object Egresos is a dbView
         Object oVISTA is a RadioGroup
             Set Location to 86 6
             Set Size to 21 207
-            Set Current_Radio to 3  // Inicializa en "Todos"
         
             Object oRadio1 is a Radio
                 Set Label to "Pendientes"
                 Set Size to 10 47
                 Set Location to 8 5
-                
             End_Object
         
             Object oRadio2 is a Radio
@@ -612,7 +740,7 @@ Object Egresos is a dbView
                 Set piOpcionVista to iToItem
                 Send Totales
                 Send OnConstrain of oEGRESOS_DD
-                Send Beginning_of_Data to oEgresos
+                Forward Send Refresh of oEgresos 2
             End_Procedure
 
             Object oRadio4 is a Radio
@@ -640,7 +768,6 @@ Object Egresos is a dbView
                 If (iToItem eq 3) Set psOpcionPago to 'EF'
                 Send Totales
                 Send OnConstrain of oEGRESOS_DD
-                send Beginning_of_Data to oEgresos
                 // for augmentation
             End_Procedure
 

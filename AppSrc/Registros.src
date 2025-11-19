@@ -59,6 +59,7 @@ End_Function
             On_Item "Catalogo Egresos"                   Send Activate_TIPO_GASTO
             On_Item "Catalogo Tarjetas de Cr‚dito"       Send Activate_TARJETA
             On_Item "TARJETA" Send Activate_TARJETA
+            On_Item "movimientos" Send Activate_movimientos
         End_Pull_Down
             
         DFCreate_Menu "&Opciones" ViewPopupMenu1 is a ViewPopupMenu
@@ -89,16 +90,11 @@ End_Function
         Set Bitmap_Style to Bitmap_Center
         Use PRESUPUESTO.sl
         Use TARJETA.vw
+        Use movimientos.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""
         End_Procedure
-        
-        // VARIABLES GLOBALES / PROPERTIES
-        
-        Property String psFiltro ''
-        Property String psOpcionPago ''
-        Property Integer piOpcionVista 0
 
     End_Object
 
