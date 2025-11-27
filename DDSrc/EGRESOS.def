@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-  DATE: 07/11/2025      TIME: 14:05                                  PAGE:  1
+  DATE: 20/11/2025      TIME: 21:42                                  PAGE:  1
   FILE DEFINITION FOR FILE: EGRESOS (# 12)
 -----------------------------------------------------------------------------
   DRIVER NAME               : MSSQLDRV
@@ -8,7 +8,7 @@
   DATAFLEX FILE NAME        : EGRESOS
 -----------------------------------------------------------------------------
   RECORD LENGTH             : 194       ( USED: 194 )
-  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 78 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 87 )
   FILE COMPRESSION          : NONE
   RE-USE DELETED SPACE      : YES
   LOCKING TYPE              : RECORD
@@ -22,7 +22,7 @@
 NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
 ---  ---------------  ---- ----- ----- --   ---------------------------------
   1  NUMERO           NUM   10.0     1  1   
-  2  TIPO             ASC      3    12      TIPO_GASTO.FIELD_2 (13,2)
+  2  TIPO             ASC      3    12      
   3  DESCRIPCION      ASC    100    15      
   4  FECHA_REALIZADO  DAT     10   115      
   5  ES_FIJO_SN       ASC      1   138      
@@ -34,7 +34,7 @@ NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
  11  MARCAR           ASC      1   181      
  12  LIQUIDAR         ASC      1   182      
  13  LIQUIDADO        ASC      1   183      
- 14  TC               NUM   10.0   184  2   
+ 14  TC               NUM   10.0   184      
 
 
 INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
@@ -42,8 +42,7 @@ INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
   1    NUMERO          NO  NO       0      0       2     ON-LINE
        PRESUPUESTO     NO  NO 
 
-  2    NUMERO          NO  NO       0      0       4     ON-LINE
+  2    NUMERO          NO  NO       0      0       3     ON-LINE
        PRESUPUESTO     NO  NO 
-       TC              NO  NO 
        MONTO           NO  NO 
 

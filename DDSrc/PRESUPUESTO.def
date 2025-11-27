@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-  DATE: 06/10/2025      TIME: 09:56                                  PAGE:  1
+  DATE: 27/11/2025      TIME: 01:12                                  PAGE:  1
   FILE DEFINITION FOR FILE: PRESUPUESTO (# 10)
 -----------------------------------------------------------------------------
   DRIVER NAME               : MSSQLDRV
@@ -7,8 +7,8 @@
   USER DISPLAY NAME         : PRESUPUESTO
   DATAFLEX FILE NAME        : PRESUPUESTO
 -----------------------------------------------------------------------------
-  RECORD LENGTH             : 95        ( USED: 95 )
-  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 4 )
+  RECORD LENGTH             : 143       ( USED: 143 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 7 )
   FILE COMPRESSION          : NONE
   RE-USE DELETED SPACE      : YES
   LOCKING TYPE              : RECORD
@@ -27,6 +27,10 @@ NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
   4  FECHA_FIN        DAT     10    45      
   5  VLR_QUINCENA     NUM   10.2    68      
   6  VLR_EFECTIVO     NUM   10.2    82      
+  7  ESTATUS          ASC      1    96      
+  8  SALDO_INICIAL    NUM   14.2    97      
+  9  SALDO_CIERRE     NUM   14.2   115      
+ 10  NUMERO_INTERNO   NUM   10.0   133      
 
 
 INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE

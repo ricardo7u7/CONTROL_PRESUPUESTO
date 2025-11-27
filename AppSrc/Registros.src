@@ -15,6 +15,11 @@ End_Object
 Use oEditContextMenu.pkg
 Use oDEOEditContextMenu17.pkg
 
+// VDF reports
+Use DRExportOptions.dg
+Use cDRReport.pkg
+
+
 Object oMain is a Panel
     Set Label to "CUBE Systems"
     Set Location to 4 3
@@ -55,17 +60,17 @@ End_Function
     DFCreate_Menu Main_Menu
     //        #INCLUDE File_PM_Espanol.inc
     
-        DFCreate_Menu "&Opciones" ViewPopupMenu is a ViewPopupMenu
-            On_Item "Catalogo Egresos"                   Send Activate_TIPO_GASTO
-            On_Item "Catalogo Tarjetas de Cr‚dito"       Send Activate_TARJETA
-            On_Item "TARJETA" Send Activate_TARJETA
-            On_Item "movimientos" Send Activate_movimientos
+        DFCreate_Menu "&Catalogos" ViewPopupMenu is a ViewPopupMenu
+            On_Item "Tipos de Gastos"                   Send Activate_TIPO_GASTO
+            On_Item "Tarjetas de Cr‚dito"               Send Activate_TARJETA
+            On_Item "Gastos_Fijos" Send Activate_Gastos_Fijos
         End_Pull_Down
             
         DFCreate_Menu "&Opciones" ViewPopupMenu1 is a ViewPopupMenu
-            On_Item "Control Ahorros"                    Send Activate_AHORRO
-            On_Item "Control Egresos"                    Send Activate_Egresos
-            On_Item "Control Deudas"                     Send Activate_Deudas
+            On_Item " Ahorros"                    Send Activate_AHORRO
+            On_Item " Egresos"                    Send Activate_Egresos
+            On_Item " Liquidacion TC"             Send Activate_movimientos
+            On_Item " Deudas"                     Send Activate_Deudas
         End_Pull_Down
         
         DFCreate_Menu "&Reportes" ViewPopupMenu2 is a ViewPopupMenu
@@ -91,6 +96,7 @@ End_Function
         Use PRESUPUESTO.sl
         Use TARJETA.vw
         Use movimientos.vw
+        Use Gastos_Fijos.vw
 
         Procedure Activate_About
             Send DoAbout "" "" "" "" ""

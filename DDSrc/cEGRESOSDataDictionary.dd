@@ -8,45 +8,38 @@ Open TARJETA
 
 Register_Object TIPO_GASTO_SL
 Register_Object TARJETAS_SL
+Register_Object PRESUPUESTO_SL
 
 Class cEGRESOSDataDictionary is a DataDictionary
     
-//        Procedure OnConstrain
-//            Forward Send OnConstrain
-//            Set pbUseDDSQLFilters to True
-//            Local String @Filtro @Filtro2 @Tipo_Gasto
-//            Local Integer @Vista 
-//            
-//            Move '' to @Filtro2
-//            
-//            Get psFiltro of (oClientArea(oMain(Current_object))) to @Filtro
-//            Get piOpcionVista of (oClientArea(oMain(Current_object))) to @Vista
-//            Get psOpcionPago of (oClientArea(oMain(Current_object))) to @Tipo_Gasto
-//            
-//            If (@Filtro ne '') Begin
-//                Append @Filtro2 @Filtro 
-//            End
-//            
-//            If (@Tipo_Gasto ne 'TODOS') Begin
-//                If (@Filtro ne '') Append @Filtro2 ' AND FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-//                Else               Append @Filtro2 ' FORMA_PAGO = ' ("'"+@Tipo_Gasto+"'")
-//            End
-//            
-//            If (@Vista ne 3) Begin
-//                If (@Filtro ne '') Append @Filtro2 " AND "
-//                If (@Vista EQ 0) Append @Filtro2   " PAGADO_SN = 'N'"
-//                If (@Vista EQ 1) Append @Filtro2   " PAGADO_SN = 'S'"
-//                If (@Vista EQ 2) Append @Filtro2   " MONTO > MONTO_PROYECTADO"
-//            End
-//            
-//            Set psSQLFilter to @Filtro2
-//        End_Procedure
+    Procedure Creating
+        Forward Send Creating
+            Local String sQ 
+            Local Handle hdbc69 hstmt69
+            Local Number nProx 
+            
+            Move '' to sQ
+            Move 0  to nProx
+            Append sQ " SELECT MAX(NUMERO) FROM EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO 
+            SQLFileConnect EGRESOS to hdbc69
+            SQLOpen hdbc69 to hstmt69
+            SQLExecDirect hstmt69 sQ
+            Repeat
+               SQLFileFetch hstmt69
+               If (SQLResult) Begin
+                  Get SQLColumnValue of hstmt69   1 to nProx
+               End
+            Until (not(SQLResult))
+            SQLClose hstmt69
+            SQLDisconnect hdbc69
+            
+            Move (nProx+1) to EGRESOS.NUMERO
+    End_Procedure
     
     Procedure Construct_Object
         Forward Send Construct_Object
         Set Main_File to EGRESOS.File_Number
 
-        Set Add_Server_File to TIPO_GASTO.File_Number
         Set Add_Server_File to PRESUPUESTO.File_Number
 
         Set Add_Client_File to SUB_EGRESOS.File_Number
@@ -60,6 +53,9 @@ Class cEGRESOSDataDictionary is a DataDictionary
 
         Set Field_Class_Name Field EGRESOS.ES_FIJO_SN to "Checkbox"
         Set Field_Checkbox_Values Field EGRESOS.ES_FIJO_SN to "S" "N"
+
+        Set Field_Prompt_Object Field EGRESOS.PRESUPUESTO to PRESUPUESTO_SL
+        Set Field_Class_Name Field EGRESOS.PRESUPUESTO to "Form"
 
         Set Field_Class_Name Field EGRESOS.PAGADO_SN to "Checkbox"
         Set Field_Checkbox_Values Field EGRESOS.PAGADO_SN to "S" "N"
@@ -91,6 +87,7 @@ End_Class
 
 #IFDEF Is$WebApp
 #ELSE
+Use PRESUPUESTO.sl
 Use TARJETAS.sl
 Use TIPO_GASTO.sl
 #ENDIF

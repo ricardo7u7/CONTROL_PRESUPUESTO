@@ -56,6 +56,17 @@
 			</DDClasses>
 		</Table>
 		<Table>
+			<tableNumber>8</tableNumber>
+			<tableName>EGRESOS_FIJOS</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>EGRESOS_FIJOS_DataDictionary</className>
+					<classFile>EGRESOS_FIJOS.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
+		<Table>
 			<tableNumber>10</tableNumber>
 			<tableName>PRESUPUESTO</tableName>
 			<DDClasses>

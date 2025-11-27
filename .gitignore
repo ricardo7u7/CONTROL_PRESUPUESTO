@@ -1,0 +1,74 @@
+# Files to be ignored by git in a DataFlex workspace
+
+# AppHtml
+**/apphtml/global.asa
+
+# AppSrc
+**/appsrc/**/*.prn
+**/appsrc/**/*.dep
+**/appsrc/**/*.exe.manifest
+**/appsrc/**/*.err
+**/appsrc/**/*.fld
+**/appsrc/**/*.pbg
+**/appsrc/**/*.pdp
+**/appsrc/**/*.pkd
+**/appsrc/**/*.prn
+**/appsrc/**/*.prp
+**/appsrc/**/*.bak
+**/appsrc/**/*.fd
+**/appsrc/**/*.def
+**/AppSrc/**/*.cfg
+**/AppSrc/**/*.int
+**/AppSrc/**/*.log
+
+# Data
+**/data/**/*.log
+**/data/**/*.dat
+**/data/**/*.vld
+**/data/**/*.k*
+**/data/**/*.bad
+**/data/**/*.hdr
+**/data/**/*.cch
+**/data/**/*.int
+**/data/**/*.log
+**/data/**/*.prn
+**/data/**/*.flx
+**/data/**/*.tag
+**/data/**/*.str
+**/data/**/*.bak
+**/data/**/*.cfg
+**/data/**/*.log
+**/data/**/*.def
+**/data/**/*.fd
+**/data/**/*.csv
+
+# DDSrc
+**/ddsrc/**/*.def
+**/ddsrc/**/*.bak
+**/ddsrc/**/*.fd
+**/ddsrc/**/*.xml
+
+# IdeSrc
+**/idesrc/*.dsk
+**/idesrc/*.loc
+**/idesrc/*.mtd
+
+# Programs
+**/programs/*.dbg
+**/programs/*.exe.manifest
+**/programs/*.log
+**/programs/*.exe
+**/programs/*.lnk
+
+#Documentos en General
+*.xls
+*.xlsx
+*.doc
+*.docx
+*.txt
+*.xml
+*.log
+
+#Carpeta ADJUNTOS
+ADJUNTOS/**
+DATASQL/**

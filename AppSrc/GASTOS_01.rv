@@ -3,9 +3,17 @@ Use DFRptVw.pkg
 Use DFRpt.pkg
 Use File_Dlg.Pkg
 Use PRESUPUESTO.sl
+Use cPRESUPUESTO_DataDictionary.dd
+Use DFEntry.pkg
 
 Activate_View Activate_GASTOS_01 for GASTOS_01
 Object GASTOS_01 is a ReportView
+    Object oPRESUPUESTO_DD is a cPRESUPUESTODataDictionary
+    End_Object
+
+    Set Main_DD to oPRESUPUESTO_DD
+    Set Server to oPRESUPUESTO_DD
+
     Set Location to 6 6
     Set Size to 56 181
     Set Label to "Grafica de Gastos"
@@ -67,22 +75,12 @@ Object GASTOS_01 is a ReportView
         
     End_Object
 
-    Object oPRESUPUESTO is a Form
-        Set Size to 13 69
-        Set Location to 10 72
-        Set Label_Col_Offset to 2
-        Set Label to "Presupuesto:"
-        Set Label_Justification_Mode to JMode_Right
+    Object oPRESUPUESTO is a dbForm
+        Entry_Item PRESUPUESTO.NUMERO
+        Set Location to 12 65
+        Set Size to 13 57
         Set Prompt_Button_Mode to PB_PromptOn
         Set Prompt_Object to PRESUPUESTO_SL
-    
-        // OnChange is called on every changed character
-    //    Procedure OnChange
-    //        String sValue
-    //    
-    //        Get Value to sValue
-    //    End_Procedure
-    
     End_Object
     
     On_Key Key_Alt+Key_O Send KeyAction of oOkButton

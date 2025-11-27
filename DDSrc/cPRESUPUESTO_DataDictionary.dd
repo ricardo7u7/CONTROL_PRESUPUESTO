@@ -4,7 +4,35 @@ Open PRESUPUESTO
 Open EGRESOS
 Open NPROX
 
+Register_Object PRESUPUESTO_SL
+
 Class cPRESUPUESTODataDictionary is a DataDictionary
+    
+    Procedure Creating
+        Forward Send Creating
+        
+        // calculamos nprox 
+        Local String sQ 
+        Local Handle hdbc69 hstmt69
+        Local Integer nProx
+        
+        Move '' to sQ
+        Move 0  to nProx
+        Append sQ " SELECT MAX(NUMERO_INTERNO) FROM PRESUPUESTO " 
+        SQLFileConnect EGRESOS to hdbc69
+        SQLOpen hdbc69 to hstmt69
+        SQLExecDirect hstmt69 sQ
+        Repeat
+           SQLFileFetch hstmt69
+           If (SQLResult) Begin
+              Get SQLColumnValue of hstmt69   1 to nProx
+           End
+        Until (not(SQLResult))
+        SQLClose hstmt69
+        SQLDisconnect hdbc69
+        
+        Move (nProx+1) to PRESUPUESTO.NUMERO_INTERNO
+    End_Procedure
     
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -20,7 +48,13 @@ Class cPRESUPUESTODataDictionary is a DataDictionary
         Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
 
         Set Field_Auto_Increment Field PRESUPUESTO.NUMERO to File_Field NPROX.PRESUPUESTO
+        Set Field_Prompt_Object Field PRESUPUESTO.NUMERO to PRESUPUESTO_SL
 
     End_Procedure
 
 End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use PRESUPUESTO.sl
+#ENDIF

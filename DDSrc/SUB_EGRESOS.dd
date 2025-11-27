@@ -5,6 +5,30 @@ Open EGRESOS
 
 Class SUB_EGRESOS_DataDictionary is a DataDictionary
     
+    Procedure Creating
+        Forward Send Creating
+            Local String sQ 
+            Local Handle hdbc69 hstmt69
+            Local Number nProx 
+            
+            Move '' to sQ
+            Move 0  to nProx
+            Append sQ " SELECT MAX(NUMERO) FROM SUB_EGRESOS WHERE PRESUPUESTO = " PRESUPUESTO.NUMERO " AND EGRESO = " EGRESOS.NUMERO
+            SQLFileConnect EGRESOS to hdbc69
+            SQLOpen hdbc69 to hstmt69
+            SQLExecDirect hstmt69 sQ
+            Repeat
+               SQLFileFetch hstmt69
+               If (SQLResult) Begin
+                  Get SQLColumnValue of hstmt69   1 to nProx
+               End
+            Until (not(SQLResult))
+            SQLClose hstmt69
+            SQLDisconnect hdbc69
+            
+            Move (nProx+1) to SUB_EGRESOS.NUMERO
+        End_Procedure
+    
     Procedure Construct_Object
         Forward Send Construct_Object
         Set Main_File to SUB_EGRESOS.File_Number

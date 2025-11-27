@@ -1,0 +1,70 @@
+Use DataDict.pkg
+
+Open EGRESOS_FIJOS
+
+Object APLICACION is a DescriptionValidationTable
+    Procedure Fill_List
+        Forward Send Fill_List
+        Send Add_Table_Value "PQ" "Primera Quincena"
+        Send Add_Table_Value "SQ" "Segunda Quincena"
+        Send Add_Table_Value "2Q" "Ambas Quincenas"
+    End_Procedure
+End_Object
+
+Register_Object TIPO_GASTO_SL
+
+Class EGRESOS_FIJOS_DataDictionary is a DataDictionary
+    
+    Procedure Creating
+        Forward Send Creating
+            Local String sQ 
+            Local Handle hdbc69 hstmt69
+            Local Number nProx 
+            
+            Move '' to sQ
+            Move 0  to nProx
+            Append sQ " SELECT MAX(NUMERO) FROM EGRESOS_FIJOS" 
+            SQLFileConnect EGRESOS to hdbc69
+            SQLOpen hdbc69 to hstmt69
+            SQLExecDirect hstmt69 sQ
+            Repeat
+               SQLFileFetch hstmt69
+               If (SQLResult) Begin
+                  Get SQLColumnValue of hstmt69   1 to nProx
+               End
+            Until (not(SQLResult))
+            SQLClose hstmt69
+            SQLDisconnect hdbc69
+            
+            Move (nProx+1) to EGRESOS_FIJOS.NUMERO
+            Move 'S' to EGRESOS_FIJOS.ES_FIJO_SN
+            Move 0 to EGRESOS_FIJOS.MONTO
+            Move 'TD' to EGRESOS_FIJOS.FORMA_PAGO
+    End_Procedure
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to EGRESOS_FIJOS.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Prompt_Object Field EGRESOS_FIJOS.TIPO to TIPO_GASTO_SL
+
+        Set Field_Value_Table Field EGRESOS_FIJOS.QUINCENA to APLICACION
+
+    End_Procedure
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+        Set Field_Changed_Value Field EGRESOS_FIJOS.QUINCENA to "2Q"
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use TIPO_GASTO.sl
+#ENDIF

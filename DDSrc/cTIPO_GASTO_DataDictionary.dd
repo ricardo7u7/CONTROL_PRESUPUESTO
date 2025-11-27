@@ -1,6 +1,7 @@
 Use DataDict.pkg
 
 Open TIPO_GASTO
+Open EGRESOS
 
 Class cTIPO_GASTO_DataDictionary is a DataDictionary
     
